@@ -355,3 +355,6 @@
 
 ## 0.7.57
 - Continuous overlapping lift, crossing and standing curves for mantle; blend from initial limb contacts, torso inclination, staggered foot placement and hand release, input-sensitive walking handoff. Assisted trajectory remains; syntax checked, gameplay unverified.
+
+## 0.7.58
+- Add eight polygonal rock formations with matching convex collision segments and local slope/foot support queries. Existing vertical cliffs retained. Arbitrary-angle climbing not yet implemented. Syntax checked; gameplay unverified.
