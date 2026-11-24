@@ -379,3 +379,6 @@
 
 ## 0.7.65
 - Require near-vertical upward input for swimming-to-climbing. Allow shallow-water exit in front of background cliffs and retain foreground collision layer until leaving cliff footprint or deliberately climbing. Syntax checked; gameplay unverified.
+
+## 0.7.66
+- Require raw joystick horizontal displacement below .065 and upward displacement above .85 for climb initiation on land and water. Foreground walking by default away from summit. Exit swimming based on local depth rather than arrival at shore waypoint; restore upright collider and foreground mask immediately. Syntax checked; gameplay unverified.
