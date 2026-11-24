@@ -220,3 +220,6 @@
 
 ## 0.7.13
 - Use actual articulated character bodies in swimming, orient torso toward travel, blend rotation and elevation during shoreline exit instead of teleporting. Syntax checked; gameplay unverified.
+
+## 0.7.14
+- Analog joystick speed curve from slow walking to running, speed-dependent gait cadence, smoother acceleration. Swimming stroke cadence, elbow flexion, kicks and buoyancy bob respond to input effort. Syntax checked; gameplay unverified.
