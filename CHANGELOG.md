@@ -456,3 +456,6 @@
 
 ## 0.7.90
 - Use common support queries for gait on soil, summits and irregular rock. Blend current and upcoming grade, adapt scramble on ascent and descent, and select reachable geological hand contacts. Legacy climbing and terrain generation retained. Syntax checked; gameplay unverified.
+
+## 0.7.91
+- Prototype climbing on irregular rock segments steeper than 60 degrees using shared surface tangents, normals and reachable limb targets. Follow connected steep segments; release or exit at endpoints. Legacy cliff climbing retained. Syntax checked; gameplay unverified.
