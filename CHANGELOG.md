@@ -9,3 +9,7 @@
 ## 0.0.3 — proposed
 - Added selectable wood, rubber, stone and steel for newly spawned bodies, with distinct approximate densities, friction and restitution.
 - Source patch checked for material property wiring; runtime and mobile tests not performed. Pending review and integration testing.
+
+## 0.0.4
+- Added small, medium and large sizes for newly spawned balls and boxes. Matter.js computes mass from area and material density.
+- Source patch checked; browser test results not verified at publication.
