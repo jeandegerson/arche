@@ -33,3 +33,7 @@
 ## 0.0.9
 - Grouped controls into Matter, Build and World tabs. Leaving Build cancels active selection tools, not existing mechanisms. Raised floor to reserve toolbar space.
 - Source patch checked; browser and deployment not verified.
+
+## 0.1.0
+- Save and restore bodies, velocities, terrain, joints, motors and selected gravity/material/size using localStorage. Autosave every two seconds and on page hide. Device-local only.
+- Source patch checked; browser persistence and deployment not verified.
