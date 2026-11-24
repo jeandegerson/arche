@@ -313,3 +313,6 @@
 
 ## 0.7.43
 - Explicit wall climb to ledge handoff; temporarily suspend torso collisions and joint forces during incremental mantle, restore on summit. Syntax checked; gameplay unverified.
+
+## 0.7.44
+- Fixed-length two-bone IK for ledge climbing, staggered hand release, bent legs and consistent torso alignment. Damped ragdoll leg joints and angular velocities, reduced recovery motor strength. Syntax checked; gameplay unverified.
