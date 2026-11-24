@@ -400,3 +400,6 @@
 
 ## 0.7.72
 - Retain vertical cliff grip on neutral input and minor horizontal deviations. Release only on outward raw horizontal input above 78%, vertical deviation below 40%, held 180 ms. Pause upward cycle on neutral. Syntax checked; gameplay unverified.
+
+## 0.7.73
+- Protect crouching and standing recovery near summit edges with a 10-unit inward support margin and 12-unit edge detection tolerance; disable protection during jump. Preserve deliberate descent hold. Syntax checked; gameplay unverified.
