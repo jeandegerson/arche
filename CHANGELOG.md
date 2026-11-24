@@ -364,3 +364,6 @@
 
 ## 0.7.60
 - Irregular slope traversal uses joystick intent even when collision stalls velocity; anticipatory surface sampling, slope clearance and lower rock friction. Scrambling recognizes nearby support. Syntax checked; gameplay unverified.
+
+## 0.7.61
+- Require directional intent for ledge grabs and cliff selection, cancel ascent when moving away, and briefly suppress regrabs. Apply direction check to water-to-climb transition. Syntax checked; gameplay unverified.
