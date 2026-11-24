@@ -148,3 +148,6 @@
 
 ## 0.5.3
 - Automatic two-handed grasp for wide or heavy objects, compliant heavy-object grips, bounded push/pull assistance and weight-dependent walking speed. Heavy objects receive no direct lifting assistance. Syntax checked; gameplay verification pending.
+
+## 0.6.0
+- New 3600-unit landscape with rolling layered terrain, six mature trees, scattered physical stones, dawn start, following camera and world-coordinate touch mapping. Separate landscape save preserves old laboratory save. Syntax checked; browser verification pending.
