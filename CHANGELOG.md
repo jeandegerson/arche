@@ -5,3 +5,7 @@
 - Fixed viewport resizing to remove each old boundary individually before adding replacements, avoiding stale collision walls.
 - Tests: Node.js 22 mock-engine checks passed for all four gravity transitions, labels, dynamic-body wake calls and removal of four previous walls on resize. These checks exercised copied source functions, not the complete browser application.
 - Actual Matter.js integration, browser rendering and mobile touch tests were not run (Matter.js unavailable in local test environment). Leave for review; do not merge until integration is verified.
+
+## 0.0.3 — proposed
+- Added selectable wood, rubber, stone and steel for newly spawned bodies, with distinct approximate densities, friction and restitution.
+- Source patch checked for material property wiring; runtime and mobile tests not performed. Pending review and integration testing.
