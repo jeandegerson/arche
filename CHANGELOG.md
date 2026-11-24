@@ -346,3 +346,6 @@
 
 ## 0.7.54
 - Running engages directly above 76% horizontal joystick input with rapid gait blend and acceleration; preserve smooth stopping. Increase climbing cycle rate by 27% and upward tracking speed. Syntax checked; gameplay unverified.
+
+## 0.7.55
+- Automatically initiate short mantle for grounded forward movement toward 35–70 unit cliff ledges; quicker lift and crossing using existing fixed-length limb animation. Syntax checked; gameplay unverified.
