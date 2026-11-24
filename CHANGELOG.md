@@ -376,3 +376,6 @@
 
 ## 0.7.64
 - Allow horizontal swimming across cliff silhouettes; upward input near a cliff edge initiates climbing. Prevent automatic shore exit into rock. Climbing still uses existing edge-based system, not arbitrary face contacts. Syntax checked; gameplay unverified.
+
+## 0.7.65
+- Require near-vertical upward input for swimming-to-climbing. Allow shallow-water exit in front of background cliffs and retain foreground collision layer until leaving cliff footprint or deliberately climbing. Syntax checked; gameplay unverified.
