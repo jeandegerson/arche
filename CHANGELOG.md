@@ -88,3 +88,6 @@
 
 ## 0.2.7
 - Added 12×16 atmospheric grid with local temperature, approximate buoyant currents, adjustable wind, drag, humidity proxy and atmospheric visualization. Vapor responds to air currents and local temperature; humidity influences condensation. Air state persists. Simplified model, not full gas dynamics. Syntax checked; browser tests pending.
+
+## 0.2.8
+- Continuous eight-minute simulated day, solar position, day/night illumination, ambient thermal cycle and approximate direct solar heating with ray-based obstruction. Time persists and advances only during simulation. Decorative night moon, not astronomical lunar simulation. Syntax checked; browser tests pending.
