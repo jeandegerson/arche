@@ -361,3 +361,6 @@
 
 ## 0.7.59
 - Blend uphill gait into slower forward-leaning scrambling, with arm IK toward sampled rock surfaces and shorter strides. Extend slope support assistance. Hands are visual contacts, not weight-bearing constraints. Syntax checked; gameplay unverified.
+
+## 0.7.60
+- Irregular slope traversal uses joystick intent even when collision stalls velocity; anticipatory surface sampling, slope clearance and lower rock friction. Scrambling recognizes nearby support. Syntax checked; gameplay unverified.
