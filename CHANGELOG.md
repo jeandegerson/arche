@@ -298,3 +298,6 @@
 
 ## 0.7.38
 - Replace overlapping center-to-center and segment strokes with one connected joint chain per limb; draw far arm behind torso, near arm in front; align head to torso on land and hide all raw anatomy. Syntax checked; gameplay unverified.
+
+## 0.7.39
+- Four deterministic climbable rock outcrops near the starting region, heights 65–240 world units, compatible with existing saves. Existing climbing and landing physics reused. Syntax checked; gameplay unverified.
