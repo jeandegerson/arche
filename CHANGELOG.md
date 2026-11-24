@@ -471,3 +471,9 @@
 
 ## 0.10.1
 - Calculate wading resistance from the same solid terrain surface and water level used by swimming, so exposed rocks above ponds do not slow walking. JavaScript syntax and 90 targeted assertions passed; browser gameplay unverified.
+
+## 0.10.4
+- Expand the deterministic landscape east from 10,800 to 18,720 units. A lake basin leads into mixed woodland and conifer foothills, an exposed ridge, and open heath. Elevation, moisture, slope, and rock exposure shape plant cover and tree mix. New ridges use the same collision and climbing profile as the original terrain.
+- Extend existing terrain saves in place and record the generated extent so removed edge terrain stays removed. Use the expanded bounds for shared positions and tree events.
+- Index rock spans for surface-height queries and remove a premature startup reset that ran before character initialization.
+- Verified in Chromium with a mobile viewport and Matter.js: coherent terrain join, lake and ridge profiles, biome distribution, camera tracking, deterministic reset, and old-save migration with preserved terrain edits. JavaScript syntax and diff checks passed. WebKit and live multiplayer were not tested.
