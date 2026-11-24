@@ -223,3 +223,6 @@
 
 ## 0.7.14
 - Analog joystick speed curve from slow walking to running, speed-dependent gait cadence, smoother acceleration. Swimming stroke cadence, elbow flexion, kicks and buoyancy bob respond to input effort. Syntax checked; gameplay unverified.
+
+## 0.7.15
+- Continuous phase-driven swimming with connected limb geometry; suspend competing joint stiffness in water and gradually restore on land. Syntax checked; gameplay unverified.
