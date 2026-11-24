@@ -157,3 +157,6 @@
 
 ## 0.6.2
 - Standing trees no longer collide with human limbs or torso, obstruct standing, or trigger automatic stepping/climbing. Trees retain collision with other matter; harvested wood remains solid. Syntax checked; gameplay verification pending.
+
+## 0.6.3
+- Add layered parallax hills, grass along existing soil surfaces, scattered flowers and varied tree canopies with gentle animated sway. Existing physical terrain and saves unchanged. Syntax checked; visual/device verification pending.
