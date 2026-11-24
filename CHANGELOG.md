@@ -468,3 +468,6 @@
 
 ## 0.9.6
 - Index static geological edges in 128-unit horizontal buckets to reduce repeated contact-search work on mobile. Preserve contact geometry; 1,000 synthetic equivalence checks and syntax validation passed. Browser gameplay unverified.
+
+## 0.10.1
+- Calculate wading resistance from the same solid terrain surface and water level used by swimming, so exposed rocks above ponds do not slow walking. JavaScript syntax and 90 targeted assertions passed; browser gameplay unverified.
