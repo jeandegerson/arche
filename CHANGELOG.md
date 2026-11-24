@@ -283,3 +283,6 @@
 
 ## 0.7.33
 - Landing compression scales with downward velocity and recovers progressively; crouched locomotion uses alternating short foot trajectories and swing clearance. Syntax checked; gameplay unverified.
+
+## 0.7.34
+- Distinct arm balance, preparation backswing, anticipatory takeoff swing, velocity-dependent flight pose and landing recovery. Inspired by DOI 10.1038/s41598-024-70194-z and PMID 18674837. Existing jump impulse unchanged; syntax checked, gameplay unverified.
