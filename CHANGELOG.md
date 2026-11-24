@@ -262,3 +262,6 @@
 
 ## 0.7.26
 - Inset joystick, remove health overlay, render connected rounded anatomy with shaped torso, neck, directional face, joint connections and feet using live articulated body positions across locomotion modes. Syntax checked; gameplay unverified.
+
+## 0.7.27
+- Replace sinusoidal foot path with distinct stance/swing intervals (62% walking, 38% running), terrain-relative foot targets, heel/toe pitch, slower cadence and revised arm counter-swing. Based on human gait biomechanics (https://journals.physiology.org/doi/full/10.1152/jn.00081.2006). Existing propulsion retained; syntax checked, gameplay unverified.
