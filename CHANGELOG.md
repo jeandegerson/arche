@@ -307,3 +307,6 @@
 
 ## 0.7.41
 - Impact ragdoll with temporary physical leg constraints, limb collisions and motor-assisted recovery. Reachable cliff ledges attach a temporary pull-up constraint and hand-targeted climbing pose. Syntax checked; gameplay unverified.
+
+## 0.7.42
+- Separate ledge pull-up into vertical clearance and horizontal mantle phases; weaken grip during lift and release only once over summit. Syntax checked; gameplay unverified.
