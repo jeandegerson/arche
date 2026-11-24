@@ -409,3 +409,6 @@
 
 ## 0.7.75
 - Prevent generic ledge acquisition interrupting active climbing. Require torso within 9 units of lip and both hands near lip before mantle; clamp final ascent target and hand targets. Blend entry velocity and initial hand contacts into pull-up. Syntax checked; gameplay unverified.
+
+## 0.7.76
+- Replace generic gait during descent entry with staged hand reach, torso inclination, staggered leg lowering and gradual collider extension. Seed descending cycle from final limb contacts. Syntax checked; gameplay unverified.
