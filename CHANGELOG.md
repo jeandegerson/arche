@@ -373,3 +373,6 @@
 
 ## 0.7.63
 - Stabilize swimming immersion and support checks, cancel blocked/reversed shore exits, retain water level during exit, guard reentry after climbing or shore exit, clear stale fall and slope state. Syntax checked; gameplay unverified.
+
+## 0.7.64
+- Allow horizontal swimming across cliff silhouettes; upward input near a cliff edge initiates climbing. Prevent automatic shore exit into rock. Climbing still uses existing edge-based system, not arbitrary face contacts. Syntax checked; gameplay unverified.
