@@ -295,3 +295,6 @@
 
 ## 0.7.37
 - Sample airborne velocity and terrain slope, resolve normal/tangential impact, drive compression and damped balance feedback from impact and ongoing motion; slope-adjusted corrective feet and reduced braking during recovery. Syntax checked; gameplay unverified.
+
+## 0.7.38
+- Replace overlapping center-to-center and segment strokes with one connected joint chain per limb; draw far arm behind torso, near arm in front; align head to torso on land and hide all raw anatomy. Syntax checked; gameplay unverified.
