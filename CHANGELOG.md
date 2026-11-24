@@ -265,3 +265,6 @@
 
 ## 0.7.27
 - Replace sinusoidal foot path with distinct stance/swing intervals (62% walking, 38% running), terrain-relative foot targets, heel/toe pitch, slower cadence and revised arm counter-swing. Based on human gait biomechanics (https://journals.physiology.org/doi/full/10.1152/jn.00081.2006). Existing propulsion retained; syntax checked, gameplay unverified.
+
+## 0.7.28
+- Anchor stance foot targets in world coordinates, release at swing, add modest physical running push-off impulses under gravity. Retain stable collision controller; syntax checked, gameplay unverified.
