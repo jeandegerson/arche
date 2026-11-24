@@ -331,3 +331,6 @@
 
 ## 0.7.49
 - Add deterministic visible cliff hold points, select reachable targets per climbing cycle and vary rise distance. Holds are terrain metadata, not separate collision bodies; ascent remains assisted. Syntax checked; gameplay unverified.
+
+## 0.7.50
+- Stable mantle target, summit regrab prevention, restored joint stiffness and collision masks, and 3.5-second mantle fallback. Syntax checked; gameplay unverified.
