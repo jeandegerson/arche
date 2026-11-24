@@ -406,3 +406,6 @@
 
 ## 0.7.74
 - Reduce edge crouch hold from 850 to 500 ms; preserve edge protection and jump preparation. Syntax checked; gameplay unverified.
+
+## 0.7.75
+- Prevent generic ledge acquisition interrupting active climbing. Require torso within 9 units of lip and both hands near lip before mantle; clamp final ascent target and hand targets. Blend entry velocity and initial hand contacts into pull-up. Syntax checked; gameplay unverified.
