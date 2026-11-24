@@ -352,3 +352,6 @@
 
 ## 0.7.56
 - Exclude only the supporting cliff from new grabs; allow adjacent higher cliff climbing from summit and forward input. Syntax checked; gameplay unverified.
+
+## 0.7.57
+- Continuous overlapping lift, crossing and standing curves for mantle; blend from initial limb contacts, torso inclination, staggered foot placement and hand release, input-sensitive walking handoff. Assisted trajectory remains; syntax checked, gameplay unverified.
