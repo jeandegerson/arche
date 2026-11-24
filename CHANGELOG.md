@@ -127,3 +127,6 @@
 
 ## 0.4.6
 - Disable text selection, touch callouts, context menus, drag selection and overscroll in the game; retain normal button activation and joystick pointer events. Syntax checked; iPad Safari verification pending.
+
+## 0.4.7
+- Suppress Safari gesture zoom, multi-touch scrolling and double-tap zoom on game controls while preserving repeated button activation. Syntax checked; iPad verification pending.
