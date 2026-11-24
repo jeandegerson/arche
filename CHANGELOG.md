@@ -205,3 +205,6 @@
 
 ## 0.7.8
 - Add connected sloped collision surfaces for human locomotion matching the rendered terrain contour; original geological cells remain physical for other objects. Exclude old cells from human stepping and climbing. Syntax checked; gameplay verification pending.
+
+## 0.7.9
+- Add slope-following movement assistance and automatic swimming with buoyancy and paddling animation in sufficiently deep ponds. No drowning or new controls. Syntax checked; gameplay verification pending.
