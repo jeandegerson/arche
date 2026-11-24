@@ -85,3 +85,6 @@
 
 ## 0.2.6
 - Added ice particles, freezing and melting, rising vapor parcels with mass-preserving condensation, and temporary cooling tool. Phase and vapor parcels persist. Condensation threshold and vapor motion are simplified; ice particles do not yet fuse into rigid blocks. Syntax checked; browser tests pending.
+
+## 0.2.7
+- Added 12×16 atmospheric grid with local temperature, approximate buoyant currents, adjustable wind, drag, humidity proxy and atmospheric visualization. Vapor responds to air currents and local temperature; humidity influences condensation. Air state persists. Simplified model, not full gas dynamics. Syntax checked; browser tests pending.
