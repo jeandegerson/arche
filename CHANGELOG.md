@@ -301,3 +301,6 @@
 
 ## 0.7.39
 - Four deterministic climbable rock outcrops near the starting region, heights 65–240 world units, compatible with existing saves. Existing climbing and landing physics reused. Syntax checked; gameplay unverified.
+
+## 0.7.40
+- Small loose objects no longer collide with character regardless of vertical motion. Strong normal/tangential landing impacts unlock physical torso rotation and momentum, followed by automatic recovery. No injury penalty. Syntax checked; gameplay unverified.
