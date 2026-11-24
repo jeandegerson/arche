@@ -112,3 +112,6 @@
 
 ## 0.4.1
 - Human torso, head, arms, thighs and shins are separate colliding bodies connected by compliant joints. Torque-based posture and gait controller, physical arm grasp, and torso force assistance. Internal self-collision disabled for stability. Saved torso position reconstructs anatomy; full pose persistence and realistic balance remain future work. Syntax checked; browser tests pending.
+
+## 0.4.2
+- Added physical forearms and hands, elbow and wrist constraints, independent left/right grasp selection, touch-directed reach and approximate arm inverse kinematics with torque control. Both hands may hold separate objects or the same object. Selected hand releases independently. Grasp mass and reach are limited; collisions transmit physical forces. Syntax checked; browser tests pending.
