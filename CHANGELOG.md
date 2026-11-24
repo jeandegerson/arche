@@ -424,3 +424,6 @@
 
 ## 0.7.79
 - Detect nearby vertical cliff faces during deliberate airborne jumps and moving toward the face; catch and enter persistent climbing grip. Preserve foreground walking and swimming. Syntax checked; gameplay unverified.
+
+## 0.7.80
+- Add upward-diagonal assisted step mantles for 8–70 unit rises within 32 units, including adjacent cliff summits. Use faster existing articulated mantle without full climbing mode; horizontal foreground travel unchanged. Syntax checked; gameplay unverified.
