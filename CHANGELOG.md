@@ -415,3 +415,6 @@
 
 ## 0.7.77
 - Allow vertical joystick reversal between ascent and descent on a cliff, preserving current limb contact heights. Neutral pauses either direction. Syntax checked; gameplay unverified.
+
+## 0.7.78
+- Add four scenic animated waterfalls, falling water streaks, spray and terrain-following stream traces. Visual prototype only; no fluid transport or collision changes. Syntax checked; gameplay unverified.
