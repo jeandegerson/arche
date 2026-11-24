@@ -459,3 +459,6 @@
 
 ## 0.7.91
 - Prototype climbing on irregular rock segments steeper than 60 degrees using shared surface tangents, normals and reachable limb targets. Follow connected steep segments; release or exit at endpoints. Legacy cliff climbing retained. Syntax checked; gameplay unverified.
+
+## 0.7.92
+- Ease body tracking between inclined rock segments and replace endpoint snap with timed ascent/descent transition onto nearby support. Suspend rock tracking during transition and resume afterward. Syntax checked; gameplay unverified.
