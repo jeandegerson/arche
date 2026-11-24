@@ -199,3 +199,6 @@
 
 ## 0.7.6
 - Clamp pond surface to bank spill elevation, including rain rise, and render water to the deepest basin point instead of a fixed depth. Syntax checked; visual verification pending.
+
+## 0.7.7
+- Hide geological block rendering and draw continuous textured earth with a connected grass-colored surface. Preserve physical terrain and saves. Syntax checked; visual verification pending.
