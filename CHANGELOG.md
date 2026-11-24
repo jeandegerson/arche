@@ -229,3 +229,6 @@
 
 ## 0.7.16
 - Keep swimming active inside pond regardless of rotated collider depth; latch shore transition and guard constraint metadata. Syntax checked; gameplay unverified.
+
+## 0.7.17
+- Determine swimming from local water depth rather than character collider immersion. Walk in shallow water, swim at approximately hip depth, transition back to wading with hysteresis. Syntax checked; gameplay unverified.
