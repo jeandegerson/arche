@@ -436,3 +436,6 @@
 
 ## 0.7.83
 - Widen wall jump preparation and diagonal launch thresholds; extend gesture window to 1100 ms and prevent accidental release during preparation. Syntax checked; gameplay unverified.
+
+## 0.7.84
+- Require downward diagonal toward wall to charge jump, followed by upward diagonal away. Vertical down immediately selects descent. Increase visible compression of torso and legs. Syntax checked; gameplay unverified.
