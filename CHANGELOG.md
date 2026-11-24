@@ -322,3 +322,6 @@
 
 ## 0.7.46
 - Swimming checks actual immersion and cliff support, yields to climbing, blocks swimming through cliff faces, and permits upward swim-to-climb transition. Syntax checked; gameplay unverified.
+
+## 0.7.47
+- Low ledges (13–34 units) trigger assisted hops instead of grabs. Tall cliff ascent uses alternating hand/foot targets, fixed-length IK and phased upward velocity. Holds are procedural, not actual rock geometry. Syntax checked; gameplay unverified.
