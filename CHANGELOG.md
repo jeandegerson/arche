@@ -133,3 +133,6 @@
 
 ## 0.4.8
 - Human collision damage based on incoming mass and relative normal speed, increased head vulnerability, stun, involuntary release, severe-impact collapse and death. Health indicator and saved injury state. Reset or toggle human to restart. Approximate injury model; syntax checked, device tests pending.
+
+## 0.4.9
+- Human-first interface: laboratory hidden behind Tools, joystick and Release remain visible, automatic hand selection, touch grasp and bounded drag reach, automatic carrying posture after touch release. Manual hand and jump controls hidden. Syntax checked; device tests pending.
