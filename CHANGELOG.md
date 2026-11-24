@@ -13,3 +13,7 @@
 ## 0.0.4
 - Added small, medium and large sizes for newly spawned balls and boxes. Matter.js computes mass from area and material density.
 - Source patch checked; browser test results not verified at publication.
+
+## 0.0.5
+- Added rod and spring constraints: select link mode and tap two bodies, then switch off to drag. Reset clears links.
+- Source patch checked; browser behavior not yet verified.
