@@ -202,3 +202,6 @@
 
 ## 0.7.7
 - Hide geological block rendering and draw continuous textured earth with a connected grass-colored surface. Preserve physical terrain and saves. Syntax checked; visual verification pending.
+
+## 0.7.8
+- Add connected sloped collision surfaces for human locomotion matching the rendered terrain contour; original geological cells remain physical for other objects. Exclude old cells from human stepping and climbing. Syntax checked; gameplay verification pending.
