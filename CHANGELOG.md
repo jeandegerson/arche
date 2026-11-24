@@ -349,3 +349,6 @@
 
 ## 0.7.55
 - Automatically initiate short mantle for grounded forward movement toward 35–70 unit cliff ledges; quicker lift and crossing using existing fixed-length limb animation. Syntax checked; gameplay unverified.
+
+## 0.7.56
+- Exclude only the supporting cliff from new grabs; allow adjacent higher cliff climbing from summit and forward input. Syntax checked; gameplay unverified.
