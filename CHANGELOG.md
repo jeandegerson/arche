@@ -403,3 +403,6 @@
 
 ## 0.7.73
 - Protect crouching and standing recovery near summit edges with a 10-unit inward support margin and 12-unit edge detection tolerance; disable protection during jump. Preserve deliberate descent hold. Syntax checked; gameplay unverified.
+
+## 0.7.74
+- Reduce edge crouch hold from 850 to 500 ms; preserve edge protection and jump preparation. Syntax checked; gameplay unverified.
