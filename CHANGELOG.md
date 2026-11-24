@@ -154,3 +154,6 @@
 
 ## 0.6.1
 - Fix standing clearance using actual collision geometry in the newly occupied overhead space, preserve foot height during posture changes and add joystick hysteresis. Syntax checked; device verification pending.
+
+## 0.6.2
+- Standing trees no longer collide with human limbs or torso, obstruct standing, or trigger automatic stepping/climbing. Trees retain collision with other matter; harvested wood remains solid. Syntax checked; gameplay verification pending.
