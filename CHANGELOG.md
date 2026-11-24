@@ -421,3 +421,6 @@
 
 ## 0.7.79
 - Isolate jump charging and triggering from climbing, ledge grip and descent entry so reversing vertical joystick direction does not queue a jump. Syntax and 12 input assertions passed; browser gameplay unverified.
+
+## 0.7.79
+- Detect nearby vertical cliff faces during deliberate airborne jumps and moving toward the face; catch and enter persistent climbing grip. Preserve foreground walking and swimming. Syntax checked; gameplay unverified.
