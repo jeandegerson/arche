@@ -277,3 +277,6 @@
 
 ## 0.7.31
 - Progressive crouch collider height with overhead clearance, blended knee/hip/torso and arm poses, upward joystick flick jump with grounded gate and cooldown, gravity-driven trajectory. Syntax checked; gameplay unverified.
+
+## 0.7.32
+- Require recent downward preparation and actual crouch before upward jump flick; extend before takeoff, directional impulse, analog crouch depth and foot-relative crouch IK with rearward pelvis. Syntax checked; gameplay unverified.
