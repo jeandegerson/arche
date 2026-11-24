@@ -208,3 +208,6 @@
 
 ## 0.7.9
 - Add slope-following movement assistance and automatic swimming with buoyancy and paddling animation in sufficiently deep ponds. No drowning or new controls. Syntax checked; gameplay verification pending.
+
+## 0.7.10
+- Display current version discreetly in the top-right corner.
