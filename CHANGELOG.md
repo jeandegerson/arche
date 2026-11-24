@@ -190,3 +190,6 @@
 
 ## 0.7.3
 - Detect natural terrain depressions and render shallow ponds with ripples, daylight-dependent color and temporary rain-related surface changes. Nonblocking visual water; no swimming or hydrology yet. Syntax checked; device verification pending.
+
+## 0.7.4
+- Add autonomous nonblocking wildlife: birds, butterflies, hares and pulsing evening fireflies. Activity varies with daylight and rain. No hunting, rewards or controls. Syntax checked; gameplay verification pending.
