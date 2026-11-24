@@ -271,3 +271,6 @@
 
 ## 0.7.29
 - Smooth foot target transitions, gradual stance anchor correction, averaged terrain samples and reset gait filters during swimming. Syntax checked; gameplay unverified.
+
+## 0.7.30
+- Hide raw anatomy before rendering to prevent duplicate heads. Free arms use continuous connected shoulder/elbow/wrist poses counter to leg stance; restore physical joint constraints for reaching and swimming. Syntax checked; visual testing pending.
