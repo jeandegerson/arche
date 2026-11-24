@@ -430,3 +430,6 @@
 
 ## 0.7.81
 - Assist horizontal and downward-diagonal descent from low terraces (4–70 unit drops), with eased body trajectory and landing flex. Preserve deliberate descent on tall cliffs. Syntax checked; gameplay unverified.
+
+## 0.7.82
+- Add wall jump preparation with down input and upward-outward flick within 650 ms. Compress climbing pose, launch away and catch a different cliff using airborne grab. Sustained down input resumes descent. Syntax checked; gameplay unverified.
