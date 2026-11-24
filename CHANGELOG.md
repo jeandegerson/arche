@@ -447,3 +447,6 @@
 - Clip buried cliff faces, restore foreground trees and show waterfall source.
 ## 0.7.87
 - Generate deterministic asymmetric rock profiles with fourteen segments, local terrain anchoring and continuous strata. Existing soil saves retained; rock geometry changes. Syntax checked; gameplay unverified.
+
+## 0.7.88
+- Broaden irregular rock formations and cluster overlapping ridges in three regions. Add subtle terraced profile variation and reduce random surface roughness. Preserve soil save. Syntax checked; gameplay unverified.
