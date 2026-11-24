@@ -388,3 +388,6 @@
 
 ## 0.7.68
 - Summit detection uses actual crouched collider height. Hold crouch near edge for 850 ms before assisted descent; shorter crouches preserve summit support. Syntax checked; gameplay unverified.
+
+## 0.7.69
+- Sustained edge crouch initiates assisted lowering and descending hand/foot cycle instead of falling. Add bounded climb cycle wait and head pose update. Syntax checked; gameplay unverified.
