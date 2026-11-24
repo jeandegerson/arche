@@ -118,3 +118,6 @@
 
 ## 0.4.3
 - Human stabilization: upright torso, lower bounded joint torque, additional solver iterations, corrected limb starting positions, individual leg contact detection, safe spawn height and visible controls. Syntax checked; device behavior not yet verified.
+
+## 0.4.4
+- New and reset worlds start with a centered human and no spawned objects. Existing saved objects are preserved until reset. Human automatically enabled on load. Large horizontal analog touch pad with variable speed, release-to-stop, keyboard arrows and assisted ground locomotion. Syntax checked; device tests pending.
