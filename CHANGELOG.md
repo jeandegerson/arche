@@ -142,3 +142,6 @@
 
 ## 0.5.1
 - Allow ordinary boxes as climbing targets, detect low obstacles, retain target through ledge transition, approach side and move onto top; exclude boundary walls. Syntax checked; gameplay verification pending.
+
+## 0.5.2
+- Downward joystick crouches, reduced collision height and speed, overhead clearance required to stand, assisted small steps, automatic recovery after nonfatal incapacitation when stationary and clear. Syntax checked; gameplay verification pending.
