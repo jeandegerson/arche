@@ -196,3 +196,6 @@
 
 ## 0.7.5
 - Expand world width from 3,600 to 10,800 units; append terrain to existing saves, add regional elevation variation, trees and proportional wildlife population. Increase terrain and plant restore limits. Syntax checked; performance/device verification pending.
+
+## 0.7.6
+- Clamp pond surface to bank spill elevation, including rain rise, and render water to the deepest basin point instead of a fixed depth. Syntax checked; visual verification pending.
