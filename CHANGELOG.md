@@ -453,3 +453,6 @@
 
 ## 0.7.89
 - Introduce common geological edge representation for cliff faces, summits and irregular rock segments, including tangent, outward normal, inclination and nearest contact queries. Route existing rock support through shared queries while retaining legacy movement behavior. Syntax checked; gameplay unverified.
+
+## 0.7.90
+- Use common support queries for gait on soil, summits and irregular rock. Blend current and upcoming grade, adapt scramble on ascent and descent, and select reachable geological hand contacts. Legacy climbing and terrain generation retained. Syntax checked; gameplay unverified.
