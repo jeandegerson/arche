@@ -253,3 +253,6 @@
 
 ## 0.7.23
 - Increase maximum jogging speed modestly; blend into a distinct running pose with faster cadence, higher knee lift, bent elbows, forward lean and visual flight phase. Syntax checked; gameplay unverified.
+
+## 0.7.24
+- Stronger coordinated shoulder, elbow and wrist animation; smooth time-filtered walk/run blend and stride amplitude, including brief ground-contact changes. Propulsion unchanged. Syntax checked; gameplay unverified.
