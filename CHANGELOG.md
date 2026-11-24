@@ -412,3 +412,6 @@
 
 ## 0.7.76
 - Replace generic gait during descent entry with staged hand reach, torso inclination, staggered leg lowering and gradual collider extension. Seed descending cycle from final limb contacts. Syntax checked; gameplay unverified.
+
+## 0.7.77
+- Allow vertical joystick reversal between ascent and descent on a cliff, preserving current limb contact heights. Neutral pauses either direction. Syntax checked; gameplay unverified.
