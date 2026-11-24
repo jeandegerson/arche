@@ -391,3 +391,6 @@
 
 ## 0.7.69
 - Sustained edge crouch initiates assisted lowering and descending hand/foot cycle instead of falling. Add bounded climb cycle wait and head pose update. Syntax checked; gameplay unverified.
+
+## 0.7.70
+- Lock facing to selected cliff side during climb, prevent joystick from flipping pose, compensate gravity and exclude cliff collision during assisted climbing. Bound stalled cycle target recovery. Syntax checked; gameplay unverified.
