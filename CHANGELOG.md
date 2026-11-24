@@ -94,3 +94,6 @@
 
 ## 0.2.9
 - Optional finite ground with 48 cells across soil, sand, clay and stone strata. Dig exposed cells to convert static ground into dynamic chunks with corresponding density, friction and mass. Excavations persist; reset clears ground. Ground cannot be regenerated without reset. Granular behavior and unsupported-ground collapse are not yet modeled. Syntax checked; browser tests pending.
+
+## 0.3.0
+- Soil and sand excavation releases mass-preserving polygonal grains with friction and low restitution. Exposed side faces can be excavated. Unsupported granular deposits collapse into particles under downward gravity, subject to the 100-dynamic-body budget. Grain metadata persists. Clay and stone remain chunks. Syntax checked; browser tests pending.
