@@ -370,3 +370,6 @@
 
 ## 0.7.62
 - Separate player slope contact from polygon collision response; continuous surface tracking with arc-length speed, grounded support and jump release. Other objects retain rock collisions. Exclude slope segments from rectangular climbing selection. Syntax checked; gameplay unverified.
+
+## 0.7.63
+- Stabilize swimming immersion and support checks, cancel blocked/reversed shore exits, retain water level during exit, guard reentry after climbing or shore exit, clear stale fall and slope state. Syntax checked; gameplay unverified.
