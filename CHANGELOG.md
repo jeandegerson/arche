@@ -418,3 +418,6 @@
 
 ## 0.7.78
 - Add four scenic animated waterfalls, falling water streaks, spray and terrain-following stream traces. Visual prototype only; no fluid transport or collision changes. Syntax checked; gameplay unverified.
+
+## 0.7.79
+- Isolate jump charging and triggering from climbing, ledge grip and descent entry so reversing vertical joystick direction does not queue a jump. Syntax and 12 input assertions passed; browser gameplay unverified.
