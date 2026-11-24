@@ -37,3 +37,6 @@
 ## 0.1.0
 - Save and restore bodies, velocities, terrain, joints, motors and selected gravity/material/size using localStorage. Autosave every two seconds and on page hide. Device-local only.
 - Source patch checked; browser persistence and deployment not verified.
+
+## 0.1.1
+- Swipe across free bodies in Build > Cut to split convex geometry into independent fragments with conserved mass. Reject tiny fragments and attached/motorized bodies. Persist polygon geometry and mass. JavaScript syntax checked; browser tests pending.
