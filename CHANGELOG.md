@@ -304,3 +304,6 @@
 
 ## 0.7.40
 - Small loose objects no longer collide with character regardless of vertical motion. Strong normal/tangential landing impacts unlock physical torso rotation and momentum, followed by automatic recovery. No injury penalty. Syntax checked; gameplay unverified.
+
+## 0.7.41
+- Impact ragdoll with temporary physical leg constraints, limb collisions and motor-assisted recovery. Reachable cliff ledges attach a temporary pull-up constraint and hand-targeted climbing pose. Syntax checked; gameplay unverified.
