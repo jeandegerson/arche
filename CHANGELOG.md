@@ -29,3 +29,7 @@
 ## 0.0.8
 - Added static terrain platforms built by tapping two endpoints, including slopes and walls. Erase mode removes user-built terrain; reset clears it. Terrain tools are exclusive with link and motor tools.
 - Source patch checked; browser and deployment not verified.
+
+## 0.0.9
+- Grouped controls into Matter, Build and World tabs. Leaving Build cancels active selection tools, not existing mechanisms. Raised floor to reserve toolbar space.
+- Source patch checked; browser and deployment not verified.
