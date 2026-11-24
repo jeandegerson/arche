@@ -163,3 +163,6 @@
 
 ## 0.6.4
 - Restore infinite torso inertia after posture scaling, enforce upright orientation during conscious locomotion, preserve feet and suppress low-speed crouch impact damage. Syntax checked; gameplay verification pending.
+
+## 0.6.5
+- Anticipatory automatic stepping over low stones and terrain ledges up to 28 units, with full-body collision clearance. Larger obstacles retain climbing mechanics. Syntax checked; gameplay verification pending.
