@@ -439,3 +439,6 @@
 
 ## 0.7.84
 - Require downward diagonal toward wall to charge jump, followed by upward diagonal away. Vertical down immediately selects descent. Increase visible compression of torso and legs. Syntax checked; gameplay unverified.
+
+## 0.7.85
+- Introduce deterministic blended regional terrain profiles, quieter meadows and clustered cliff formations. New landscape save key preserves old save separately and starts new geography. Syntax checked; gameplay unverified.
