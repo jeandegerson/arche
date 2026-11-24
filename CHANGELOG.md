@@ -343,3 +343,6 @@
 
 ## 0.7.53
 - Track actual collider height independently of velocity-expanded bounds; continuous foot support probe and brief support hysteresis; full crouch to 44 units; suppress automatic hops while crouching. Syntax checked; gameplay unverified.
+
+## 0.7.54
+- Running engages directly above 76% horizontal joystick input with rapid gait blend and acceleration; preserve smooth stopping. Increase climbing cycle rate by 27% and upward tracking speed. Syntax checked; gameplay unverified.
