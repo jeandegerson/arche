@@ -21,3 +21,7 @@
 ## 0.0.6
 - Added fixed world anchors: choose Anchor mode, tap a body, then an empty point to attach a stiff distance constraint. Switch off to drag and swing. Reset clears anchors.
 - Source patch checked; browser and live deployment not verified.
+
+## 0.0.7
+- Added clockwise and counterclockwise torque-driven motors, selectable by tapping bodies; Clear mode removes motor, reset clears all motors. Motors apply bounded feedback torque rather than directly setting velocity.
+- Source patch checked; browser and live deployment not verified.
