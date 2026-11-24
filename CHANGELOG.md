@@ -280,3 +280,6 @@
 
 ## 0.7.32
 - Require recent downward preparation and actual crouch before upward jump flick; extend before takeoff, directional impulse, analog crouch depth and foot-relative crouch IK with rearward pelvis. Syntax checked; gameplay unverified.
+
+## 0.7.33
+- Landing compression scales with downward velocity and recovers progressively; crouched locomotion uses alternating short foot trajectories and swing clearance. Syntax checked; gameplay unverified.
