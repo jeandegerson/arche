@@ -433,3 +433,6 @@
 
 ## 0.7.82
 - Add wall jump preparation with down input and upward-outward flick within 650 ms. Compress climbing pose, launch away and catch a different cliff using airborne grab. Sustained down input resumes descent. Syntax checked; gameplay unverified.
+
+## 0.7.83
+- Widen wall jump preparation and diagonal launch thresholds; extend gesture window to 1100 ms and prevent accidental release during preparation. Syntax checked; gameplay unverified.
