@@ -25,3 +25,7 @@
 ## 0.0.7
 - Added clockwise and counterclockwise torque-driven motors, selectable by tapping bodies; Clear mode removes motor, reset clears all motors. Motors apply bounded feedback torque rather than directly setting velocity.
 - Source patch checked; browser and live deployment not verified.
+
+## 0.0.8
+- Added static terrain platforms built by tapping two endpoints, including slopes and walls. Erase mode removes user-built terrain; reset clears it. Terrain tools are exclusive with link and motor tools.
+- Source patch checked; browser and deployment not verified.
