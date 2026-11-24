@@ -450,3 +450,6 @@
 
 ## 0.7.88
 - Broaden irregular rock formations and cluster overlapping ridges in three regions. Add subtle terraced profile variation and reduce random surface roughness. Preserve soil save. Syntax checked; gameplay unverified.
+
+## 0.7.89
+- Introduce common geological edge representation for cliff faces, summits and irregular rock segments, including tangent, outward normal, inclination and nearest contact queries. Route existing rock support through shared queries while retaining legacy movement behavior. Syntax checked; gameplay unverified.
