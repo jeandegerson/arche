@@ -103,3 +103,6 @@
 
 ## 0.3.2
 - Plant seeds on soil; plants absorb nearby liquid water, grow physical trunk and branch segments under suitable sunlight and air temperature, release water vapor, and can be harvested into dynamic wood. Growth persists. Biomass carbon uptake and root mechanics not yet simulated; seed placement is a laboratory tool. Syntax checked; browser tests pending.
+
+## 0.3.3
+- Mature plants disperse seeds carried by wind; seeds landing on suitable unoccupied soil can germinate. Plants age, die after 600 simulation seconds or loss of soil, and decompose progressively, returning an approximate nutrient quantity to soil. Growth consumes fertility; seeds, fertility and ageing persist. Population capped at six plants and 24 airborne seeds. Nutrients are a proxy, not a closed chemical mass balance. Syntax checked; browser tests pending.
