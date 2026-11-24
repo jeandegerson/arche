@@ -232,3 +232,6 @@
 
 ## 0.7.17
 - Determine swimming from local water depth rather than character collider immersion. Walk in shallow water, swim at approximately hip depth, transition back to wading with hysteresis. Syntax checked; gameplay unverified.
+
+## 0.7.18
+- Wider joystick dead zone, calm walking across most of the range, gentle running only near full displacement, smoother acceleration and slower swimming. Syntax checked; gameplay unverified.
