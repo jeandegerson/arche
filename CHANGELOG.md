@@ -337,3 +337,6 @@
 
 ## 0.7.51
 - Prioritize actual summit support over swimming and climbing, clear stale movement state, use cliff-aware foot targets, disable soil slope correction on rock tops and account for overlapping cliffs at mantle exit. Syntax checked; gameplay unverified.
+
+## 0.7.52
+- Cancel gravity during controlled mantle, allow 1.5-unit phase transition tolerance, and align head throughout pull-up to avoid waiting at summit edge. Syntax checked; gameplay unverified.
