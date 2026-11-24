@@ -109,3 +109,6 @@
 
 ## 0.4.0
 - Optional human mode with a colliding upright body, force-based walking, grounded step/jump, animated limbs, touch controls and limited reach and lifting mass. Grasp uses a compliant physical constraint; release drops the object. Human position persists. Laboratory tools remain available; articulated balance and bodily tool use are future work. Syntax checked; browser tests pending.
+
+## 0.4.1
+- Human torso, head, arms, thighs and shins are separate colliding bodies connected by compliant joints. Torque-based posture and gait controller, physical arm grasp, and torso force assistance. Internal self-collision disabled for stability. Saved torso position reconstructs anatomy; full pose persistence and realistic balance remain future work. Syntax checked; browser tests pending.
