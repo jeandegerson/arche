@@ -247,3 +247,6 @@
 
 ## 0.7.21
 - Restore pre-0.7.19 land propulsion with gradual braking; isolate gait animation errors from movement. Syntax checked; gameplay unverified.
+
+## 0.7.22
+- Walking animation uses two-segment inverse kinematics, alternating foot lift and stride trajectories, coordinated head bob and delayed arm swing. Land propulsion unchanged. Syntax checked; gameplay unverified.
