@@ -139,3 +139,6 @@
 
 ## 0.5.0
 - Two-axis joystick, upward and diagonal climbing near substantial physical surfaces, assisted ascent and alternating limb reach, release to stop climbing. Syntax checked; device testing pending.
+
+## 0.5.1
+- Allow ordinary boxes as climbing targets, detect low obstacles, retain target through ledge transition, approach side and move onto top; exclude boundary walls. Syntax checked; gameplay verification pending.
