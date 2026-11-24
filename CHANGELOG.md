@@ -385,3 +385,6 @@
 
 ## 0.7.67
 - Apply foreground cliff exclusion to all anatomy collision masks and ground queries; recover excessively displaced limbs. Syntax checked; gameplay unverified.
+
+## 0.7.68
+- Summit detection uses actual crouched collider height. Hold crouch near edge for 850 ms before assisted descent; shorter crouches preserve summit support. Syntax checked; gameplay unverified.
