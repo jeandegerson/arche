@@ -325,3 +325,6 @@
 
 ## 0.7.47
 - Low ledges (13–34 units) trigger assisted hops instead of grabs. Tall cliff ascent uses alternating hand/foot targets, fixed-length IK and phased upward velocity. Holds are procedural, not actual rock geometry. Syntax checked; gameplay unverified.
+
+## 0.7.48
+- Replace continuously drifting climbing targets with per-character alternating reach, opposite-foot placement and body transfer phases; smooth mantle movement and later summit handoff. Procedural contacts and assisted body motion remain. Syntax checked; gameplay unverified.
