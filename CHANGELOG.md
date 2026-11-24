@@ -211,3 +211,6 @@
 
 ## 0.7.10
 - Display current version discreetly in the top-right corner.
+
+## 0.7.11
+- Horizontal swimming pose with animated strokes and kicks; automatically lift toward shore when moving near pond edges. Syntax checked; gameplay verification pending.
