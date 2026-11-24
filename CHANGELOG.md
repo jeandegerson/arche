@@ -121,3 +121,6 @@
 
 ## 0.4.4
 - New and reset worlds start with a centered human and no spawned objects. Existing saved objects are preserved until reset. Human automatically enabled on load. Large horizontal analog touch pad with variable speed, release-to-stop, keyboard arrows and assisted ground locomotion. Syntax checked; device tests pending.
+
+## 0.4.5
+- Replaced unstable load-bearing ragdoll legs with an upright collision body and controlled articulated stepping animation driven by movement speed. Legs are positioned kinematically and do not independently collide; arms retain physical articulation. Ground detection uses the upright body footprint. Syntax checked; device tests pending.
