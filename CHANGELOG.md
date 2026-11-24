@@ -477,3 +477,8 @@
 - Extend existing terrain saves in place and record the generated extent so removed edge terrain stays removed. Use the expanded bounds for shared positions and tree events.
 - Index rock spans for surface-height queries and remove a premature startup reset that ran before character initialization.
 - Verified in Chromium with a mobile viewport and Matter.js: coherent terrain join, lake and ridge profiles, biome distribution, camera tracking, deterministic reset, and old-save migration with preserved terrain edits. JavaScript syntax and diff checks passed. WebKit and live multiplayer were not tested.
+
+## 0.10.5
+- Add an experimental solo Watershed world, selectable from the game and the shared-world entry screen. A seeded 195 by 97 regional map generates landforms, rain, drainage, and vegetation before sampling the playable side-on terrain. The slope profile drives the existing walking and climbing physics. Water includes coastal shallows, river crossings, and lake basins.
+- Keep existing worlds available. Watershed saves and tree cuts are stored separately per seed. Use the seed query parameter to explore a different region.
+- Verified seed repeatability, drainage, biome variety, and dry starts across five seeds. Tested world navigation, terrain and water rendering, and save isolation in mobile-sized Chromium with Matter.js. Safari was not tested.
