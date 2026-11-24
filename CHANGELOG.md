@@ -241,3 +241,6 @@
 
 ## 0.7.20
 - Shallow water progressively slows walking and running as immersion increases, using the same terrain depth calculation as swimming. Dry-land movement is unchanged. Syntax and 35 resistance assertions passed; mobile gameplay unverified.
+
+## 0.7.20
+- Guard joint metadata on land; remove legacy injury/stun locomotion lock and allow directional movement across brief loss of ground contact. Syntax checked; gameplay unverified.
