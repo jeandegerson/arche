@@ -367,3 +367,6 @@
 
 ## 0.7.61
 - Require directional intent for ledge grabs and cliff selection, cancel ascent when moving away, and briefly suppress regrabs. Apply direction check to water-to-climb transition. Syntax checked; gameplay unverified.
+
+## 0.7.62
+- Separate player slope contact from polygon collision response; continuous surface tracking with arc-length speed, grounded support and jump release. Other objects retain rock collisions. Exclude slope segments from rectangular climbing selection. Syntax checked; gameplay unverified.
