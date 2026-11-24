@@ -286,3 +286,6 @@
 
 ## 0.7.34
 - Distinct arm balance, preparation backswing, anticipatory takeoff swing, velocity-dependent flight pose and landing recovery. Inspired by DOI 10.1038/s41598-024-70194-z and PMID 18674837. Existing jump impulse unchanged; syntax checked, gameplay unverified.
+
+## 0.7.35
+- Impact-scaled landing compression peaks over 130 ms and recovers over 720 ms; increased torso inclination, arm counterbalance and head stabilization. Syntax checked; gameplay unverified.
