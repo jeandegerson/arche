@@ -250,3 +250,6 @@
 
 ## 0.7.22
 - Walking animation uses two-segment inverse kinematics, alternating foot lift and stride trajectories, coordinated head bob and delayed arm swing. Land propulsion unchanged. Syntax checked; gameplay unverified.
+
+## 0.7.23
+- Increase maximum jogging speed modestly; blend into a distinct running pose with faster cadence, higher knee lift, bent elbows, forward lean and visual flight phase. Syntax checked; gameplay unverified.
