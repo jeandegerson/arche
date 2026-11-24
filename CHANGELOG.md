@@ -274,3 +274,6 @@
 
 ## 0.7.30
 - Hide raw anatomy before rendering to prevent duplicate heads. Free arms use continuous connected shoulder/elbow/wrist poses counter to leg stance; restore physical joint constraints for reaching and swimming. Syntax checked; visual testing pending.
+
+## 0.7.31
+- Progressive crouch collider height with overhead clearance, blended knee/hip/torso and arm poses, upward joystick flick jump with grounded gate and cooldown, gravity-driven trajectory. Syntax checked; gameplay unverified.
