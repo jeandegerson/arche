@@ -292,3 +292,6 @@
 
 ## 0.7.36
 - Longer landing recovery (1.25 s), stronger forward lean, damped torso sway, asymmetric arm and foot balance corrections. Syntax checked; gameplay unverified.
+
+## 0.7.37
+- Sample airborne velocity and terrain slope, resolve normal/tangential impact, drive compression and damped balance feedback from impact and ongoing motion; slope-adjusted corrective feet and reduced braking during recovery. Syntax checked; gameplay unverified.
