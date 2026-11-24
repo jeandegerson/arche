@@ -465,3 +465,6 @@
 
 ## 0.7.93
 - Replace rectangular cliffs at x1750 and x4500 with continuous asymmetric profiles combining slopes, steep faces and terraces. Reuse shared geological contact and inclined climbing systems. Other cliffs and soil saves retained. Syntax checked; gameplay unverified.
+
+## 0.9.6
+- Index static geological edges in 128-unit horizontal buckets to reduce repeated contact-search work on mobile. Preserve contact geometry; 1,000 synthetic equivalence checks and syntax validation passed. Browser gameplay unverified.
