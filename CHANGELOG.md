@@ -259,3 +259,6 @@
 
 ## 0.7.25
 - Reduce and cap running cadence; active damped angular velocity control for free arms, forearms and wrists; posture responds to acceleration and vertical velocity. Preserve gravity and existing propulsion. Syntax checked; gameplay unverified.
+
+## 0.7.26
+- Inset joystick, remove health overlay, render connected rounded anatomy with shaped torso, neck, directional face, joint connections and feet using live articulated body positions across locomotion modes. Syntax checked; gameplay unverified.
