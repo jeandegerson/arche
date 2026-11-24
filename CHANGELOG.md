@@ -193,3 +193,6 @@
 
 ## 0.7.4
 - Add autonomous nonblocking wildlife: birds, butterflies, hares and pulsing evening fireflies. Activity varies with daylight and rain. No hunting, rewards or controls. Syntax checked; gameplay verification pending.
+
+## 0.7.5
+- Expand world width from 3,600 to 10,800 units; append terrain to existing saves, add regional elevation variation, trees and proportional wildlife population. Increase terrain and plant restore limits. Syntax checked; performance/device verification pending.
