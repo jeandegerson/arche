@@ -340,3 +340,6 @@
 
 ## 0.7.52
 - Cancel gravity during controlled mantle, allow 1.5-unit phase transition tolerance, and align head throughout pull-up to avoid waiting at summit edge. Syntax checked; gameplay unverified.
+
+## 0.7.53
+- Track actual collider height independently of velocity-expanded bounds; continuous foot support probe and brief support hysteresis; full crouch to 44 units; suppress automatic hops while crouching. Syntax checked; gameplay unverified.
