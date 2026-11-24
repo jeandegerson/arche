@@ -397,3 +397,6 @@
 
 ## 0.7.71
 - Expand sustained crouch descent activation from 18 to 42 world units, capped at half summit width. Preserve 850 ms hold. Syntax checked; gameplay unverified.
+
+## 0.7.72
+- Retain vertical cliff grip on neutral input and minor horizontal deviations. Release only on outward raw horizontal input above 78%, vertical deviation below 40%, held 180 ms. Pause upward cycle on neutral. Syntax checked; gameplay unverified.
