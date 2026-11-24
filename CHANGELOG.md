@@ -482,3 +482,8 @@
 - Add an experimental solo Watershed world, selectable from the game and the shared-world entry screen. A seeded 195 by 97 regional map generates landforms, rain, drainage, and vegetation before sampling the playable side-on terrain. The slope profile drives the existing walking and climbing physics. Water includes coastal shallows, river crossings, and lake basins.
 - Keep existing worlds available. Watershed saves and tree cuts are stored separately per seed. Use the seed query parameter to explore a different region.
 - Verified seed repeatability, drainage, biome variety, and dry starts across five seeds. Tested world navigation, terrain and water rendering, and save isolation in mobile-sized Chromium with Matter.js. Safari was not tested.
+
+## 0.10.6
+- Clip standing water to the painted slope and lower Watershed river surfaces to their local banks where needed, removing abrupt vertical edges inside riverbeds.
+- Extend the soil fill below the visible floor in tall viewports while retaining the collision boundary.
+- Checked JavaScript syntax and shoreline geometry with four generated seeds, including two-bank crossings and dry islands. Device rendering was not tested.
