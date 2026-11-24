@@ -462,3 +462,6 @@
 
 ## 0.7.92
 - Ease body tracking between inclined rock segments and replace endpoint snap with timed ascent/descent transition onto nearby support. Suspend rock tracking during transition and resume afterward. Syntax checked; gameplay unverified.
+
+## 0.7.93
+- Replace rectangular cliffs at x1750 and x4500 with continuous asymmetric profiles combining slopes, steep faces and terraces. Reuse shared geological contact and inclined climbing systems. Other cliffs and soil saves retained. Syntax checked; gameplay unverified.
