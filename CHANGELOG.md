@@ -244,3 +244,6 @@
 
 ## 0.7.20
 - Guard joint metadata on land; remove legacy injury/stun locomotion lock and allow directional movement across brief loss of ground contact. Syntax checked; gameplay unverified.
+
+## 0.7.21
+- Restore pre-0.7.19 land propulsion with gradual braking; isolate gait animation errors from movement. Syntax checked; gameplay unverified.
