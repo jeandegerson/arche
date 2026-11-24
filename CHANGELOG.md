@@ -184,3 +184,6 @@
 
 ## 0.7.1
 - Remove laboratory and sound toggle from the visible exploration interface. Ambient audio starts automatically where permitted, otherwise unlocks on ordinary touch or keyboard interaction. Physics engine retained. Syntax checked; device verification pending.
+
+## 0.7.2
+- Autonomous gradual rain cycles, atmospheric dimming, dawn mist and weather-responsive ambient noise. No survival penalties or new controls. Visual weather only; hydrology remains future work. Syntax checked; device verification pending.
