@@ -97,3 +97,6 @@
 
 ## 0.3.0
 - Soil and sand excavation releases mass-preserving polygonal grains with friction and low restitution. Exposed side faces can be excavated. Unsupported granular deposits collapse into particles under downward gravity, subject to the 100-dynamic-body budget. Grain metadata persists. Clay and stone remain chunks. Syntax checked; browser tests pending.
+
+## 0.3.1
+- Earth absorbs nearby water particles, gains mass and darkens; wet grains form temporary cohesive bonds. Moist clay yields under impact; drying transfers moisture into vapor parcels; sufficiently dry clay fired above 600°C for three seconds becomes ceramic. Moisture and firing state persist. Approximate model; syntax checked, browser tests pending.
