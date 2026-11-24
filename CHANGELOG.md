@@ -169,3 +169,6 @@
 
 ## 0.6.6
 - Atmospheric sky gradients, dawn/dusk horizon warmth, drifting clouds and night stars. Preserve existing world and physics. Long-term direction: persistent shared natural world with organic encounters; prioritize autonomous environmental richness before multiplayer. Syntax checked; visual verification pending.
+
+## 0.6.7
+- Small slow-moving ground objects no longer block human locomotion; retain collisions with other matter and restore human collision for airborne or held objects. Exclude bypassed debris from foot support and step assistance. Syntax checked; gameplay verification pending.
