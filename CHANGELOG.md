@@ -226,3 +226,6 @@
 
 ## 0.7.15
 - Continuous phase-driven swimming with connected limb geometry; suspend competing joint stiffness in water and gradually restore on land. Syntax checked; gameplay unverified.
+
+## 0.7.16
+- Keep swimming active inside pond regardless of rotated collider depth; latch shore transition and guard constraint metadata. Syntax checked; gameplay unverified.
