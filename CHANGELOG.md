@@ -328,3 +328,6 @@
 
 ## 0.7.48
 - Replace continuously drifting climbing targets with per-character alternating reach, opposite-foot placement and body transfer phases; smooth mantle movement and later summit handoff. Procedural contacts and assisted body motion remain. Syntax checked; gameplay unverified.
+
+## 0.7.49
+- Add deterministic visible cliff hold points, select reachable targets per climbing cycle and vary rise distance. Holds are terrain metadata, not separate collision bodies; ascent remains assisted. Syntax checked; gameplay unverified.
