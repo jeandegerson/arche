@@ -442,3 +442,8 @@
 
 ## 0.7.85
 - Introduce deterministic blended regional terrain profiles, quieter meadows and clustered cliff formations. New landscape save key preserves old save separately and starts new geography. Syntax checked; gameplay unverified.
+
+## 0.7.86
+- Clip buried cliff faces, restore foreground trees and show waterfall source.
+## 0.7.87
+- Generate deterministic asymmetric rock profiles with fourteen segments, local terrain anchoring and continuous strata. Existing soil saves retained; rock geometry changes. Syntax checked; gameplay unverified.
