@@ -172,3 +172,6 @@
 
 ## 0.6.7
 - Small slow-moving ground objects no longer block human locomotion; retain collisions with other matter and restore human collision for airborne or held objects. Exclude bypassed debris from foot support and step assistance. Syntax checked; gameplay verification pending.
+
+## 0.6.8
+- Deterministic regional vegetation variation: scrub, flowering meadows, rocky patches and distant woodland silhouettes. Decorative features follow existing soil and do not obstruct walking. Existing saves unchanged. Syntax checked; visual verification pending.
