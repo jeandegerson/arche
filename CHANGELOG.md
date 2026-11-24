@@ -235,3 +235,6 @@
 
 ## 0.7.18
 - Wider joystick dead zone, calm walking across most of the range, gentle running only near full displacement, smoother acceleration and slower swimming. Syntax checked; gameplay unverified.
+
+## 0.7.19
+- Acceleration-limited walking, gradual braking and reversal, velocity-driven gait with directional knee flexion, arm swing, torso lean, body bob and subtle stride variation. Terrain following preserves momentum. Syntax checked; gameplay unverified.
