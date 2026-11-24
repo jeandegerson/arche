@@ -238,3 +238,6 @@
 
 ## 0.7.19
 - Acceleration-limited walking, gradual braking and reversal, velocity-driven gait with directional knee flexion, arm swing, torso lean, body bob and subtle stride variation. Terrain following preserves momentum. Syntax checked; gameplay unverified.
+
+## 0.7.20
+- Shallow water progressively slows walking and running as immersion increases, using the same terrain depth calculation as swimming. Dry-land movement is unchanged. Syntax and 35 resistance assertions passed; mobile gameplay unverified.
