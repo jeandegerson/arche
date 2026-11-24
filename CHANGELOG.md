@@ -334,3 +334,6 @@
 
 ## 0.7.50
 - Stable mantle target, summit regrab prevention, restored joint stiffness and collision masks, and 3.5-second mantle fallback. Syntax checked; gameplay unverified.
+
+## 0.7.51
+- Prioritize actual summit support over swimming and climbing, clear stale movement state, use cliff-aware foot targets, disable soil slope correction on rock tops and account for overlapping cliffs at mantle exit. Syntax checked; gameplay unverified.
