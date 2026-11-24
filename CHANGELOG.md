@@ -310,3 +310,6 @@
 
 ## 0.7.42
 - Separate ledge pull-up into vertical clearance and horizontal mantle phases; weaken grip during lift and release only once over summit. Syntax checked; gameplay unverified.
+
+## 0.7.43
+- Explicit wall climb to ledge handoff; temporarily suspend torso collisions and joint forces during incremental mantle, restore on summit. Syntax checked; gameplay unverified.
