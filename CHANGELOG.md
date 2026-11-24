@@ -181,3 +181,6 @@
 
 ## 0.7.0
 - Minimal exploration interface, contextual release control, optional synthesized wind and day/night nature calls. Physics lab remains available. Design direction: utopian shared exploration, no hunger, survival obligations, grinding or progression. Syntax checked; audio/device verification pending.
+
+## 0.7.1
+- Remove laboratory and sound toggle from the visible exploration interface. Ambient audio starts automatically where permitted, otherwise unlocks on ordinary touch or keyboard interaction. Physics engine retained. Syntax checked; device verification pending.
