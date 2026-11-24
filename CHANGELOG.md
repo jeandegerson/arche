@@ -319,3 +319,6 @@
 
 ## 0.7.45
 - Expand four cliff obstacles into 31 varied rock formations, including stepped ascents, narrow gaps and high plateaus. Existing terrain saves retained. Syntax checked; gameplay unverified.
+
+## 0.7.46
+- Swimming checks actual immersion and cliff support, yields to climbing, blocks swimming through cliff faces, and permits upward swim-to-climb transition. Syntax checked; gameplay unverified.
