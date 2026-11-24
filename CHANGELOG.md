@@ -316,3 +316,6 @@
 
 ## 0.7.44
 - Fixed-length two-bone IK for ledge climbing, staggered hand release, bent legs and consistent torso alignment. Damped ragdoll leg joints and angular velocities, reduced recovery motor strength. Syntax checked; gameplay unverified.
+
+## 0.7.45
+- Expand four cliff obstacles into 31 varied rock formations, including stepped ascents, narrow gaps and high plateaus. Existing terrain saves retained. Syntax checked; gameplay unverified.
