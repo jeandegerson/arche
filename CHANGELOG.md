@@ -256,3 +256,6 @@
 
 ## 0.7.24
 - Stronger coordinated shoulder, elbow and wrist animation; smooth time-filtered walk/run blend and stride amplitude, including brief ground-contact changes. Propulsion unchanged. Syntax checked; gameplay unverified.
+
+## 0.7.25
+- Reduce and cap running cadence; active damped angular velocity control for free arms, forearms and wrists; posture responds to acceleration and vertical velocity. Preserve gravity and existing propulsion. Syntax checked; gameplay unverified.
