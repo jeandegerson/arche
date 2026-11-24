@@ -217,3 +217,6 @@
 
 ## 0.7.12
 - Disable obstructive character collisions while swimming; explicitly transition onto dry bank. Match swimming body proportions, colors and rectangular articulated style to walking character. Syntax checked; gameplay unverified.
+
+## 0.7.13
+- Use actual articulated character bodies in swimming, orient torso toward travel, blend rotation and elevation during shoreline exit instead of teleporting. Syntax checked; gameplay unverified.
