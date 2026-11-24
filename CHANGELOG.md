@@ -178,3 +178,6 @@
 
 ## 0.6.9
 - Reduce locomotion collider friction, anticipate terrain rises farther ahead, ascend incrementally instead of teleporting up steps, and maintain horizontal walking velocity during ascent. Syntax checked; gameplay verification pending.
+
+## 0.7.0
+- Minimal exploration interface, contextual release control, optional synthesized wind and day/night nature calls. Physics lab remains available. Design direction: utopian shared exploration, no hunger, survival obligations, grinding or progression. Syntax checked; audio/device verification pending.
