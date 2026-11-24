@@ -394,3 +394,6 @@
 
 ## 0.7.70
 - Lock facing to selected cliff side during climb, prevent joystick from flipping pose, compensate gravity and exclude cliff collision during assisted climbing. Bound stalled cycle target recovery. Syntax checked; gameplay unverified.
+
+## 0.7.71
+- Expand sustained crouch descent activation from 18 to 42 world units, capped at half summit width. Preserve 850 ms hold. Syntax checked; gameplay unverified.
