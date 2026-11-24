@@ -17,3 +17,7 @@
 ## 0.0.5
 - Added rod and spring constraints: select link mode and tap two bodies, then switch off to drag. Reset clears links.
 - Source patch checked; browser behavior not yet verified.
+
+## 0.0.6
+- Added fixed world anchors: choose Anchor mode, tap a body, then an empty point to attach a stiff distance constraint. Switch off to drag and swing. Reset clears anchors.
+- Source patch checked; browser and live deployment not verified.
