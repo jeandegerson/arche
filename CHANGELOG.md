@@ -382,3 +382,6 @@
 
 ## 0.7.66
 - Require raw joystick horizontal displacement below .065 and upward displacement above .85 for climb initiation on land and water. Foreground walking by default away from summit. Exit swimming based on local depth rather than arrival at shore waypoint; restore upright collider and foreground mask immediately. Syntax checked; gameplay unverified.
+
+## 0.7.67
+- Apply foreground cliff exclusion to all anatomy collision masks and ground queries; recover excessively displaced limbs. Syntax checked; gameplay unverified.
