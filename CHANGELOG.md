@@ -358,3 +358,6 @@
 
 ## 0.7.58
 - Add eight polygonal rock formations with matching convex collision segments and local slope/foot support queries. Existing vertical cliffs retained. Arbitrary-angle climbing not yet implemented. Syntax checked; gameplay unverified.
+
+## 0.7.59
+- Blend uphill gait into slower forward-leaning scrambling, with arm IK toward sampled rock surfaces and shorter strides. Extend slope support assistance. Hands are visual contacts, not weight-bearing constraints. Syntax checked; gameplay unverified.
