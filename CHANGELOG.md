@@ -268,3 +268,6 @@
 
 ## 0.7.28
 - Anchor stance foot targets in world coordinates, release at swing, add modest physical running push-off impulses under gravity. Retain stable collision controller; syntax checked, gameplay unverified.
+
+## 0.7.29
+- Smooth foot target transitions, gradual stance anchor correction, averaged terrain samples and reset gait filters during swimming. Syntax checked; gameplay unverified.
