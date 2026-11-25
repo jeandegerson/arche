@@ -20,6 +20,45 @@ const assert=require('node:assert/strict');
    await page.waitForFunction(()=>typeof physicalGeometry!=='undefined'&&typeof runner!=='undefined');
    const results=await page.evaluate(()=>{
     Runner.stop(runner);Render.stop(r);
+    const tick=()=>Engine.update(e,1000/60);
+    function joystick(dx,dy){
+     const rect=pad.getBoundingClientRect();
+     movePad({clientX:rect.left+rect.width/2+38*dx,clientY:rect.top+rect.height/2+38*dy});
+    }
+    function position(x,dir,cave){
+     const floor=cave?caveFloor(x,cave):solidGaitSurface(x);
+     if(!human)createHuman(x,floor-37);
+     Body.setPosition(human,{x,y:floor-37});
+     if(cave)human.plugin.route=cave.id;
+     else delete human.plugin.route;
+     delete human.plugin.groundTravel;
+     delete human.plugin.coordinatedGait;
+     facing=dir;
+     stopWalking();
+    }
+    function checkCrouch(where){
+     joystick(0,1);
+     for(let i=0;i<15;i++)tick();
+     if(crouchPose<.8)throw Error('Joystick failed to crouch '+where);
+     joystick(0,0);
+     for(let i=0;i<15;i++)tick();
+     if(crouchPose>.1)throw Error('Joystick failed to stand '+where);
+    }
+    for(const dir of [-1,1]){
+     const cave=caves.find(c=>dir>0?!c.closedLeft:!c.closedRight);
+     const edge=dir>0?cave.left:cave.right;
+     position(edge-dir*30,dir);
+     checkCrouch('at the cave mouth');
+     if(human.plugin.route)throw Error('Straight-down crouch entered a cave');
+     joystick(dir,.8);
+     for(let i=0;i<100&&!human.plugin.route;i++)tick();
+     if(human.plugin.route!==cave.id)throw Error('Diagonal descent failed to enter '+cave.id);
+     const x=edge+dir*260;
+     const room=physicalGeometry.walkingRegion(x,cave.id);
+     if(!Number.isFinite(room.top)||room.bottom-room.top<74)throw Error('Invalid underground crouch fixture');
+     position(x,dir,cave);
+     checkCrouch('inside '+cave.id);
+    }
     let count=0;
     for(const cave of caves)for(const dir of [-1,1]){
      if(dir<0?cave.closedLeft:cave.closedRight)continue;
