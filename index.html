@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.11.82</span><header><h1>Archē</h1><small>v0.11.82 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.11.83</span><header><h1>Archē</h1><small>v0.11.83 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
 const travelMultiplier=requestedSpeed==='15'?15:requestedSpeed==='5'?5:requestedSpeed==='3'?3:1;
 if(travelMultiplier>1)document.querySelector('#versionLabel').textContent+=' · '+travelMultiplier+'× travel';
 const archeWorld=createArcheWorld(),worldWidth=archeWorld.width,baseY=620,worldFloor=1320,worldCeiling=-1500;
@@ -138,17 +138,98 @@ function walkCave(st,dt){
  Body.setPosition(human,{x:nx,y:p.y+(caveFloor(nx,c)-37+14*st.compress-p.y)*Math.min(1,dt*.35)});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
 }
 const caveStone={
- cave:['#655d4f','#303332','#151c1c','#c5ae86'],
- woodland:['#605f50','#343a30','#171e1b','#a9a17a'],
- conifer:['#5a6260','#323e3d','#151e22','#9baaa4'],
- eastern:['#6b6258','#3d3936','#201c1d','#b3a18b'],
- desert:['#80634b','#503a2e','#261c1a','#d1a071']
+ cave:{light:'#7b6b52',rock:'#44413a',dark:'#252925',seam:'#a59679',bed:'#786851',grain:'#a69575'},
+ woodland:{light:'#75745b',rock:'#43483d',dark:'#242b25',seam:'#a1a084',bed:'#665b48',grain:'#99876c'},
+ conifer:{light:'#707975',rock:'#424e4b',dark:'#232d2e',seam:'#9aaba1',bed:'#59635d',grain:'#8c9991'},
+ 'conifer-lower':{light:'#5d7169',rock:'#374741',dark:'#202c2b',seam:'#849c92',bed:'#4e615b',grain:'#82968e'},
+ eastern:{light:'#89796b',rock:'#514743',dark:'#302827',seam:'#b5a093',bed:'#786654',grain:'#aa957f'},
+ desert:{light:'#9b7959',rock:'#674b3b',dark:'#392d29',seam:'#bf9b77',bed:'#987552',grain:'#c5a17c'},
+ 'desert-lower':{light:'#846b53',rock:'#544437',dark:'#312923',seam:'#a88d71',bed:'#716354',grain:'#a99b88'}
 };
+function caveTextureNoise(n){
+ const value=Math.sin(n*127.1+311.7)*43758.5453;
+ return value-Math.floor(value);
+}
+function paintCaveRock(ctx,c,material,start,end,top,bottom){
+ const rowHeight=48,columnWidth=76;
+ for(let y=Math.floor(top/rowHeight)*rowHeight;y<bottom+rowHeight;y+=rowHeight){
+  const offset=(y/rowHeight%2)*38;
+  for(let x=Math.floor((start-offset)/columnWidth)*columnWidth+offset;x<end+columnWidth;x+=columnWidth){
+   const key=x*.19+y*.031+c.left*.07+(c.parent?19:0);
+   const n=caveTextureNoise(key);
+   const lean=(caveTextureNoise(key+1)-.5)*24;
+   ctx.beginPath();
+   ctx.moveTo(x-12,y+5);
+   ctx.lineTo(x+41,y-7+n*12);
+   ctx.lineTo(x+70,y+11);
+   ctx.lineTo(x+55+lean,y+41);
+   ctx.lineTo(x+9+lean,y+47);
+   ctx.closePath();
+   ctx.globalAlpha=.12+n*.19;
+   ctx.fillStyle=n>.54?material.light:material.dark;
+   ctx.fill();
+   if(n<.36){
+    ctx.globalAlpha=.31;
+    ctx.strokeStyle=material.dark;
+    ctx.lineWidth=1.5;
+    ctx.beginPath();
+    ctx.moveTo(x+14,y+1);
+    ctx.lineTo(x+23+lean,y+16);
+    ctx.lineTo(x+16+lean,y+33);
+    ctx.stroke();
+   }
+  }
+ }
+ // Bedding cuts across the rock in world space and is revealed by the chamber opening.
+ for(let y=Math.floor(top/62)*62-35;y<bottom+62;y+=62){
+  ctx.strokeStyle=material.seam;
+  ctx.globalAlpha=.23;
+  ctx.lineWidth=1.5;
+  const step=24;
+  ctx.beginPath();
+  const first=Math.floor(start/step)*step-step;
+  for(let x=first;x<=end+step;x+=step){
+   const seam=y+14*Math.sin(x*.005+c.left*.013)+4*Math.sin(x*.023+y*.024);
+   if(x===first||caveTextureNoise(x*.02+y)<.19)ctx.moveTo(x,seam);
+   else ctx.lineTo(x,seam);
+  }
+  ctx.stroke();
+ }
+ ctx.globalAlpha=1;
+}
+function paintCaveTread(ctx,c,material,points,start,end){
+ ctx.fillStyle=material.bed;
+ ctx.beginPath();
+ points.forEach(({x,floor},i)=>{
+  const thickness=9+4*Math.sin(x*.024+c.left);
+  if(i)ctx.lineTo(x,floor-thickness);else ctx.moveTo(x,floor-thickness);
+ });
+ for(let i=points.length-1;i>=0;i--)ctx.lineTo(points[i].x,points[i].floor);
+ ctx.closePath();
+ ctx.fill();
+ for(let x=Math.max(c.left+6,Math.floor(start/13)*13);x<end;x+=13){
+  const n=caveTextureNoise(x+c.left);
+  const y=caveFloor(x,c)-2;
+  const rubble=c.closedRight&&x>c.right-195&&x<caveBackWallStop(c);
+  const size=rubble?4+n*9:1.3+n*3.6;
+  ctx.fillStyle=n>.47?material.grain:material.dark;
+  ctx.globalAlpha=rubble?.68:.38;
+  ctx.beginPath();
+  ctx.moveTo(x-size,y);
+  ctx.lineTo(x-size*.35,y-size*(.5+n*.35));
+  ctx.lineTo(x+size*.55,y-size*.48);
+  ctx.lineTo(x+size,y);
+  ctx.closePath();
+  ctx.fill();
+ }
+ ctx.globalAlpha=1;
+}
 function paintCave(c){
  const ctx=r.context,lo=r.bounds.min.x,hi=r.bounds.max.x;
  if(c.right<lo||c.left>hi)return;
  const parent=caveById(c.parent);
- const [lip,wall,shadow,mineral]=caveStone[c.parent||c.id];
+ const material=caveStone[c.id];
+ const {light:lip,rock:wall,dark:shadow}=material;
  const points=[];
  const start=Math.max(c.left,c.left+Math.floor((lo-c.left)/8)*8);
  const end=Math.min(c.right,c.left+Math.ceil((hi-c.left)/8)*8);
@@ -172,23 +253,11 @@ function paintCave(c){
  const shade=ctx.createLinearGradient(0,Math.min(caveFloor(c.left,c),caveFloor(c.right,c))-30,0,basin+20);
  shade.addColorStop(0,shadow);
  shade.addColorStop(.55,wall);
- shade.addColorStop(1,lip);
+ shade.addColorStop(1,wall);
  ctx.fillStyle=shade;
  ctx.fillRect(start,top,end-start,bottom-top);
- // Broken bedding lines use world coordinates so the pattern stays fixed as the camera moves.
- for(let band=0;band<5;band++){
-  ctx.strokeStyle=band%2?mineral:shadow;
-  ctx.globalAlpha=band%2?.17:.32;
-  ctx.lineWidth=band%2?1:2.5;
-  ctx.beginPath();
-  points.forEach(({x,roof,floor},i)=>{
-   const p=(band+1)/7;
-   const y=roof+(floor-roof)*p+5*Math.sin(x*.018+band*2)+2*Math.sin(x*.07+band);
-   if(!i||Math.sin(x*.014+band*2.3)<-.55)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-  });
-  ctx.stroke();
- }
- ctx.globalAlpha=1;
+ paintCaveRock(ctx,c,material,start,end,top,bottom);
+ paintCaveTread(ctx,c,material,points,start,end);
  const daylight=sunlight();
  if(!parent){
   for(const edge of c.closedRight?[c.left]:[c.left,c.right]){
@@ -197,7 +266,7 @@ function paintCave(c){
    const light=ctx.createLinearGradient(edge,0,edge+dir*200,0);
    light.addColorStop(0,lip);
    light.addColorStop(1,'transparent');
-   ctx.globalAlpha=.22+.55*daylight;
+   ctx.globalAlpha=.12+.48*daylight;
    ctx.fillStyle=light;
    ctx.fillRect(Math.min(edge,edge+dir*200),top,200,bottom-top);
   }
@@ -240,7 +309,7 @@ function paintCaveFloor(c){
  const origin=c.left+inset;
  const start=Math.max(origin,origin+Math.floor((lo-5-origin)/5)*5);
  const end=Math.min(origin+Math.ceil((hi+5-origin)/5)*5,c.closedRight?caveBackWallStop(c):c.right-inset);
- if(start<end)stroke(start,end,floor,caveStone[c.parent||c.id][3],1.4);
+ if(start<end)stroke(start,end,floor,caveStone[c.id].grain,1);
  for(const dir of [1,-1]){
   const mouth=caveMouth(c,dir);
   if(!mouth)continue;
@@ -250,10 +319,10 @@ function paintCaveFloor(c){
   const grad=ctx.createLinearGradient(from,0,to,0);
   const center=approach/(approach+inside);
   grad.addColorStop(0,'rgba(211,196,152,0)');
-  grad.addColorStop(center*.55,'rgba(211,196,152,.60)');
-  grad.addColorStop(center,'rgba(231,213,167,.95)');
+  grad.addColorStop(center*.55,'rgba(211,196,152,.32)');
+  grad.addColorStop(center,'rgba(231,213,167,.82)');
   grad.addColorStop(1,'rgba(211,196,152,.28)');
-  stroke(from,to,x=>(parent?caveFloor(x,parent):caveFloor(x,c))-1,grad,4);
+  stroke(from,to,x=>(parent?caveFloor(x,parent):caveFloor(x,c))-1,grad,2.5);
   // Continue the highlighted edge beyond the lip down the actual branch floor.
   if(parent){
    const end=edge+dir*125;
