@@ -705,3 +705,7 @@
 
 ## 0.11.49
 - Animated perspective-scaled ocean crests in near scenic geography, clipped to sea strips; distant sea glints move. Syntax and mock rendering passed; device visuals unverified.
+
+
+## 0.11.50
+- Extend near scenic ocean 36 units behind foreground wave troughs, only across sea cells, to eliminate exposed background seam. Wave physics unchanged. Syntax and amplitude bound checked; live visual verification pending.
