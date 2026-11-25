@@ -3,6 +3,8 @@ const createArcheWorld = require('../world');
 
 for (const seed of [1, 17, 20261125]) {
   const world = createArcheWorld(seed);
+  assert.equal(world.width,59520);
+  assert.equal(world.shore,5760);
   const repeated = createArcheWorld(seed);
   const oceanRuns = [];
   const inlandBiomes = new Set();
@@ -26,9 +28,9 @@ for (const seed of [1, 17, 20261125]) {
   }
   assert.deepEqual(oceanRuns, [false,true,false,true]);
   assert.deepEqual([...inlandBiomes].sort(),
-    ['alpine','coast','conifer','marsh','salt','steppe','woodland']);
+    ['alpine','coast','conifer','marsh','meadow','salt','steppe','woodland']);
   assert.equal(world.sample(world.spawn).wet,false);
   assert.equal(world.sample(world.spawn).biome,'coast');
 }
-assert.notEqual(createArcheWorld(1).sample(185000).surface,createArcheWorld(17).sample(185000).surface);
+assert.notEqual(createArcheWorld(1).sample(36000).surface,createArcheWorld(17).sample(185000).surface);
 console.log('Verified reproducible side-on terrain, one island and continuous mainland across three seeds.');

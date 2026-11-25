@@ -496,3 +496,8 @@
 ## 0.11.1
 - Add a temporary 3× travel mode via `?speed=3` for testing the mainland. Walking, wading, and swimming go faster. Both speeds use the same world save.
 - Verified the complete accelerated mainland crossing in mobile-sized Chromium with Matter.js in about 20 simulated minutes.
+
+## 0.11.2
+- Shrink the world to 59,520 units, one fifth of its previous width. Keep its offshore island and all major mainland regions. Alternate broadleaf forest with open meadow and add more frequent local changes in relief.
+- Start a separate save for the new geography. Previous saves remain stored.
+- Ran generator assertions across three seeds and checked inline script syntax. Browser traversal was not tested.
