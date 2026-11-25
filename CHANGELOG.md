@@ -582,3 +582,8 @@
 - Mock drawing checks exercised all ten biome palettes in the initial renderer; final browser rendering and live multiplayer visual checks unverified.
 
 - Added opt-in `?speed=15` exploration speed; normal speed unchanged. Parameter checks passed; high-speed physics and live browser behavior unverified.
+
+
+## 0.11.20
+- Independent two-dimensional scenic noise field replaces mirrored playable elevation. Regional biome classifications guide relief and vegetation; depth slices generate distinct ridges, coastal hills and offshore islands. Playable map and persistence unchanged.
+- 1494 deterministic elevation-independence and finite-value sample checks passed (mock regional world); browser visuals and multiplayer not verified.
