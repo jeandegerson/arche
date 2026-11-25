@@ -3,8 +3,8 @@ const createArcheWorld = require('../world');
 
 for (const seed of [1, 17, 20261125]) {
   const world = createArcheWorld(seed);
-  assert.equal(world.width,59520);
-  assert.equal(world.shore,5760);
+  assert.equal(world.width,63360);
+  assert.equal(world.shore,9600);
   const repeated = createArcheWorld(seed);
   const oceanRuns = [];
   const inlandBiomes = new Set();
@@ -29,7 +29,16 @@ for (const seed of [1, 17, 20261125]) {
     }
     previous = terrain;
   }
-  assert.ok(deepestSea>290);
+  assert.ok(deepestSea>530);
+  const mainland=world.width-world.shore;
+  let last=Infinity;
+  for(let i=470;i<=590;i++){
+    const ground=world.sample(world.shore+mainland*i/1000);
+    assert.equal(ground.biome,'conifer');
+    assert.ok(ground.surface<last);
+    last=ground.surface;
+  }
+  assert.ok(world.sample(world.shore+mainland*.651).surface<-500);
   assert.deepEqual(world.lakes.map(lake=>lake.biome).sort(),
     ['alpine','coast','conifer','island','marsh','meadow','steppe','woodland']);
   for(const lake of world.lakes){

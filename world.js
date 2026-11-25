@@ -2,7 +2,7 @@
   'use strict';
 
   // Distances reflect travel time. Elevations are in the game's physics units.
-  const shore = 5760;
+  const shore = 9600;
   const mainlandLength = 53760;
   const width = shore + mainlandLength;
   const shelf = 610;
@@ -17,8 +17,8 @@
   const bands = [
     [0, 594], [.035, 579], [.073, 604], [.11, 600], [.145, 575],
     [.18, 562], [.22, 579], [.27, 550], [.32, 567], [.36, 547], [.42, 522], [.48, 493],
-    [.53, 416], [.595, 308], [.64, 151], [.675, 250], [.71, 191],
-    [.75, 319], [.80, 493], [.86, 568], [.905, 591], [.935, 571], [1, 508]
+    [.53, 409], [.595, 308], [.625, -116], [.651, -590], [.681, -140],
+    [.718, -402], [.75, 146], [.80, 493], [.86, 568], [.905, 591], [.935, 571], [1, 508]
   ];
 
   // Regional relief fades between dunes, hummocks, forested ridges and terraces.
@@ -45,9 +45,11 @@
       const [start,a,periodA]=reliefBands[i],[end,b,periodB]=reliefBands[i+1];
       const blend=smooth((t-start)/(end-start));
       function shape(amplitude,period) {
-        const phase=x/period*Math.PI*2+noise(x,1800,15)*.65;
-        return amplitude*(Math.sin(phase)*.65+Math.sin(phase*2+.9)*.17
-          +noise(x,period*1.3,16)*.36);
+        const warped=x+noise(x,period*2.5,15)*period*.38;
+        const mass=noise(warped,period,16);
+        const shoulders=noise(warped,period*.43,17);
+        const ledges=noise(x,period*.22,18)*(Math.abs(mass)*.23+.06);
+        return amplitude*(mass*.8+shoulders*.33+ledges);
       }
       return mix(shape(a,periodA),shape(b,periodB),blend);
     }
@@ -55,18 +57,18 @@
       const t=clamp((x-shore)/mainlandLength,0,1);
       let surface,biome,water=null;
       if(x<shore){
-        const islandX=(x-shore*.48)/(shore*.155);
+        const islandX=(x-shore*.48)/(shore*.109);
         const island=Math.abs(islandX)<1?Math.cos(islandX*Math.PI/2)**2:0;
         const seabed=675+noise(x,480,1)*9;
         surface=mix(seabed,505+noise(x,220,2)*7+noise(x,170,19)*8,island);
-        surface=mix(surface,594,smooth(clamp((x-shore+440)/440,0,1)));
+        surface=mix(surface,594,smooth(clamp((x-shore+620)/620,0,1)));
         const shoreHeight=surface-shelf;
         surface-=island*Math.sign(shoreHeight)*27*(1-Math.exp(-Math.abs(shoreHeight)/45));
         if(surface>shelf){
           water=shelf;
           // Keep the beaches shallow and drop into a deeper offshore basin.
           const offshore=smooth(clamp((surface-shelf-14)/49,0,1));
-          surface+=offshore*(242+noise(x,640,20)*26);
+          surface+=offshore*(514+noise(x,1070,20)*64);
         }
         biome=water!==null?'sea':island>0?'island':'coast';
       }else{
@@ -80,6 +82,10 @@
         surface=base+detail*(noise(x,1260,3)*(11+relief*49)
           +noise(x,370,4)*(3+relief*13)+noise(x,130,5)*(1+relief*5)+terraces);
         surface+=detail*localRelief(x,t);
+        // The western conifer slope is one long graded climb into the snowline.
+        const uphill=smooth(clamp((t-.437)/.031,0,1))*(1-smooth(clamp((t-.595)/.018,0,1)));
+        const grade=508-(t-.468)*(194/.127);
+        surface=mix(surface,grade,uphill);
         if(t<.045)biome='coast';
         else if(t<.145){
           biome='marsh';
@@ -104,7 +110,7 @@
       ['marsh',shore+mainlandLength*.105,280,31],
       ['woodland',shore+mainlandLength*.32,270,38],
       ['meadow',shore+mainlandLength*.25,265,34],
-      ['conifer',shore+mainlandLength*.52,290,39],
+      ['conifer',shore+mainlandLength*.788,290,39],
       ['alpine',shore+mainlandLength*.68,305,41],
       ['steppe',shore+mainlandLength*.962,290,35]
     ];
@@ -113,13 +119,14 @@
       let best=null;
       for(let x=radius+24;x+radius<width;x+=48){
         if(biome==='coast'&&x<shore+600)continue;
+        if(biome==='conifer'&&x<shore+mainlandLength*.755)continue;
         const center=baseSample(x),left=baseSample(x-radius),right=baseSample(x+radius);
         if(center.biome!==biome||left.biome!==biome||right.biome!==biome)continue;
         if([-radius/2,radius/2].some(offset=>baseSample(x+offset).biome!==biome))continue;
-        const score=Math.abs(x-target)*.018+Math.abs(left.surface-right.surface)*1.4
-          +Math.abs((left.surface+right.surface)/2-center.surface)*.6;
+        const score=Math.abs(x-target)*.018+Math.abs(left.surface-right.surface)*3
+          +Math.abs((left.surface+right.surface)/2-center.surface)*2;
         if(best&&score>=best.score)continue;
-        best={biome,x,radius,depth,level:Math.max(left.surface,right.surface,center.surface)+3,score};
+        best={biome,x,radius,depth,level:Math.max(left.surface,right.surface)+3,score};
       }
       if(best)lakes.push(best);
     }
@@ -129,7 +136,7 @@
       if(lake){
         const u=Math.abs(x-lake.x)/lake.radius;
         const bed=lake.level+lake.depth-(lake.depth+5)*smooth(clamp(u/.78,0,1));
-        surface=mix(bed,surface,smooth(clamp((u-.68)/.32,0,1)));
+        surface=mix(bed,surface,smooth(clamp((u-.47)/.53,0,1)));
         biome=lake.biome;
         water=surface>lake.level?lake.level:null;
       }
