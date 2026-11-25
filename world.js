@@ -153,6 +153,10 @@
         }
       }
       const wet=water!==null;
+      // Eastern rain-shadow forest: retain the original relief and lake basins.
+      const easternForest=x>=56600&&x<61700;
+      const easternGrove=x>=65400&&x<68160;
+      if(!wet&&!frozen&&((easternForest&&['woodland','steppe'].includes(biome))||(easternGrove&&biome==='steppe'&&noise(x,1400,61)>.15+(x-65400)/2760*.85)))biome='conifer';
       const canopy=noise(x,980,6);
       const cover=wet||frozen?0:({
         coast:.14,island:.42,marsh:.57,meadow:.54,woodland:.68+canopy*.24,
