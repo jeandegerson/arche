@@ -685,3 +685,7 @@
 
 ## 0.11.44
 - Restore local character checkpoint on shared-world join, stream destination terrain before moving character, and use safe ground or water surface height. First-time spawn unchanged. Syntax checked; live reload unverified.
+
+
+## 0.11.45
+- Double island and mainland beach spans by inserting 4428 world units. Preserve inland geography and ocean spans. No inland island water. Saved entity coordinates not migrated; live visuals unverified.
