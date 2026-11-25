@@ -388,9 +388,13 @@
           const growth=smooth(clamp(i/16,0,1));
           const radius=(45+45*(1-rockResistance(x,y)))*growth*Math.sqrt(clamp((n-i)/8,0,1));
           if(y-radius<ground+12||y+radius>1290)break;
-          points.push({top:y-radius,bottom:y+radius});
           const p=parent.fieldPoints[start+sign*i];
-          if(i>=16&&p&&(y-radius>p.bottom+8||y+radius<p.top-8))separated=true;
+          // A secondary front may open a higher passage, but cannot cut
+          // across the continuous walking bed of its parent. Keep lower
+          // rock intact until there is terrain support for a true descent.
+          if(!p||y-radius>=p.bottom)break;
+          points.push({top:y-radius,bottom:Math.min(y+radius,p.bottom)});
+          if(i>=16&&y+radius<p.top-8)separated=true;
           let best=v,cost=Infinity;
           for(const slope of [-.85,-.5,-.2,.2,.5,.85]){
             const score=rockResistance(x+sign*step,y+slope*step)+.18*Math.abs(slope-v)+.24*Math.abs(slope-vertical*.5);
