@@ -829,3 +829,7 @@
 - Shape the first cave as a single-mouth passage opening into a tall chamber with a rising stone floor at its closed back wall.
 - Give the conifer main tunnel a tall central chamber and its lower loop a low ceiling with a modest widening.
 - JavaScript syntax, watershed, mouth alignment, closed-wall turnaround and bidirectional loop traversal checks passed. Live visual playtesting pending.
+
+## 0.11.80
+- Round the small cave's back wall beneath a layer of solid rock. Shade the closure and end the floor highlight at the player's turnaround point.
+- Syntax, watershed, buried-wall clearance and left-mouth exit checks passed.
