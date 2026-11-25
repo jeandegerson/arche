@@ -285,6 +285,12 @@
     function baseLandscape(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};if(q.biome==='island'&&!q.wet){const u=clamp((oldX-islandStart)/(islandEnd-islandStart),0,1),forest=smoothstep(.12,.27,u)*(1-smoothstep(.73,.88,u)),mountain=Math.pow(Math.sin(Math.PI*u),2.4)*forest;return {...q,surface:q.surface-mountain*(350+noise(x,620,201)*42+noise(x,170,202)*12),tropical:forest,cover:mix(.14,.94,forest)};}return q;}
     // Joint landform and cavity formation: the same inclined bed produces the
     // exposed valley approach, overlying ridge and buried eroded seam.
+    function rockResistance(x,y){
+      const bedding=y+45*noise(x,1800,401)+18*noise(x,480,402);
+      const seam=Math.pow(Math.abs(Math.sin(bedding/76)),.65);
+      const fracture=Math.abs(noise(x+y*.73,185,407));
+      return clamp(.18+.48*seam+.22*fracture+.12*noise(x+y*.2,620,408),.08,.98);
+    }
     const formations=[],step=8;
     for(let center=400;center<width+extension+4428-400;center+=420){
       const q=baseLandscape(center);
@@ -298,8 +304,15 @@
       const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*(d*(dip-.29)+ (25+random(center,315)*75)*(Math.sin(d/wavelength+phase)-Math.sin(phase))+35*(noise(center+d,240,316)-noise(center,240,316)));
       const endDatum=baseLandscape(center+dir*length).surface;
       const bed=d=>Math.min(1250,through?rawBed(d)+(endDatum-rawBed(length))*smooth(clamp((d-220)/(length-220),0,1)):rawBed(d));
-      const pockets=Array.from({length:1+Math.floor(random(center,317)*5)},(_,i)=>({at:.22+random(center,330+i)*.68,width:.045+random(center,340+i)*.15,height:30+random(center,350+i)*190}));
-      const aperture=d=>{const u=d/length,base=90+24*noise(center+d,180,304),shape=pockets.reduce((sum,p)=>sum+p.height*Math.exp(-(((u-p.at)/p.width)**2)),0)-45*noise(center+d,125,318);return Math.min(360,Math.max(58,base+inner(d)*shape))*smooth(clamp(d/110,0,1))*(through?smooth(clamp((length-d)/100,0,1)):Math.sqrt(clamp((length-d)/(16+random(center,319)*32),0,1)));};
+      // Erosion follows a continuous resistance field shared by all passages.
+      // Weak beds and intersecting fractures widen the dissolved rock.
+      const aperture=d=>{
+        const x=center+dir*d,y=bed(d);
+        const resistance=rockResistance(x,y);
+        const fracture=1-Math.abs(noise(x+y*.73,185,407));
+        const dissolution=65+155*(1-resistance)+65*fracture*fracture;
+        return dissolution*smooth(clamp(d/110,0,1))*(through?smooth(clamp((length-d)/100,0,1)):Math.sqrt(clamp((length-d)/40,0,1)));
+      };
       // Fit an independently shaped passage beneath the existing landscape.
       // A single broad depth adjustment, never a copy of local relief.
       const blend=d=>smooth(clamp(d/260,0,1))*(through?smooth(clamp((length-d)/260,0,1)):1);
@@ -327,7 +340,7 @@
     const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
-    return {sample,geologicalPassages,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
+    return {sample,rockResistance,geologicalPassages,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
 
   }
 
