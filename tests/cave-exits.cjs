@@ -29,9 +29,14 @@ const assert=require('node:assert/strict');
        if(end.bottom-end.top>.01)throw Error('Abrupt branch end in '+cave.id);
       }
      }else{
+      let previousGrade=0,straightRun=0;
       for(let i=1;i<points.length;i++){
        const rise=Math.abs(points[i].bottom-points[i-1].bottom);
        if(rise>cave.fieldScale*.85+.001)throw Error('Abrupt floor grade in '+cave.id);
+       const grade=(points[i].bottom-points[i-1].bottom)/cave.fieldScale;
+       straightRun=Math.abs(grade)>.6&&Math.abs(grade-previousGrade)<.001?straightRun+cave.fieldScale:0;
+       if(straightRun>200)throw Error('Long uniform floor grade in '+cave.id);
+       previousGrade=grade;
       }
      }
     }

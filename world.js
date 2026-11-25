@@ -348,18 +348,26 @@
       }
       if(!valid)continue;
       // Spread sharp changes in accessible floor depth over the adjoining
-      // bed. The roof follows the same displacement to retain clearance.
-      const floorProfile=points.map(p=>p.bottom);
-      const maxRise=step*.85;
-      for(let i=1;i<points.length;i++)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i-1]+maxRise);
-      for(let i=points.length-2;i>=0;i--)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i+1]+maxRise);
+      // bed. Preserve the roof profile where it leaves enough clearance.
+      const floorProfile=points.map((p,i)=>{
+        const d=i*step,x=center+dir*d,y=bed(d);
+        const bedRelief=16*noise(x+y*.73,185,407)+7*noise(x-y*.35,83,408);
+        return Math.min(1290,p.bottom+bedRelief*blend(d)*smooth(clamp((length-d)/100,0,1)));
+      });
+      const maxRise=points.map((_,i)=>{
+        const d=Math.max(0,(i-.5)*step),x=center+dir*d;
+        const fracture=noise(x+bed(d)*.73,185,407);
+        return step*(.85-.20*blend(d)*(1-Math.abs(fracture)));
+      });
+      for(let i=1;i<points.length;i++)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i-1]+maxRise[i]);
+      for(let i=points.length-2;i>=0;i--)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i+1]+maxRise[i+1]);
       for(let i=0;i<points.length;i++){
         const p=points[i],ground=baseLandscape(center+dir*i*step).surface;
         const distance=through?Math.min(i*step,length-i*step):i*step;
         const cover=Math.min(p.top-ground,12)*smooth(clamp((distance-150)/110,0,1));
         const clearance=Math.min(74,p.bottom-p.top)*smooth(clamp((distance-150)/110,0,1));
         const bottom=Math.max(ground+cover+clearance,floorProfile[i]);
-        p.top=Math.max(ground+cover,p.top+bottom-p.bottom);
+        p.top=Math.max(ground+cover,Math.min(p.top,bottom-clearance));
         p.bottom=bottom;
       }
       formations.push({center,dir,length,left,right,points,through,biome:q.biome});
