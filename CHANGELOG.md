@@ -733,3 +733,7 @@
 
 ## 0.11.56
 - Coordinated breaststroke cycle and stroke-driven propulsion, drag, relaxed floating posture, damped vertical buoyancy and averaged wave surface. All swimmable waters. Syntax and numerical propulsion tests passed; live animation, remote pose and shore transitions unverified.
+
+
+## 0.11.57
+- Predict descending deep-water landings, blend into streamlined dive pose, retain entry momentum and briefly submerge before resurfacing. Minimum dive depth 70 units. Syntax checked; live pose and entry transitions unverified.
