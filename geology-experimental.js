@@ -1,6 +1,6 @@
 // Deterministic experimental geological field; independent of live world.
 (function(root){
-function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2,environment=()=>({recharge:1,vertical:1,solubility:1})}={}){
+function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2,walkable=false,environment=()=>({recharge:1,vertical:1,solubility:1})}={}){
  const profiles={limestone:{bed:.45,fracture:.65,down:.48,erosion:1},sandstone:{bed:.85,fracture:.25,down:.18,erosion:.75},fractured:{bed:.18,fracture:.95,down:.72,erosion:.85}};const p=profiles[regime]||profiles.limestone;
  const n=width*height,resistance=new Float32Array(n),solid=new Uint8Array(n),weak=new Float32Array(n),flow=new Float32Array(n);
  const hash=(x,y)=>{let v=Math.sin(x*127.1+y*311.7+seed*74.7)*43758.5453;return v-Math.floor(v)};
@@ -20,10 +20,10 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  for(let t=0;t<height*2&&y<height-3&&x>1&&x<width-2;t++){
  flow[idx(x,y)]+=env[x].recharge;
  let best=null;
- for(const [dx,dy] of [[-1,0],[1,0],[-1,1],[0,1],[1,1]]){
+ for(const [dx,dy] of (walkable?[[heading,0],[heading,1]]:[[-1,0],[1,0],[-1,1],[0,1],[1,1]])){
  const a=x+dx,b=y+dy,i=idx(a,b);
  if(!solid[i])continue;
- const score=weak[i]*2+Math.log1p(flow[i])*.10+dy*p.down*env[x].vertical+dx*heading*.10+hash(k+t*7,a+b*width)*.55;
+ const score=weak[i]*2+Math.log1p(flow[i])*.10+dy*p.down*env[x].vertical+dx*heading*.10+hash(k+t*7,a+b*width)*.55-(walkable?dy*(.7+1.5*Math.max(0,y-Math.ceil(surface(a))-t*.32)):0);
  if(!best||score>best.score)best={a,b,score};
  }
  if(!best)break;x=best.a;y=best.b;
