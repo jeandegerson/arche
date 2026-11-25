@@ -653,3 +653,7 @@
 
 ## 0.11.36
 - Fix camera-height clipping that suppressed background water; remove camera-center lateral drift, extend visible water and add bank vegetation. Projection bounds and syntax checked. Still a projected near landscape, not a full hydrological elevation field; live visuals unverified.
+
+
+## 0.11.37
+- Shared near terrain/water mesh with exclusive basin ownership, depth-ordered rendering and opaque underwater base. Playable terrain unchanged. Syntax and mock mesh tests passed; mobile visuals and performance unverified. Distant ridges remain separate.
