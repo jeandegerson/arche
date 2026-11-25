@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.45
+- Use shared fracture variation to shape low ridges and hollows in cave beds. Vary the allowed grade along the bed so steep sections do not turn into long straight ramps. Preserve overhead clearance and fade relief at entrances and closed ends.
+- Chromium checks passed for floor grades, cave controls and interior crossings. All 44 entrances and exits passed at 1× and 15×. Watershed tests passed.
+
 ## 0.12.44
 - Keep a held diagonal descent active through the entrance ramp after entering the cave route. Face downhill during entry. Straight down still crouches at the mouth and inside the cave.
 - Chromium verified held diagonal entry and exit at all 44 cave mouths at 1× and 15× travel. Watershed tests passed.
