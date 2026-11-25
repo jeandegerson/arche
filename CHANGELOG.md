@@ -713,3 +713,7 @@
 
 ## 0.11.51
 - Free logs in sea render at deterministic wave surface with tilt; persistent positions unchanged (visual buoyancy only). More dispersed shallow crest foam and proximity-modulated procedural surf audio. Existing background overlap retained. Syntax and numerical checks passed; live audio and visuals unverified.
+
+
+## 0.11.52
+- Add destination-over ocean seam backing using playable sea banks rather than scenic samples, before distant ridges. Syntax and shoreline coverage test passed; device visual verification pending.
