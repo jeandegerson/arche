@@ -789,3 +789,7 @@
 
 ## 0.11.70
 - Add four fixed regional caves with varied length, depth and chamber height, independent route IDs, shared entrance lighting and local route restoration. Test links select each cave by ID. Syntax, dry terrain and entrance checks passed; device testing pending.
+
+
+## 0.11.71
+- Align cave-region geology and grass with actual walking surface; paint cave cavity after exterior grass to prevent internal surface strips. Syntax checked; visual verification pending.
