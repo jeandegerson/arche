@@ -2,7 +2,7 @@
   'use strict';
 
   // Distances reflect travel time. Elevations are in the game's physics units.
-  const shore = 9600;
+  const shore = 14400;
   const mainlandLength = 53760;
   const width = shore + mainlandLength;
   const shelf = 610;
@@ -10,15 +10,15 @@
   const smooth = x => x*x*(3-2*x);
   const mix = (a,b,t) => a+(b-a)*t;
   const colors = {
-    sea:'#5d6863', island:'#777950', coast:'#c4ad77', marsh:'#8c793e',
+    sea:'#5d6863', island:'#e4c689', coast:'#ddbd7f', marsh:'#8c793e',
     woodland:'#637a41', meadow:'#a4a259', conifer:'#415e52', alpine:'#c4d2d0', steppe:'#b18d51',
     salt:'#b7a58a'
   };
   const bands = [
     [0, 594], [.035, 579], [.073, 604], [.11, 600], [.145, 575],
     [.18, 562], [.22, 579], [.27, 550], [.32, 567], [.36, 547], [.42, 522], [.48, 493],
-    [.53, 409], [.595, 308], [.625, -116], [.651, -590], [.681, -140],
-    [.718, -402], [.75, 146], [.80, 493], [.86, 568], [.905, 591], [.935, 571], [1, 508]
+    [.53, 409], [.595, 153], [.625, -116], [.651, -590], [.681, -140],
+    [.718, -402], [.75, 146], [.79, 369], [.848, 475], [.864, 559], [.905, 591], [.935, 571], [1, 508]
   ];
 
   // Regional relief fades between dunes, hummocks, forested ridges and terraces.
@@ -84,20 +84,24 @@
         surface+=detail*localRelief(x,t);
         // The western conifer slope is one long graded climb into the snowline.
         const uphill=smooth(clamp((t-.437)/.031,0,1))*(1-smooth(clamp((t-.595)/.018,0,1)));
-        const grade=508-(t-.468)*(194/.127);
+        const grade=508-(t-.468)*(355/.127);
         surface=mix(surface,grade,uphill);
-        if(t<.045)biome='coast';
+        if(t<.045){
+          const fade=detail*smooth(clamp((.045-t)/.007,0,1));
+          surface-=fade*43*(.5+.5*noise(x,220,24))**1.5;
+          biome='coast';
+        }
         else if(t<.145){
           biome='marsh';
           if(surface>598)water=598;
-        }else if(t>.815){
+        }else if(t>.86){
           biome='steppe';
-          const lake=Math.abs((t-.905)/.026);
+          const lake=Math.abs((t-.911)/.045);
           if(lake<1){
-            surface+=65*Math.cos(lake*Math.PI/2)**2;
+            surface+=210*Math.cos(lake*Math.PI/2)**2;
             if(surface>592){water=592;biome='salt'}
           }
-        }else if(surface<314)biome='alpine';
+        }else if(t>=.595&&surface<(t<.625?153:314))biome='alpine';
         else if(surface<508)biome='conifer';
         else biome=noise(x,2150,9)>.21?'meadow':'woodland';
       }
@@ -106,7 +110,7 @@
 
     // Site a basin within each biome. Its rim blends back into the same height field.
     const lakeSites=[
-      ['island',shore*.48,255,62], ['coast',shore+1600,450,77],
+      ['coast',shore+1600,450,77],
       ['marsh',shore+mainlandLength*.105,485,87],
       ['woodland',shore+mainlandLength*.32,475,92],
       ['meadow',shore+mainlandLength*.25,465,83],
@@ -132,6 +136,7 @@
     }
     function sample(x){
       let {surface,biome,water}=baseSample(x);
+      let frozen=false;
       const lake=lakes.find(basin=>Math.abs(x-basin.x)<basin.radius);
       if(lake){
         const u=Math.abs(x-lake.x)/lake.radius;
@@ -139,14 +144,19 @@
         surface=mix(bed,surface,smooth(clamp((u-.34)/.66,0,1)));
         biome=lake.biome;
         water=surface>lake.level?lake.level:null;
+        if(biome==='alpine'&&water!==null){
+          frozen=true;
+          surface=water;
+          water=null;
+        }
       }
       const wet=water!==null;
       const canopy=noise(x,980,6);
-      const cover=wet?0:({
+      const cover=wet||frozen?0:({
         coast:.14,island:.42,marsh:.57,meadow:.54,woodland:.68+canopy*.24,
         conifer:.69+canopy*.22,alpine:.08,steppe:.16,salt:.05
       }[biome]??0);
-      return {surface,water,wet,biome,cover,color:colors[biome]};
+      return {surface,water,wet,frozen,biome,cover,color:colors[biome]};
     }
     return {sample,width,shore,lakes,spawn:shore+264};
   }

@@ -526,3 +526,8 @@
 ## 0.11.7
 - Add optional 5× exploration via `?speed=5` using the existing world save.
 - Verified JavaScript syntax and speed selection for normal, 3×, 5×, and unsupported values. Browser traversal was not tested.
+
+## 0.11.8 — Tropical shores and mountain lakes
+- Extended the western ocean, replaced the island lake with sandy palm habitat, and shaped dunes on the mainland beach.
+- Increased the western conifer climb, extended the eastern forest and froze the alpine lake into a walkable surface. Widened and deepened the salt basin.
+- Started a fresh world layout. Three-seed terrain checks and inline JavaScript syntax checks passed.
