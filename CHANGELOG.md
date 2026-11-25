@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.49
+- Start crouch-walking after about 300 ms of holding the joystick diagonally down. Use low, short steps, with a speed cap during fast travel. Keep the descent gesture at cave mouths and straight-down crouching in place.
+- Chromium tested crouch-walking through the conifer throat in both directions, stopping in a crouch, and all 49 entries and exits at 1× and 15×. Watershed tests passed.
+
 ## 0.12.48
 - Prototype a conifer cave with a constricted throat, higher chamber, sediment shelf and tapered blind end. Render fractured rock faces, recessed bedding, scree and fading entrance light using the same boundary as the passage.
 - Chromium verified the pilot chamber in both directions, its rendering path, and all 49 cave mouths at 1× and 15×. Watershed tests passed.
