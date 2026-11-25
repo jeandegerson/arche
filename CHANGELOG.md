@@ -781,3 +781,7 @@
 
 ## 0.11.68
 - Widen cave approach selection to 125 units outside and 110 inside; retain surface for horizontal or vertical input. Restore gradual crouching underground and slower crouched movement. Syntax and seven gesture checks passed.
+
+
+## 0.11.69
+- Add natural-time-dependent cave entrance illumination, directional exposure, fading floor highlights and subtle exterior approach lighting aligned with the entry gesture zone. Existing cave geometry and movement unchanged. Syntax and mock rendering passed.
