@@ -144,5 +144,12 @@ function waterSimulation(field){
  }
  return {amount,current,moisture,capacity,permeability,step,inlets,outlets,budget:()=>{const free=amount.reduce((a,b)=>a+b,0),pore=moisture.reduce((a,b)=>a+b,0);return {input,output,free,pore,stored:free+pore}}};
 }
-root.ArcheGeology={generate,contours,boundaryPaths,physicalField,waterSimulation};
+function soilEcology(field,water){
+ const w=field.width,h=field.height,biomass=new Float32Array(w),roots=new Float32Array(w),surface=new Int32Array(w);surface.fill(-1);
+ for(let x=0;x<w;x++)for(let y=0;y<h;y++)if(field.solid[y*w+x]){surface[x]=y*w+x;biomass[x]=.05;break}
+ let transpired=0;
+ function step(){for(let x=0;x<w;x++){const i=surface[x];if(i<0)continue;let saturation=0,count=0;const depth=1+Math.floor(roots[x]*5);for(let d=0;d<depth;d++){const j=i+d*w;if(j>=w*h||!field.solid[j])break;saturation+=water.moisture[j]/water.capacity[j];count++}const wet=saturation/Math.max(1,count),fitness=Math.max(0,1-Math.abs(wet-.55)/.55);biomass[x]=Math.max(0,Math.min(1,biomass[x]+.012*fitness*(1-biomass[x])-.003*(1-fitness)*biomass[x]));roots[x]+=(biomass[x]-roots[x])*.025;for(let d=0;d<depth;d++){const j=i+d*w;if(j>=w*h||!field.solid[j])break;const q=Math.min(water.moisture[j],.0015*biomass[x]/depth);water.moisture[j]-=q;transpired+=q}}}
+ return {biomass,roots,surface,step,transpired:()=>transpired};
+}
+root.ArcheGeology={generate,contours,boundaryPaths,physicalField,waterSimulation,soilEcology};
 })(typeof globalThis!=='undefined'?globalThis:this);
