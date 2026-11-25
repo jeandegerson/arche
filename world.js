@@ -296,7 +296,7 @@
       if(!valid)continue;
       const bed=d=>datum+d*(.24+random(center,303)*.12)+8*Math.sin(d/83)+4*Math.sin(d/37);
       const aperture=d=>(90+24*noise(center+d,180,304))*smooth(clamp(d/110,0,1))*smooth(clamp((length-d)/100,0,1));
-      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-100)*.28);
+      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-220)*.28);
       const points=[];for(let d=0;d<=length;d+=step)points.push({top:bed(d)-aperture(d),bottom:bed(d)});
       formations.push({center,dir,length,left,right,relief,points,biome:q.biome});
     }
