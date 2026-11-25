@@ -131,5 +131,14 @@ function physicalField(field){
  for(let y=0;y<=field.height;y++){if(y<field.height&&!isSolid(a,y)){if(start===null)start=y-.5;}else if(start!==null){out.push({top:start,bottom:y-.5});start=null;}}return out;};
  return {paths,isSolid,column};
 }
-root.ArcheGeology={generate,contours,boundaryPaths,physicalField};
+function waterSimulation(field){
+ const {width:w,height:h,solid}=field,n=w*h,amount=Float32Array.from(field.water),current=new Float32Array(n);
+ function step(){
+ current.fill(0);
+ for(let y=h-2;y>=0;y--)for(let x=0;x<w;x++){const i=y*w+x,j=i+w;if(solid[i]||solid[j])continue;const q=Math.min(amount[i],1-amount[j],.35);if(q>0){amount[i]-=q;amount[j]+=q}}
+ for(let y=0;y<h;y++)for(let x=0;x<w-1;x++){const i=y*w+x,j=i+1;if(solid[i]||solid[j])continue;const q=(amount[i]-amount[j])*.18;amount[i]-=q;amount[j]+=q;current[i]+=q;current[j]+=q}
+ }
+ return {amount,current,step};
+}
+root.ArcheGeology={generate,contours,boundaryPaths,physicalField,waterSimulation};
 })(typeof globalThis!=='undefined'?globalThis:this);
