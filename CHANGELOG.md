@@ -842,3 +842,8 @@
 - Extend the Small and Woodland caves. Give Conifer and Desert distinct lower passage grades and asymmetric connectors, drawing on bedding-plane and fracture-controlled passages described by the Kentucky Geological Survey and USGS.
 - Anchor cave geometry and floor strokes to fixed world samples. Keep rock over the interior of all five main passages.
 - Syntax, simulated traversal of seven routes, interior cover and clearance, rock separation and overlapping Eastern roof samples passed. Live visual playtesting pending.
+
+## 0.11.83
+- Replace tunnel-following stripes with world-aligned rock bedding, fractured faces and clipped rock shading in every cave. Give the main and lower passages distinct floor materials, with rubble against the small cave's back wall.
+- Use a subdued walking edge, concentrated mouth and junction highlights, and daylight fading inward.
+- Syntax and canvas drawing checks passed across all seven routes, at both night and day. Cave geometry and movement code are unchanged. Live visual playtesting pending.
