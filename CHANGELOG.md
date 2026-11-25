@@ -785,3 +785,7 @@
 
 ## 0.11.69
 - Add natural-time-dependent cave entrance illumination, directional exposure, fading floor highlights and subtle exterior approach lighting aligned with the entry gesture zone. Existing cave geometry and movement unchanged. Syntax and mock rendering passed.
+
+
+## 0.11.70
+- Add four fixed regional caves with varied length, depth and chamber height, independent route IDs, shared entrance lighting and local route restoration. Test links select each cave by ID. Syntax, dry terrain and entrance checks passed; device testing pending.
