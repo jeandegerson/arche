@@ -580,3 +580,5 @@
 ## 0.11.19
 - Replace generic distant hills with three biome-aware regional landscape layers, using official shared-world elevation, water levels, vegetation and daylight. Stable world-space parallax; no physics or persistence changes.
 - Mock drawing checks exercised all ten biome palettes in the initial renderer; final browser rendering and live multiplayer visual checks unverified.
+
+- Added opt-in `?speed=15` exploration speed; normal speed unchanged. Parameter checks passed; high-speed physics and live browser behavior unverified.
