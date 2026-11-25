@@ -814,3 +814,8 @@
 - Add a conifer upper passage that rejoins the main tunnel in both directions. Pull the joystick diagonally up toward a rising floor highlight to enter. Lower branches still use a downward diagonal.
 - Draw junction highlights after the cave passes so the parent tunnel cannot cover them, and stage the branch test spawn inside the parent tunnel.
 - Syntax, watershed and bidirectional checks for all three branch loops passed. The existing world test still expects a width of 68,160 for the 104,588-unit map. Browser and live multiplayer verification pending.
+
+## 0.11.77
+- Limit caves to a main tunnel and at most one lower passage. Shape each floor as a steady grade with smooth ramps, draw a continuous floor edge and mark entrances and exits in gold using the same approach zones as the joystick.
+- Resume players formerly in the conifer upper passage on the main tunnel floor.
+- JavaScript syntax, watershed, surface mouth alignment, tunnel separation and bidirectional traversal checks passed. Live playtesting pending.
