@@ -641,3 +641,7 @@
 
 ## 0.11.33
 - Add 5 deterministic river crossings with explicit waterKind, distinct background shape and faster directional surface ripples. Preserve existing lakes and ice. 12521 terrain checks and syntax passed. No physical current or connected drainage simulation; saved objects and live rendering unverified.
+
+
+## 0.11.34
+- River depths +85%, other unfrozen inland water depths +35%; preserve shoreline and level. Taper distant rivers, fade far edge and add subtle bank contours. 25041 terrain checks and syntax passed. Live visuals and saved submerged objects unverified.
