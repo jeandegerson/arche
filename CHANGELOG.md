@@ -773,3 +773,7 @@
 
 ## 0.11.66
 - Introduce walkable route graph with validated junctions, route-specific support and intentional branch selection. Existing gait uses exterior route only; no caves or collision carving yet. Syntax and isolated route tests passed.
+
+
+## 0.11.67
+- Experimental cave at x27300–28100, intentional diagonal entry, walking exits, local route checkpoint and ?test=cave entrance. Route-controlled character movement and cross-section rendering; physical matter carving and cave object interactions remain pending. Syntax passed; live device testing pending.
