@@ -20,6 +20,22 @@ const assert=require('node:assert/strict');
    await page.waitForFunction(()=>typeof physicalGeometry!=='undefined'&&typeof runner!=='undefined');
    const results=await page.evaluate(()=>{
     Runner.stop(runner);Render.stop(r);
+    let branches=0;
+    for(const cave of caves){
+     const points=cave.fieldPoints;
+     if(cave.id.includes('-branch-')){
+      branches++;
+      for(const end of [points[0],points.at(-1)]){
+       if(end.bottom-end.top>.01)throw Error('Abrupt branch end in '+cave.id);
+      }
+     }else{
+      for(let i=1;i<points.length;i++){
+       const rise=Math.abs(points[i].bottom-points[i-1].bottom);
+       if(rise>cave.fieldScale*.85+.001)throw Error('Abrupt floor grade in '+cave.id);
+      }
+     }
+    }
+    if(!branches)throw Error('Expected secondary cave passages');
     const tick=()=>Engine.update(e,1000/60);
     function joystick(dx,dy){
      const rect=pad.getBoundingClientRect();

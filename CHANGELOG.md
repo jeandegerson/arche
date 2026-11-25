@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.42
+- Spread steep floor changes along the cave bed while retaining underground headroom and rock cover. Grow branch openings gradually from within the main passage so their starts cannot carve a vertical face into the rock.
+- Chromium geometry and movement checks passed for branch ends, floor grades, crouching, entering, and all 44 exits at 1× and 15×. Watershed tests passed.
+
 ## 0.12.41
 - Use the same joystick controls inside caves and on the surface. Straight down crouches, while a diagonal down gesture selects the descending ramp near a cave entrance. Low ceilings continue to constrain the character’s stance.
 - Chromium checks passed for crouching, standing, and entering from both directions. All 44 cave exits passed at 1× and 15× travel speed. Watershed tests passed.
