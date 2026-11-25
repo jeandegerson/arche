@@ -300,16 +300,30 @@
       const bed=d=>Math.min(1250,through?rawBed(d)+(endDatum-rawBed(length))*smooth(clamp((d-220)/(length-220),0,1)):rawBed(d));
       const pockets=Array.from({length:1+Math.floor(random(center,317)*5)},(_,i)=>({at:.22+random(center,330+i)*.68,width:.045+random(center,340+i)*.15,height:30+random(center,350+i)*190}));
       const aperture=d=>{const u=d/length,base=90+24*noise(center+d,180,304),shape=pockets.reduce((sum,p)=>sum+p.height*Math.exp(-(((u-p.at)/p.width)**2)),0)-45*noise(center+d,125,318);return Math.min(360,Math.max(58,base+inner(d)*shape))*smooth(clamp(d/110,0,1))*(through?smooth(clamp((length-d)/100,0,1)):Math.sqrt(clamp((length-d)/(16+random(center,319)*32),0,1)));};
-      const relief=d=>{const roof=bed(d)-aperture(d),burial=Math.min(burialMax,Math.max(0,d-220)*(.2+random(center,320)*.65))*(through?smooth(clamp((length-d-220)/420,0,1)):1);return roof-burial;};
-      const points=[];for(let d=0;d<=length;d+=step)points.push({top:bed(d)-aperture(d),bottom:bed(d)});
-      formations.push({center,dir,length,left,right,relief,points,through,biome:q.biome});
+      // Fit an independently shaped passage beneath the existing landscape.
+      // A single broad depth adjustment, never a copy of local relief.
+      const blend=d=>smooth(clamp(d/260,0,1))*(through?smooth(clamp((length-d)/260,0,1)):1);
+      let shift=0;
+      for(let d=8;d<length;d+=step){
+        const k=blend(d);if(k<.15)continue;
+        const ground=baseLandscape(center+dir*d).surface;
+        const clearance=aperture(d)*smooth(clamp((d-110)/150,0,1))*(through?smooth(clamp((length-d-110)/150,0,1)):1);
+        shift=Math.max(shift,(ground+clearance+12*k-bed(d))/k);
+      }
+      const points=[];let valid=true;
+      for(let d=0;d<=length;d+=step){
+        const ground=baseLandscape(center+dir*d).surface;
+        const distance=through?Math.min(d,length-d):d;
+        const k=smooth(clamp(distance/260,0,1));
+        const bottom=mix(ground+distance*.30,bed(d)+shift*blend(d),k);
+        const top=bottom-aperture(d);
+        if(bottom>1290||bottom<ground-2||(distance>260&&top<ground+2)){valid=false;break;}
+        points.push({top:Math.max(ground,top),bottom:Math.max(ground,bottom)});
+      }
+      if(!valid)continue;
+      formations.push({center,dir,length,left,right,points,through,biome:q.biome});
     }
-    function sample(x){
-      const q=baseLandscape(x),f=formations.find(f=>x>=f.left&&x<=f.right);
-      if(!f)return q;
-      const d=(x-f.center)*f.dir,weight=smooth(clamp((d+240)/240,0,1))*smooth(clamp((f.length+240-d)/240,0,1));
-      return {...q,surface:mix(q.surface,f.relief(d),weight)};
-    }
+    function sample(x){return baseLandscape(x);}
     const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
