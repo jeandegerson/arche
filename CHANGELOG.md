@@ -587,3 +587,8 @@
 ## 0.11.20
 - Independent two-dimensional scenic noise field replaces mirrored playable elevation. Regional biome classifications guide relief and vegetation; depth slices generate distinct ridges, coastal hills and offshore islands. Playable map and persistence unchanged.
 - 1494 deterministic elevation-independence and finite-value sample checks passed (mock regional world); browser visuals and multiplayer not verified.
+
+
+## 0.11.21
+- Scenic layers gain depth-dependent haze, vertical shading, water glints, alpine snow and rock facets, curved palms, layered conifers and irregular deciduous crowns. Reuse sampled points within each frame. No gameplay changes.
+- 36 mock canvas frames passed finite-coordinate checks; actual browser visuals and mobile performance unverified.
