@@ -721,3 +721,7 @@
 
 ## 0.11.53
 - Loose planks and branches use the same deterministic visual ocean buoyancy as logs; carried items and piles retain existing poses. No persistent drift or pickup changes. Syntax checked; device rendering pending.
+
+
+## 0.11.54
+- Grouped broad ocean swells with smaller ripples, irregular scenic crest spacing/length/opacity, surface sheen and wider foam dispersion. Shared wave function retained. Syntax and amplitude checks passed; live visual verification pending.
