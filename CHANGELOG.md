@@ -745,3 +745,7 @@
 
 ## 0.11.59
 - Underwater swimming with vertical joystick input, stroke-driven vertical thrust, drag, passive resurfacing, directional posture and seabed bounds. No oxygen limit. Syntax and simplified vertical dynamics checks passed; live controls and remote rendering unverified.
+
+
+## 0.11.60
+- Impact-scaled splash droplets and synthesized sound, stroke-triggered surface splashes, underwater bubbles and head-submersion ambient lowpass with hysteresis. Local effects only; syntax checked, live audio and rendering pending.
