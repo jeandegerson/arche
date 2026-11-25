@@ -149,16 +149,24 @@ const assert=require('node:assert/strict');
      if(Math.abs(human.position.x-stopped)>.2||crouchPose<.8)
       throw Error('Straight down should crouch in place');
     }
-    // Exercise the display path as well as its collision geometry.
+    // Render every generated passage, including secondary passages.
     const ctx=r.context;
     const left=r.bounds.min.x,right=r.bounds.max.x;
-    ctx.save();
-    r.bounds.min.x=chamber.left;
-    r.bounds.max.x=chamber.left+820;
-    try{paintCave(chamber);}finally{
-     r.bounds.min.x=left;r.bounds.max.x=right;
-     ctx.restore();
+    const finishes=new Set();
+    for(const cave of caves){
+     const finish=caveBiomeFinishes[cave.biome];
+     if(!finish)throw Error('Missing cave finish for '+cave.biome);
+     finishes.add(finish);
+     ctx.save();
+     r.bounds.min.x=cave.left;
+     r.bounds.max.x=Math.min(cave.right,cave.left+820);
+     try{paintCave(cave);}finally{
+      r.bounds.min.x=left;r.bounds.max.x=right;
+      ctx.restore();
+     }
     }
+    if(finishes.size!==new Set(caves.map(c=>c.biome)).size)
+     throw Error('Expected a distinct finish for each cave biome');
     let count=0;
     for(const cave of caves)for(const dir of [-1,1]){
      if(dir<0?cave.closedLeft:cave.closedRight)continue;
