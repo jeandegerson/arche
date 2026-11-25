@@ -761,3 +761,7 @@
 
 ## 0.11.63
 - Add clipped depth-dependent underwater attenuation, subtle animated sunlight shafts and world-anchored suspended particles in oceans and freshwater. Syntax and mock canvas checks passed; device visuals pending.
+
+
+## 0.11.64
+- Shared world solar time and season derive from a common UTC epoch, independent of session start, frame rate and travel speed. Retains 480-second day and existing seasonal rate. Device clock accuracy required; weather remains separate. Syntax and 2000 clock checks passed.
