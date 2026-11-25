@@ -278,7 +278,7 @@
       const wet=u<1&&surface>p.level;
       return {...q,surface,wet,water:wet?p.level:null,waterKind:wet?'river':undefined,cover:wet?0:q.cover};
     }
-    function sample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;return {...q,surface:q.surface+Math.max(0,q.surface-q.water)*(q.waterKind==='river'?.85:.35)};}
+    function sample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;const d=Math.max(0,q.surface-q.water);if(q.waterKind==='river'){const p=rivers.find(p=>Math.abs(x-p.x)<p.radius);const u=p?Math.abs(x-p.x)/p.radius:1;const shape=Math.max(0,1-Math.pow(u,5));return {...q,surface:q.water+Math.max(d*2.8,(p?p.depth*4.8:150)*shape*Math.min(1,d/12))};}return {...q,surface:q.water+d*2.65};}
     return {sample,rivers,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
 
