@@ -665,3 +665,7 @@
 
 ## 0.11.39
 - Cache near geography on a fixed world grid, reduce sampling resolution, batch same-colour terrain into continuous strips and remove per-facet shading. Syntax and mock rendering passed. Riverbank clipping and curved shorelines still pending; mobile FPS unverified.
+
+
+## 0.11.40
+- Sample basin contours at four-unit intervals and extend to adjacent terrain centers. Draw opaque water backing before local character, translucent tint and ripples afterward. Syntax and shore intersection test passed; live clipping and remote swimmer tint unverified.
