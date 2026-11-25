@@ -512,3 +512,8 @@
 - Generate a lake in each land biome, including the island, while retaining the steppe salt lake. Use the exposed geological surface for the lakebed so alpine water follows the actual rock banks.
 - Deepen the offshore seabed while keeping shallow approaches to the mainland and island. The release uses the existing save.
 - Generator checks passed across three seeds. Mobile Chromium verified all eight new lakes, snowy trees, a complete mainland crossing, and a swim from the mainland to the island. Safari was not tested.
+
+## 0.11.5
+- Replace repeated ridges with seeded terrain at several scales. The western conifer forest rises steadily into a much taller snowy range with two summits and a saddle. The conifer lake sits on the eastern descent.
+- Widen the ocean, deepen offshore water, and enlarge the island. The reshaped world starts a fresh save.
+- Passed three-seed generator checks and a mobile Chromium crossing over the snowy summits and an ocean swim to the island. Safari was not tested.
