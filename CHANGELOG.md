@@ -851,3 +851,7 @@
 ## 0.11.84
 - Shape the small cave collapse, Conifer fractures and rubble ascent, and Desert's shelf and lower channel with shared roof and floor features. Render matching rock scars, debris and sediment along the actual walking terrain.
 - Syntax, mock canvas rendering, seven-route traversal, interior clearance and rock separation checks passed. Live visual playtesting pending.
+
+## 0.11.85
+- Prototype geology-driven topology in Conifer. Dipping permeable beds set passage grades, and penetrating inclined fractures determine the lower loop's junction positions and connector lengths. An incomplete pair or impermeable lower bed leaves the loop closed. Keep the existing surface mouths as access points for the prototype.
+- JavaScript syntax, fracture relocation and removal, permeability, rock cover, clearance, connector grade, divider thickness and traversal of all seven routes passed. Live visual playtesting pending.
