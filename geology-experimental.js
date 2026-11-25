@@ -50,5 +50,16 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30)}=
  }
  return {width,height,solid,weak,flow,components};
 }
-root.ArcheGeology={generate};
+// Extract all solid/void interfaces from the same field using marching squares.
+function contours(field){
+ const {width:w,height:h,solid}=field,segments=[];
+ const cases=[[],[[3,0]],[[0,1]],[[3,1]],[[1,2]],[[3,0],[1,2]],[[0,2]],[[3,2]],[[2,3]],[[0,2]],[[0,1],[2,3]],[[1,2]],[[1,3]],[[0,1]],[[3,0]],[]];
+ for(let y=0;y<h-1;y++)for(let x=0;x<w-1;x++){
+ const i=y*w+x,k=solid[i]+2*solid[i+1]+4*solid[i+w+1]+8*solid[i+w];
+ const p=[[x+.5,y],[x+1,y+.5],[x+.5,y+1],[x,y+.5]];
+ for(const [a,b] of cases[k])segments.push([p[a],p[b]]);
+ }
+ return segments;
+}
+root.ArcheGeology={generate,contours};
 })(typeof globalThis!=='undefined'?globalThis:this);
