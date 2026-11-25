@@ -545,3 +545,8 @@
 - Add entry and exit controls for shared play on the same terrain as solo. Ask for the traveller’s name on entry and show online presence after the channel reports it.
 - Load terrain around a restored multiplayer checkpoint before positioning the character. Preserve the existing solo and shared saves.
 - Checked JavaScript syntax, mode navigation, name submission and simulated two-player presence. The existing shared forest API responded to read requests. Live two-device gameplay was not tested.
+
+## 0.11.12 — Default shared world and common spawn
+- Open the shared world by default and keep solo play available through Play solo.
+- Place every shared arrival at the same mainland spawn after name entry. Saved character coordinates no longer determine the entry location.
+- JavaScript syntax and simulated mode navigation, shared spawn with an old character save, name entry and online presence passed. Physical devices were not tested.
