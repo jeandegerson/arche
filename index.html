@@ -190,7 +190,16 @@ function createPhysicalGeometry(surface, cavities, floor, ceiling, exteriorConta
   }
   return hit;
  }
- return {intervals,isSolid,contacts,clearanceAt,regions,supportAt,verticalMotion,landingContact};
+ // Portal transitions require proximity to the actual shared terrain boundary.
+ function entryCandidates(x,feet,dir,approach=125,inside=110){
+  return cavities.filter(c=>{
+   if(!dir||(dir<0&&c.closedRight))return false;
+   const edge=dir>0?c.left:c.right,d=(x-edge)*dir;
+   if(d< -approach||d>inside)return false;
+   return Math.abs(feet-surface(x))<=28&&Math.abs(floor(edge,c)-surface(edge))<=32;
+  }).sort((a,b)=>Math.abs(x-(dir>0?a.left:a.right))-Math.abs(x-(dir>0?b.left:b.right)));
+ }
+ return {intervals,isSolid,contacts,clearanceAt,regions,supportAt,verticalMotion,landingContact,entryCandidates};
 }
 const physicalGeometry=createPhysicalGeometry(solidGaitSurface,allCaveRoutes,caveFloor,caveCeiling,geologicalContacts);
 for(const c of allCaveRoutes)walkableRoutes.addRoute(c.id,c.left,c.right,x=>caveFloor(x,c));
@@ -209,7 +218,9 @@ function caveEntryGesture(dx,dy){
  return Math.abs(dx)>.25&&dy>.22&&dy<Math.abs(dx)*2.2;
 }
 function caveIntent(x,dx,dy){
- return caveEntryGesture(dx,dy)?caves.find(c=>caveMouthContains(c,x,Math.sign(dx))):null;
+ if(!caveEntryGesture(dx,dy))return null;
+ const feet=human?human.position.y+(human.plugin.colliderHeight||74)/2:solidGaitSurface(x);
+ return physicalGeometry.entryCandidates(x,feet,Math.sign(dx))[0]||null;
 }
 // Select support from the shared geometry without confusing stacked exterior and cave floors.
 function characterSupportAt(x,c=activeCave()){
