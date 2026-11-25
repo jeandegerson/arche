@@ -531,3 +531,7 @@
 - Extended the western ocean, replaced the island lake with sandy palm habitat, and shaped dunes on the mainland beach.
 - Increased the western conifer climb, extended the eastern forest and froze the alpine lake into a walkable surface. Widened and deepened the salt basin.
 - Started a fresh world layout. Three-seed terrain checks and inline JavaScript syntax checks passed.
+
+## 0.11.9 — Beach sand in cross-section
+- Render deep, grain-textured sand beneath dunes and palms and taper the deposit offshore and inland.
+- Three-seed world checks, beach-depth checks and inline script syntax passed.
