@@ -540,3 +540,8 @@
 - Draw the sand deposit as continuous contours and follow the ground slope with the surface trim and grass.
 - Interpolate ground height between adjoining soil cells so walking and wading do not encounter artificial steps. The update uses the existing world save.
 - Inline JavaScript syntax and Matter.js simulation checks passed. The simulation crossed both island shores and the mainland shoreline at 1× and 5× using a mocked DOM and canvas. Browser rendering and Safari touch controls were not tested.
+
+## 0.11.11 — Shared world on the current map
+- Add entry and exit controls for shared play on the same terrain as solo. Ask for the traveller’s name on entry and show online presence after the channel reports it.
+- Load terrain around a restored multiplayer checkpoint before positioning the character. Preserve the existing solo and shared saves.
+- Checked JavaScript syntax, mode navigation, name submission and simulated two-player presence. The existing shared forest API responded to read requests. Live two-device gameplay was not tested.
