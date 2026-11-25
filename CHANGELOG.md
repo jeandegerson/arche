@@ -649,3 +649,7 @@
 
 ## 0.11.35
 - Incised river channels and substantially deeper lake basins, distinct receding river and broad lake projections, different palettes and ripples. 25041 terrain comparisons and syntax passed. Live rendering and swimming unverified.
+
+
+## 0.11.36
+- Fix camera-height clipping that suppressed background water; remove camera-center lateral drift, extend visible water and add bank vegetation. Projection bounds and syntax checked. Still a projected near landscape, not a full hydrological elevation field; live visuals unverified.
