@@ -592,3 +592,7 @@
 ## 0.11.21
 - Scenic layers gain depth-dependent haze, vertical shading, water glints, alpine snow and rock facets, curved palms, layered conifers and irregular deciduous crowns. Reuse sampled points within each frame. No gameplay changes.
 - 36 mock canvas frames passed finite-coordinate checks; actual browser visuals and mobile performance unverified.
+
+
+## 0.11.22
+- Altitude-dependent patchy snow tint for terrain and pine foliage; blended coastal soil and background biome palettes; soften alpine snow facets. Existing physical world and tree population unchanged. Browser rendering unverified.
