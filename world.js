@@ -187,12 +187,58 @@
       const blend=lake?smooth(clamp((lake.radius+180-Math.abs(x-lake.x))/180,0,1)):0;
       return weight*mix(ordinary,target-baseline,blend);
     }
-    function sample(x){
+    function regionalSample(x){
       const q=expandedSample(x),delta=easternDelta(x);
       if(!delta)return q;
       const surface=q.surface+delta,water=q.water===null?null:q.water+delta;
       const biome=!q.wet&&!q.frozen&&x>=56000&&x<65500?'conifer':q.biome;
       return {...q,surface,water,biome,color:colors[biome],cover:biome==='conifer'&&!q.wet&&!q.frozen?.69+noise(x,980,6)*.22:q.cover};
+    }
+    // Seeded landforms: irregularly spaced, compact, smoothly joined to regional relief.
+    const landformProfiles={island:[.65,.55],coast:[.65,.45],marsh:[.25,.25],woodland:[1,.85],meadow:[.75,.5],conifer:[1.2,1],alpine:[1.4,1.2],steppe:[.9,.8],arid:[1,.9],dunes:[.85,.3],sandstone:[1.5,1.3],oasis:[.3,.2],salt:[.15,.1],sea:[0,0]};
+    const localSpacing=310;
+    const smoothstep=(a,b,v)=>smooth(clamp((v-a)/(b-a),0,1));
+    function localForm(x){
+      const index=Math.floor(x/localSpacing);
+      let offset=0;
+      for(let i=index-2;i<=index+2;i++){
+        const center=(i+.18+.64*random(i,101))*localSpacing;
+        const radius=45+random(i,102)*170;
+        const u=(x-center)/radius;
+        if(Math.abs(u)>=1)continue;
+        const q=regionalSample(center),p=landformProfiles[q.biome]||[0,0];
+        if(q.wet||q.frozen)continue;
+        const activity=smoothstep(-.4,.65,noise(center,1700,103));
+        if(random(i,104)>.25+.65*activity)continue;
+        const strength=(14+random(i,105)*48)*p[0]*(.4+.6*activity);
+        const type=random(i,106),envelope=(1-u*u)**2;
+        let shape;
+        if(type<.25)shape=-envelope; // rounded hill
+        else if(type<.48)shape=envelope*(.7+.3*Math.cos(u*4)); // hollow
+        else if(type<.68)shape=envelope*Math.tanh(u*5)*p[1]; // bank
+        else if(type<.84)shape=envelope*smoothstep(.05,.7,1-Math.abs(u))*p[1]; // gully
+        else shape=-envelope*(.65+.35*Math.tanh((u+.2)*6))*p[1]; // asymmetric outcrop
+        offset+=strength*shape;
+      }
+      const activity=smoothstep(-.45,.65,noise(x,1350,107));
+      const p=landformProfiles[regionalSample(x).biome]||[0,0];
+      offset+=p[0]*activity*(noise(x,95,108)*5+noise(x,38,109)*1.8);
+      return clamp(offset,-85,85);
+    }
+    // Protect all water margins and the starting area. Interpolate a cached mask
+    // so landforms fade before shorelines instead of creating vertical banks.
+    const maskStep=24,mask=[];
+    for(let x=0;x<=width+extension+maskStep;x+=maskStep){
+      const q=regionalSample(x);
+      mask.push(q.wet||q.frozen||Math.abs(x-(shore+264))<150?0:1);
+    }
+    const wetDistance=mask.map((v,i)=>{if(!v)return 0;for(let d=1;d<=9;d++)if(mask[i-d]===0||mask[i+d]===0)return smooth((d-1)/9);return 1});
+    function sample(x){
+      const q=regionalSample(x);
+      if(q.wet||q.frozen)return q;
+      const t=clamp(x/maskStep,0,wetDistance.length-1),i=Math.floor(t);
+      const weight=mix(wetDistance[i],wetDistance[Math.min(i+1,wetDistance.length-1)],t-i);
+      return {...q,surface:q.surface+localForm(x)*weight};
     }
     return {sample,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }

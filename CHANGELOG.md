@@ -617,3 +617,7 @@
 
 ## 0.11.27
 - Alpine pines use the same 95–190 base size range as conifer forest pines. Snow, density and tree placement rules unchanged. Inline JavaScript syntax passed; live rendering unverified.
+
+
+## 0.11.28
+- Seeded compact local hills, hollows, banks, gullies and asymmetric outcrops with clustered activity and biome-dependent strength. Protect water, ice and spawn margins; retain regional profile and biome layout. 12521 terrain comparisons passed; inline syntax passed. Saved object elevations, mobile performance, actual collision traversal and live deployment unverified.
