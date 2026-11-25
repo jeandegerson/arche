@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.47
+- Draw the biome rim from the exact same vertices as the geological silhouette, removing the coarse foreground strip that could bridge steep notches.
+- JavaScript syntax and a synthetic notch drawing check passed. Browser testing was unavailable locally.
+
 ## 0.12.46
 - Rank candidate cave entrances and both directions by rock resistance and cover, so the map scan cannot consistently reserve space for eastward passages first. The new layout has nine left-only caves, four right-only caves, and eighteen through caves.
 - Restore saved cave routes only at coordinates still inside them after regeneration. Chromium verified all 49 entrances and exits at 1× and 15×, plus cave controls and branch crossings. Watershed tests passed.
