@@ -67,13 +67,24 @@ const assert=require('node:assert/strict');
      checkCrouch('at the cave mouth');
      if(human.plugin.route)throw Error('Straight-down crouch entered a cave');
      joystick(dir,.8);
-     for(let i=0;i<100&&!human.plugin.route;i++)tick();
-     if(human.plugin.route!==cave.id)throw Error('Diagonal descent failed to enter '+cave.id);
+     for(let i=0;i<180&&(!human.plugin.route||dir*(human.position.x-edge)<125);i++)tick();
+     if(human.plugin.route!==cave.id||dir*(human.position.x-edge)<125)
+      throw Error('Held diagonal stopped at entrance '+cave.id);
      const x=edge+dir*260;
      const room=physicalGeometry.walkingRegion(x,cave.id);
      if(!Number.isFinite(room.top)||room.bottom-room.top<74)throw Error('Invalid underground crouch fixture');
      position(x,dir,cave);
      checkCrouch('inside '+cave.id);
+    }
+    for(const cave of caves)for(const dir of [-1,1]){
+     if(dir>0?cave.closedLeft:cave.closedRight)continue;
+     const edge=dir>0?cave.left:cave.right;
+     position(edge,-dir);
+     joystick(dir,1);
+     for(let i=0;i<200&&(!human.plugin.route||dir*(human.position.x-edge)<125);i++)tick();
+     if(human.plugin.route!==cave.id||dir*(human.position.x-edge)<125)
+      throw Error('Held diagonal stopped at '+cave.id+' '+dir+' offset '+(human.position.x-edge));
+     if(facing!==dir)throw Error('Faced away from entrance '+cave.id);
     }
     for(const [id,crossing] of [['seam-19720',20372],['seam-50800',51656],['seam-86920',87140]]){
      const cave=caves.find(c=>c.id===id);
