@@ -522,3 +522,7 @@
 - Add scattered trees on stable ground in the dunes, marsh, meadow and steppe. The uppermost alpine rock remains above the treeline.
 - Increase the width and depth of all eight biome lakes and enlarge the salt lake. Blend the wider banks back into the surrounding terrain.
 - Generator checks passed across three seeds. Mobile Chromium verified trees in the four previously excluded biomes and completed the mainland crossing through the enlarged lakes.
+
+## 0.11.7
+- Add optional 5× exploration via `?speed=5` using the existing world save.
+- Verified JavaScript syntax and speed selection for normal, 3×, 5×, and unsupported values. Browser traversal was not tested.
