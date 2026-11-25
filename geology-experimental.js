@@ -2,13 +2,15 @@
 (function(root){
 function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2}={}){
  const profiles={limestone:{bed:.45,fracture:.65,down:.48,erosion:1},sandstone:{bed:.85,fracture:.25,down:.18,erosion:.75},fractured:{bed:.18,fracture:.95,down:.72,erosion:.85}};const p=profiles[regime]||profiles.limestone;
- const n=width*height,solid=new Uint8Array(n),weak=new Float32Array(n),flow=new Float32Array(n);
+ const n=width*height,resistance=new Float32Array(n),solid=new Uint8Array(n),weak=new Float32Array(n),flow=new Float32Array(n);
  const hash=(x,y)=>{let v=Math.sin(x*127.1+y*311.7+seed*74.7)*43758.5453;return v-Math.floor(v)};
  const idx=(x,y)=>y*width+x;
  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
  const i=idx(x,y);solid[i]=+(y>=surface(x));
  const bed=Math.abs(Math.sin((y+5*Math.sin(x/25))/6));
  const fracture=Math.min(Math.abs(Math.sin((x+y*.65+4*Math.sin(y/9))/13)),Math.abs(Math.sin((x-y*.38)/19)));
+ const mass=.5+.25*Math.sin(x/19+Math.sin(y/17))+.25*Math.cos(y/23-x/31);
+ resistance[i]=Math.max(0,Math.min(1,mass));
  weak[i]=.15+p.bed*Math.exp(-bed*8)+p.fracture*Math.exp(-fracture*12);
  }
  // Recharge traces compete for permeable routes; accumulated flow enlarges rock.
@@ -33,7 +35,8 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  const radius=Math.min(15,1+Math.floor(Math.sqrt(f)*.30*p.erosion*chamber*(.75+.25*maturity)));
  for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++){
  const a=x+dx,b=y+dy;if(a<1||a>=width-1||b<1||b>=height-2)continue;
- if(dx*dx+dy*dy<=radius*radius*(.65+.55*weak[idx(a,b)]))solid[idx(a,b)]=0;
+ const j=idx(a,b),strength=resistance[j],pressure=Math.min(1,Math.log1p(f)/Math.log1p(peak));
+ if(dx*dx+dy*dy<=radius*radius*(.65+.55*weak[j])*(1-.55*strength)&& (strength<.78||pressure*weak[j]>.48))solid[j]=0;
  }
  }
  // Secondary circulation: widen existing conduits where nearby permeable rock receives flow.
@@ -43,7 +46,7 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  const i=idx(x,y);if(!solid[i]||y<surface(x)+2)continue;
  let wet=0,open=0;
  for(const j of [i-1,i+1,i-width,i+width])if(!solid[j]){open++;wet+=flow[j]}
- if(open&&weak[i]>.42&&wet>peak*.018&&hash(x+pass*width,y)<Math.min(.85,weak[i]*.65))remove.push(i);
+ if(open&&resistance[i]<.72&&weak[i]>.42&&wet>peak*.018&&hash(x+pass*width,y)<Math.min(.85,weak[i]*.65))remove.push(i);
  }
  for(const i of remove){solid[i]=0;flow[i]=Math.max(flow[i],peak*.025)}
  }
@@ -55,7 +58,7 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  const i=idx(x,y);
  if(!solid[i]||solid[i+width]||y<surface(x)+3)continue;
  if(solid[i-1]&&solid[i+1]||solid[i-width]&&solid[i-2*width])continue;
- if(hash(x+pass*width,y)>.55)continue;
+ if(hash(x+pass*width,y)>.55*(1-resistance[i]))continue;
  falling.push(i);
  }
  for(const i of falling){
@@ -78,7 +81,7 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  }
  if(queue.length>=8)components.push({area:queue.length,minX,maxX,minY,maxY,openingColumns:[...openings].sort((a,b)=>a-b)});
  }
- return {width,height,solid,weak,flow,debris,components,regime};
+ return {width,height,solid,weak,flow,debris,resistance,components,regime};
 }
 // Extract all solid/void interfaces from the same field using marching squares.
 function contours(field){
