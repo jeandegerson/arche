@@ -165,9 +165,20 @@ function createPhysicalGeometry(surface, cavities, floor, ceiling, exteriorConta
   return hits.sort((a,b)=>a.distance-b.distance);
  }
  function clearanceAt(x,y){const q=intervals(x).find(q=>y>q.top&&y<q.bottom);return q?{above:y-q.top,below:q.bottom-y}:isSolid(x,y)?{above:0,below:0}:{above:Infinity,below:Math.max(0,surface(x)-y)};}
- return {intervals,isSolid,contacts,clearanceAt};
+ // Free-space regions share one support representation; route IDs are continuity hints.
+ function regions(x){return [{id:'surface',top:-Infinity,bottom:surface(x)},...intervals(x)];}
+ function supportAt(x,id){return regions(x).find(q=>q.id===id)?.bottom;}
+ function verticalMotion(y,vy,dt,region,half){
+  const top=region.top+half,bottom=region.bottom-half;
+  if(top>bottom)return {blocked:true,y,vy:0,grounded:false};
+  let v=Math.min(12,vy+.24*dt),next=y+v*dt;
+  if(next>=bottom){next=bottom;v=0;}
+  if(next<top){next=top;v=0;}
+  return {blocked:false,y:next,vy:v,grounded:next>=bottom-.5};
+ }
+ return {intervals,isSolid,contacts,clearanceAt,regions,supportAt,verticalMotion};
 }
-const physicalGeometry=createPhysicalGeometry(caveSurface,allCaveRoutes,caveFloor,caveCeiling,geologicalContacts);
+const physicalGeometry=createPhysicalGeometry(solidGaitSurface,allCaveRoutes,caveFloor,caveCeiling,geologicalContacts);
 for(const c of allCaveRoutes)walkableRoutes.addRoute(c.id,c.left,c.right,x=>caveFloor(x,c));
 function caveMouth(c,dir){
  if(c.closedRight&&dir<0)return null;
@@ -188,9 +199,7 @@ function caveIntent(x,dx,dy){
 }
 // Select support from the shared geometry without confusing stacked exterior and cave floors.
 function characterSupportAt(x,c=activeCave()){
- if(!c)return walkableRoutes.support('surface',x);
- const interval=physicalGeometry.intervals(x).find(q=>q.id===c.id);
- return interval?interval.bottom:caveFloor(x,c);
+ return physicalGeometry.supportAt(x,c?.id||'surface')??(c?caveFloor(x,c):solidGaitSurface(x));
 }
 function gaitRouteSurface(x){return characterSupportAt(x);}
 function characterBoundaryContacts(x,y,radius=24){
@@ -260,12 +269,9 @@ function walkCave(st,dt){
   if(jumpRequest>now&&Math.abs(p.y-bottom)<3&&(st.caveVy||0)>=0){
    st.caveVy=-6.2;st.caveJumpX=Math.max(-2,Math.min(2,jumpDir*2));jumpRequest=0;jumpLock=now+650;
   }
-  st.caveVy=Math.min(12,(st.caveVy||0)+.24*dt);
-  cy=p.y+st.caveVy*dt;
-  if(cy>=bottom){cy=bottom;st.caveVy=0;delete st.caveJumpX;}
-  if(cy<top){cy=top;st.caveVy=0;}
-  st.air=cy<bottom-.5;
-  st.vy=st.caveVy;
+  const motion=physicalGeometry.verticalMotion(p.y,st.caveVy||0,dt,interval,half);
+  cy=motion.y;st.caveVy=motion.vy;st.air=!motion.grounded;st.vy=motion.vy;
+  if(motion.grounded)delete st.caveJumpX;
  }else{st.caveVy=0;delete st.caveJumpX;st.air=false;jumpRequest=0;}
  Body.setPosition(human,{x:nx,y:cy});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
 }
