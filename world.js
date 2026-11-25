@@ -268,7 +268,7 @@
       }
       if(best)rivers.push(best);
     }
-    function sample(x){
+    function shallowSample(x){
       const q=landSample(x),p=rivers.find(p=>Math.abs(x-p.x)<p.radius+100);
       if(!p||q.wet||q.frozen)return q;
       const u=Math.abs(x-p.x)/p.radius;
@@ -278,6 +278,7 @@
       const wet=u<1&&surface>p.level;
       return {...q,surface,wet,water:wet?p.level:null,waterKind:wet?'river':undefined,cover:wet?0:q.cover};
     }
+    function sample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;return {...q,surface:q.surface+Math.max(0,q.surface-q.water)*(q.waterKind==='river'?.85:.35)};}
     return {sample,rivers,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
 
