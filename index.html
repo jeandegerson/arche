@@ -134,6 +134,35 @@ function caveCeiling(x,c){
  const taper=c.closedRight?caveEase((c.right-x)/56):1;
  return Math.min(floor,Math.max(caveSurface(x)+cover,floor-caveOpening(c,x)*taper));
 }
+// Shared boundary queries, initially observational: existing movement remains unchanged.
+function createPhysicalGeometry(surface, cavities, floor, ceiling, exteriorContacts){
+ function intervals(x){return cavities.filter(c=>x>=c.left&&x<=c.right).map(c=>({id:c.id,top:ceiling(x,c),bottom:floor(x,c)})).filter(q=>q.bottom>q.top);}
+ function isSolid(x,y){return y>=surface(x)&&!intervals(x).some(q=>y>q.top&&y<q.bottom);}
+ function contacts(x,y,radius=24){
+  if(!Number.isFinite(radius)||radius<0)throw RangeError('Invalid contact radius');
+  const hits=exteriorContacts(x,y,radius).slice();
+  function segment(ax,ay,bx,by,kind,id,sign){
+   const dx=bx-ax,dy=by-ay,len=Math.hypot(dx,dy);if(!len)return;
+   const t=Math.max(0,Math.min(1,((x-ax)*dx+(y-ay)*dy)/(len*len)));
+   const px=ax+t*dx,py=ay+t*dy,distance=Math.hypot(x-px,y-py);
+   if(distance<=radius)hits.push({x:px,y:py,distance,normal:{x:sign*dy/len,y:-sign*dx/len},inclination:Math.atan2(Math.abs(dy),Math.abs(dx)),edge:{kind,caveId:id,a:{x:ax,y:ay},b:{x:bx,y:by}}});
+  }
+  const step=8;
+  for(const c of cavities){
+   if(x+radius<c.left||x-radius>c.right)continue;
+   const start=Math.max(c.left,c.left+Math.floor((x-radius-c.left)/step)*step);
+   const end=Math.min(c.right,x+radius+step);
+   for(let a=start;a<end;a+=step){const b=Math.min(c.right,a+step);
+    segment(a,floor(a,c),b,floor(b,c),'cave-floor',c.id,1);
+    segment(a,ceiling(a,c),b,ceiling(b,c),'cave-ceiling',c.id,-1);
+   }
+  }
+  return hits.sort((a,b)=>a.distance-b.distance);
+ }
+ function clearanceAt(x,y){const q=intervals(x).find(q=>y>q.top&&y<q.bottom);return q?{above:y-q.top,below:q.bottom-y}:isSolid(x,y)?{above:0,below:0}:{above:Infinity,below:Math.max(0,surface(x)-y)};}
+ return {intervals,isSolid,contacts,clearanceAt};
+}
+const physicalGeometry=createPhysicalGeometry(caveSurface,allCaveRoutes,caveFloor,caveCeiling,geologicalContacts);
 for(const c of allCaveRoutes)walkableRoutes.addRoute(c.id,c.left,c.right,x=>caveFloor(x,c));
 function caveMouth(c,dir){
  if(c.closedRight&&dir<0)return null;
