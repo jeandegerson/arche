@@ -793,3 +793,7 @@
 
 ## 0.11.71
 - Align cave-region geology and grass with actual walking surface; paint cave cavity after exterior grass to prevent internal surface strips. Syntax checked; visual verification pending.
+
+
+## 0.11.72
+- Remove independent natural-rock geology overlay and use solid walking surface for exterior geology and grass throughout the world. Preserve collision geometry and cave routes. Syntax and duplicate overlay checks passed; device visuals pending.
