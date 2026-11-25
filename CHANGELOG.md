@@ -555,3 +555,7 @@
 - Validate incoming player positions against the current map bounds. The old horizontal cutoff discarded updates at the mainland spawn and farther east.
 - Stack nearby name labels when players overlap.
 - JavaScript checks and simulated incoming pose, out-of-bounds rejection, overlapping labels and online presence passed. Live two-device gameplay was not tested.
+
+## 0.11.14 — Shared tree falls
+- Broadcast a completed chop as soon as the tree falls and save the event independently. Keep the trunk pose in shared history and apply events when their terrain streams in.
+- Simulated shared fall, trunk creation, duplicate suppression and broadcasting while a database save was pending. Live two-device gameplay was not tested.
