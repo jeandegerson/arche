@@ -801,3 +801,7 @@
 
 ## 0.11.73
 - Vary cave depth profiles and chamber heights. Add lower loop routes in conifer and desert caves with diagonal entry and automatic return to parent route. Geometry samples and syntax passed; live movement and rendering unverified.
+
+
+## 0.11.74
+- Require a fresh downward gesture for lower passages, advance across return junctions, render parent passages over lower branch overlaps, replace branch daylight beams with subtle junction floor highlights. Syntax passed; live testing pending.
