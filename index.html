@@ -146,12 +146,12 @@ const landscapeNoise=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Mat
  const center=ox+w/2;
  ctx.save();ctx.globalCompositeOperation='destination-over';
  for(const [par,depth,base,step] of [[.64,.62,.76,24],[.36,.42,.62,36],[.14,.24,.49,48]]){
-  const offset=center-w/2*par;
-  const point=i=>{const x=i*step, q=clamp(offset+x*par,0,world.width),s=world.sample(q);const elevation=s.water!==null?s.water:s.surface;return {x,q,s,y:clamp(h*base+(elevation-535)*depth-oy*depth*.55,-h*2,h*2)}};
+  const offset=center-w/2/par, grid=Math.floor(offset*par/step);
+  const point=i=>{const q0=(grid+i)*step/par,x=(q0-offset)*par,q=clamp(q0,0,world.width),s=world.sample(q);const elevation=s.water!==null?s.water:s.surface;return {x,q,s,y:clamp(h*base+(elevation-535)*depth-oy*depth*.55,-h*2,h*2)}};
   const color=(s)=>{const p=palette[s.biome]||palette.meadow;return 'rgb('+p.map((v,j)=>Math.round((v*depth+[125,155,170][j]*(1-depth))*(.27+.73*day))).join(',')+')'};
-  const n=Math.ceil(w/step)+1;
+  const n=Math.ceil(w/step)+2;
   // Trees must be drawn first with destination-over so the ridge cannot hide them.
-  for(let i=0;i<n;i++){const a=point(i),b=point(i+1),key=Math.floor(a.q/12),v=hash(key);if(a.s.wet||a.s.frozen||v>a.s.cover||!['island','coast','woodland','conifer','meadow'].includes(a.s.biome))continue;
+  for(let i=0;i<n;i++){const a=point(i),b=point(i+1),key=Math.floor(a.q/12),v=hash(key);if(a.q===b.q||a.s.wet||a.s.frozen||v>a.s.cover||!['island','coast','woodland','conifer','meadow'].includes(a.s.biome))continue;
    const x=a.x+step*.5,y=(a.y+b.y)/2+2,ht=(12+v*38)*depth,tw=ht*.34;ctx.fillStyle=color(a.s);ctx.beginPath();
    if(a.s.biome==='island'||a.s.biome==='coast'){ctx.fillRect(x-1,y-ht,2,ht);for(let k=-2;k<=2;k++){ctx.moveTo(x,y-ht);ctx.quadraticCurveTo(x+k*tw*.6,y-ht-5,x+k*tw,y-ht+Math.abs(k)*2);ctx.lineTo(x,y-ht+3);}}
    else if(a.s.biome==='conifer'){ctx.moveTo(x-tw,y);ctx.lineTo(x,y-ht);ctx.lineTo(x+tw,y);}
