@@ -613,3 +613,7 @@
 
 ## 0.11.26
 - Grade eastern conifer forest into a long descent comparable to western ascent; retain lake depth and geography outside eastern foothills. Existing object heights not migrated; live rendering and water behavior unverified.
+
+
+## 0.11.27
+- Alpine pines use the same 95–190 base size range as conifer forest pines. Snow, density and tree placement rules unchanged. Inline JavaScript syntax passed; live rendering unverified.
