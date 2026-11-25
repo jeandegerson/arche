@@ -347,6 +347,21 @@
         points.push({top:Math.max(ground,top),bottom:Math.max(ground,bottom)});
       }
       if(!valid)continue;
+      // Spread sharp changes in accessible floor depth over the adjoining
+      // bed. The roof follows the same displacement to retain clearance.
+      const floorProfile=points.map(p=>p.bottom);
+      const maxRise=step*.85;
+      for(let i=1;i<points.length;i++)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i-1]+maxRise);
+      for(let i=points.length-2;i>=0;i--)floorProfile[i]=Math.min(floorProfile[i],floorProfile[i+1]+maxRise);
+      for(let i=0;i<points.length;i++){
+        const p=points[i],ground=baseLandscape(center+dir*i*step).surface;
+        const distance=through?Math.min(i*step,length-i*step):i*step;
+        const cover=Math.min(p.top-ground,12)*smooth(clamp((distance-150)/110,0,1));
+        const clearance=Math.min(74,p.bottom-p.top)*smooth(clamp((distance-150)/110,0,1));
+        const bottom=Math.max(ground+cover+clearance,floorProfile[i]);
+        p.top=Math.max(ground+cover,p.top+bottom-p.bottom);
+        p.bottom=bottom;
+      }
       formations.push({center,dir,length,left,right,points,through,biome:q.biome});
     }
     function sample(x){return baseLandscape(x);}
@@ -368,11 +383,14 @@
           const x=x0+sign*i*step,ground=baseLandscape(x).surface;
           // Keep secondary passages clear of the parent ramp to the surface.
           if((!parent.closedLeft&&x-parent.left<150)||(!parent.closedRight&&parent.right-x<150))break;
-          const radius=(45+45*(1-rockResistance(x,y)))*Math.sqrt(clamp((n-i)/8,0,1));
+          // Grow the branch from inside its parent, then round off
+          // the distal end. Neither end starts as a vertical cut.
+          const growth=smooth(clamp(i/16,0,1));
+          const radius=(45+45*(1-rockResistance(x,y)))*growth*Math.sqrt(clamp((n-i)/8,0,1));
           if(y-radius<ground+12||y+radius>1290)break;
           points.push({top:y-radius,bottom:y+radius});
           const p=parent.fieldPoints[start+sign*i];
-          if(p&&(y-radius>p.bottom+8||y+radius<p.top-8))separated=true;
+          if(i>=16&&p&&(y-radius>p.bottom+8||y+radius<p.top-8))separated=true;
           let best=v,cost=Infinity;
           for(const slope of [-.85,-.5,-.2,.2,.5,.85]){
             const score=rockResistance(x+sign*step,y+slope*step)+.18*Math.abs(slope-v)+.24*Math.abs(slope-vertical*.5);
