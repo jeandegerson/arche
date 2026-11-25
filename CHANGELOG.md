@@ -621,3 +621,7 @@
 
 ## 0.11.28
 - Seeded compact local hills, hollows, banks, gullies and asymmetric outcrops with clustered activity and biome-dependent strength. Protect water, ice and spawn margins; retain regional profile and biome layout. 12521 terrain comparisons passed; inline syntax passed. Saved object elevations, mobile performance, actual collision traversal and live deployment unverified.
+
+
+## 0.11.29
+- Add deterministic level clearings and terraces with smooth shoulders and biome-specific frequency. Preserve water, ice and biome layout. 12521 samples checked; 53 dry flat runs at least 96 units long. Inline syntax passed. Saved object elevations, live collision and deployment unverified.

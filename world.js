@@ -238,7 +238,23 @@
       if(q.wet||q.frozen)return q;
       const t=clamp(x/maskStep,0,wetDistance.length-1),i=Math.floor(t);
       const weight=mix(wetDistance[i],wetDistance[Math.min(i+1,wetDistance.length-1)],t-i);
-      return {...q,surface:q.surface+localForm(x)*weight};
+      let surface=q.surface+localForm(x)*weight;
+      // Level benches and clearings, with broad shoulders and no water overlap.
+      const cell=Math.floor(x/650);
+      for(let k=cell-1;k<=cell+1;k++){
+        const center=(k+.25+.5*random(k,121))*650;
+        const h=regionalSample(center);
+        const chance={island:.55,coast:.65,marsh:.85,woodland:.65,meadow:.85,conifer:.55,alpine:.22,steppe:.8,arid:.65,dunes:.22,sandstone:.3,oasis:.35,salt:.6}[h.biome]||0;
+        if(h.wet||h.frozen||random(k,122)>chance)continue;
+        const half=55+random(k,123)*100,shoulder=65+random(k,124)*65;
+        const distance=Math.abs(x-center);
+        if(distance>=half+shoulder)continue;
+        const left=regionalSample(center-half-shoulder),right=regionalSample(center+half+shoulder);
+        if(left.wet||right.wet||left.frozen||right.frozen||left.biome!==h.biome||right.biome!==h.biome)continue;
+        const blend=(1-smoothstep(half,half+shoulder,distance))*weight;
+        surface=mix(surface,h.surface,blend);
+      }
+      return {...q,surface};
     }
     return {sample,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
