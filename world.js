@@ -233,7 +233,7 @@
       mask.push(q.wet||q.frozen||Math.abs(x-(shore+264))<150?0:1);
     }
     const wetDistance=mask.map((v,i)=>{if(!v)return 0;for(let d=1;d<=9;d++)if(mask[i-d]===0||mask[i+d]===0)return smooth((d-1)/9);return 1});
-    function sample(x){
+    function landSample(x){
       const q=regionalSample(x);
       if(q.wet||q.frozen)return q;
       const t=clamp(x/maskStep,0,wetDistance.length-1),i=Math.floor(t);
@@ -256,7 +256,29 @@
       }
       return {...q,surface};
     }
-    return {sample,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
+    const rivers=[];
+    for(const [target,biome,radius,depth] of [[26000,'woodland',145,38],[34000,'meadow',190,52],[41000,'conifer',110,32],[61000,'conifer',165,45],[69000,'steppe',205,50]]){
+      let best=null;
+      for(let x=target-2200;x<=target+2200;x+=48){
+        const a=landSample(x-radius-100),c=landSample(x),z=landSample(x+radius+100);
+        if([a,c,z].some(q=>q.wet||q.frozen||q.biome!==biome)||rivers.some(p=>Math.abs(p.x-x)<1000))continue;
+        let valid=true;for(let d=-radius-100;d<=radius+100;d+=12){const q=landSample(x+d);if(q.wet||q.frozen||q.biome!==biome){valid=false;break}}if(!valid)continue;
+        const score=Math.abs(x-target)*.025+Math.abs(a.surface-z.surface)*2+Math.abs(c.surface-(a.surface+z.surface)/2);
+        if(!best||score<best.score)best={x,radius,depth,level:Math.max(a.surface,z.surface,c.surface)+3,score,biome};
+      }
+      if(best)rivers.push(best);
+    }
+    function sample(x){
+      const q=landSample(x),p=rivers.find(p=>Math.abs(x-p.x)<p.radius+100);
+      if(!p||q.wet||q.frozen)return q;
+      const u=Math.abs(x-p.x)/p.radius;
+      const bed=p.level+p.depth*(1-u*u);
+      const blend=1-smoothstep(.82,1+100/p.radius,u);
+      const surface=mix(q.surface,bed,blend);
+      const wet=u<1&&surface>p.level;
+      return {...q,surface,wet,water:wet?p.level:null,waterKind:wet?'river':undefined,cover:wet?0:q.cover};
+    }
+    return {sample,rivers,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
 
   if(typeof module!=='undefined')module.exports=createArcheWorld;
