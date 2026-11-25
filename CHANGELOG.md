@@ -697,3 +697,7 @@
 
 ## 0.11.47
 - Ocean-only procedural swells with shared epoch, variable amplitude, seabed-clipped shoreline and shallow foam. Depth gradient. Physics and background waves unchanged; mock render and syntax checked.
+
+
+## 0.11.48
+- Swimming follows ocean wave height with bounded drift and tilt; wading responds to moving surface. Lakes unchanged. Syntax and numerical tests passed; live physics and floating objects not yet verified/implemented.
