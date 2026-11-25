@@ -833,3 +833,7 @@
 ## 0.11.80
 - Round the small cave's back wall beneath a layer of solid rock. Shade the closure and end the floor highlight at the player's turnaround point.
 - Syntax, watershed, buried-wall clearance and left-mouth exit checks passed.
+
+## 0.11.81
+- Keep solid rock above the small cave beyond its entrance ramp and blend the chamber roof into a longer curved back wall.
+- Geometry checks passed for roof cover, wall curvature, standing clearance, turnaround and left exit.
