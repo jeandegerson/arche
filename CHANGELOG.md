@@ -559,3 +559,7 @@
 ## 0.11.14 — Shared tree falls
 - Broadcast a completed chop as soon as the tree falls and save the event independently. Keep the trunk pose in shared history and apply events when their terrain streams in.
 - Simulated shared fall, trunk creation, duplicate suppression and broadcasting while a database save was pending. Live two-device gameplay was not tested.
+
+## 0.11.15 — Shared carrying visuals
+- Send carried branch counts in player updates and accept palm logs and planks on receiving clients. Attach carried wood to the remote character’s hand.
+- Simulated sending and receiving carry updates, drawing branches and clearing the branch count. Physical devices were not tested.
