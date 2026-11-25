@@ -180,10 +180,10 @@ function drawRegionalBackground(ctx,world,w,h,ox,oy,day){
     if(snow>.05){const next=clamp((b.s.elevation-260)/230,0,1)*(b.s.weights?.alpine||0);poly([[a.x,a.y],[b.x+.6,b.y],[b.x+.6,b.y+next*(15+20*depth)],[x,y+snow*(12+j*28)*depth],[a.x,a.y+snow*(15+20*depth)]],color(a.s,1+snow*.48))}
     if(v>.35&&snow>.3)poly([[x,y+12],[b.x,b.y+22],[x+step*.2,y+75*depth]],color(a.s,.65));
    }
-   if(a.q===b.q||v>a.s.cover||!['island','coast','woodland','conifer','meadow'].includes(a.s.biome))continue;
+   if(a.q===b.q||v>a.s.cover||!['island','coast','woodland','conifer','meadow','oasis'].includes(a.s.biome))continue;
    const ht=(20+j*48)*depth,tw=ht*(.25+v*.16),fill=color(a.s,.68);
    ctx.fillStyle=fill;
-   if(a.s.biome==='island'||a.s.biome==='coast'){
+   if(a.s.biome==='island'||a.s.biome==='coast'||a.s.biome==='oasis'){
     ctx.beginPath();ctx.moveTo(x,y+2);ctx.quadraticCurveTo(x-3,y-ht*.5,x+3,y-ht);ctx.lineTo(x+5,y-ht);ctx.quadraticCurveTo(x,y-ht*.5,x+2,y+2);ctx.fill();
     for(let k=-2;k<=2;k++){ctx.beginPath();ctx.moveTo(x+4,y-ht);ctx.quadraticCurveTo(x+4+k*tw*.7,y-ht-ht*.24,x+4+k*tw,y-ht+Math.abs(k)*ht*.12);ctx.quadraticCurveTo(x+4+k*tw*.5,y-ht-ht*.03,x+4,y-ht+2);ctx.fill()}
    }else if(a.s.biome==='conifer'){
@@ -212,7 +212,7 @@ ctx.lineTo(right,rightY+3);ctx.lineTo(mid,midY+3);ctx.lineTo(left,leftY+3);ctx.c
   conifer:{density:.57,type:'shrub',height:14,color:'#4e6d57',accent:'#879783'},
   alpine:{density:.18,type:'shrub',height:5,color:'#84917a',accent:'#d4c7cc'},
   steppe:{density:.54,type:'blades',height:21,color:'#b49a5d'},
-  salt:{density:.27,type:'shrub',height:6,color:'#8b9181',accent:'#ac9781'}
+  salt:{density:.27,type:'shrub',height:6,color:'#8b9181',accent:'#ac9781'}, arid:{density:.06,type:'shrub',height:7,color:'#9c9363'}, dunes:{density:0,type:'blades',height:4,color:'#b9a16e'}, sandstone:{density:.02,type:'shrub',height:5,color:'#a99a70'}, oasis:{density:.55,type:'reeds',height:18,color:'#80934f'}
 };
 function drawBiomePlant(ctx,plant,x,y,variation,sway){
   const {type,height,color,accent}=plant;
@@ -277,7 +277,7 @@ worldOverlay(()=>{
   }
 });
 Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,ox=r.bounds.min.x,day=sunlight();ctx.save();ctx.globalCompositeOperation='destination-over';ctx.fillStyle='rgba(35,57,42,'+(.35+day*.3)+')';for(let i=-2;i<Math.ceil(w/13)+2;i++){const q=Math.floor(ox*.32/13)+i,x=i*13-(ox*.32%13),n=landscapeNoise(q+4000);if(archeWorld.sample(ox+x).biome!=='conifer'||n<.25)continue;const y=h*.62+Math.sin(q*.05)*25,ht=18+n*45;ctx.beginPath();ctx.moveTo(x-9,y);ctx.lineTo(x,y-ht);ctx.lineTo(x+9,y);ctx.fill()}ctx.restore()});let soundCtx=null,soundGain=null,windFilter=null,soundOn=false,nextBird=0;const soundToggle=document.querySelector('#soundToggle');async function startNatureSound(){try{if(!soundCtx){soundCtx=new (window.AudioContext||window.webkitAudioContext)();const buffer=soundCtx.createBuffer(1,soundCtx.sampleRate*3,soundCtx.sampleRate),data=buffer.getChannelData(0);let last=0;for(let i=0;i<data.length;i++){last=(last+Math.random()*.04-.02)/1.02;data[i]=last*3}const source=soundCtx.createBufferSource();source.buffer=buffer;source.loop=true;windFilter=soundCtx.createBiquadFilter();windFilter.type='lowpass';windFilter.frequency.value=450;soundGain=soundCtx.createGain();soundGain.gain.value=0;source.connect(windFilter).connect(soundGain).connect(soundCtx.destination);source.start()}soundOn=true;await soundCtx.resume();soundGain.gain.setTargetAtTime(soundOn?.18:0,soundCtx.currentTime,.2);soundToggle.textContent=soundOn?'Sound on':'Sound off';soundToggle.setAttribute('aria-pressed',String(soundOn))}catch(err){soundOn=false;soundToggle.textContent='Sound unavailable'}};function unlockNatureSound(){if(!soundCtx||soundCtx.state!=='running'||!soundOn)startNatureSound()}window.addEventListener('pointerdown',unlockNatureSound,{capture:true});window.addEventListener('keydown',unlockNatureSound,{capture:true});startNatureSound();function natureTone(freq,end,duration,volume){const now=soundCtx.currentTime,o=soundCtx.createOscillator(),g=soundCtx.createGain();o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(end,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.035);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g).connect(soundCtx.destination);o.start();o.stop(now+duration+.02)}Events.on(e,'afterUpdate',()=>{document.querySelector('#releaseHuman').classList.toggle('holding',!!held);if(!soundOn||!soundCtx||soundCtx.state!=='running')return;const now=soundCtx.currentTime,day=sunlight();windFilter.frequency.setTargetAtTime(350+150*Math.sin(now*.13)+day*180,now,.5);if(now>nextBird){nextBird=now+3+Math.random()*9;if(day>.15)natureTone(1300+Math.random()*900,2400+Math.random()*600,.18,.025);else natureTone(3900,3600,.09,.009)}});let weatherClock=0,rainAmount=0,cloudCover=.18,weatherWind=.25,soilWetness=.25;const choppedTrees=new Set();try{for(const x of JSON.parse(onlineMode?'[]':localStorage.getItem(choppedKey)||'[]'))choppedTrees.add(x)}catch{}function treeTraits(q){const n=landscapeNoise(q.x+711),biome=archeWorld.sample(q.x).biome;
-const type=q.type||(['island','coast'].includes(biome)?'palm':['conifer','alpine','steppe'].includes(biome)?'pine':biome==='marsh'||n<.43?'birch':'oak'),size=q.size||56;return {type,size,width:Math.max(3,size*(type==='oak'?.15:type==='pine'?.085:.065))}}function drawTreeSpecies(ctx,q,sway=0){const {type,size,width}=treeTraits(q);
+const type=q.type||(['island','coast','oasis'].includes(biome)?'palm':['conifer','alpine','steppe'].includes(biome)?'pine':biome==='marsh'||n<.43?'birch':'oak'),size=q.size||56;return {type,size,width:Math.max(3,size*(type==='oak'?.15:type==='pine'?.085:.065))}}function drawTreeSpecies(ctx,q,sway=0){const {type,size,width}=treeTraits(q);
 if(type==='palm'){
   const crown=size*.12;
   ctx.strokeStyle='#886843';ctx.lineWidth=width;
@@ -310,13 +310,13 @@ if(snowy>0){
     const h=habitatAt(x);
     if(choppedTrees.has(x)||h.wet||h.frozen)continue;
     const sparse=['coast','marsh','meadow','steppe'].includes(h.biome);
-    if(!sparse&&!['woodland','conifer','island','alpine'].includes(h.biome))continue;
+    if(!sparse&&!['woodland','conifer','island','alpine','oasis'].includes(h.biome))continue;
     const snowy=h.biome==='alpine';
     const slope=Math.abs(solidGaitSurface(x+24)-solidGaitSurface(x-24));
     if(snowy&&(h.surface<-385||slope>25))continue;
     if(sparse&&(slope>15||h.biome==='coast'&&h.surface>601))continue;
     const grove=landscapeNoise(Math.floor(x/260)+214);
-    const density=['coast','island'].includes(h.biome)?.20+grove*.16:snowy?.10+grove*.22:sparse?grove>.43?.075+grove*.12:.023
+    const density=['coast','island','oasis'].includes(h.biome)?.20+grove*.16:snowy?.10+grove*.22:sparse?grove>.43?.075+grove*.12:.023
       :(h.biome==='conifer'?.68:h.biome==='woodland'?.62:.23)*h.cover;
     const seed=landscapeNoise(x+711);
     if(landscapeNoise(x+713)>=density)continue;
