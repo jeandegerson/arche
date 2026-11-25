@@ -819,3 +819,8 @@
 - Limit caves to a main tunnel and at most one lower passage. Shape each floor as a steady grade with smooth ramps, draw a continuous floor edge and mark entrances and exits in gold using the same approach zones as the joystick.
 - Resume players formerly in the conifer upper passage on the main tunnel floor.
 - JavaScript syntax, watershed, surface mouth alignment, tunnel separation and bidirectional traversal checks passed. Live playtesting pending.
+
+## 0.11.78
+- Give cave ceilings irregular rock ledges and alternating low and high sections. Add clipped bedding lines, stone colors by region, and fading daylight at surface mouths.
+- Add small floor undulations while preserving continuous walking edges, marked junctions, and the two-tunnel limit.
+- JavaScript syntax, watershed, junction alignment and bidirectional traversal passed. Visual playtesting pending.
