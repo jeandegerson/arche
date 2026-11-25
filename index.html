@@ -209,15 +209,16 @@ function walkCave(st,dt){
  const p=human.position;
  const current=activeCave();
  const c=current||caveIntent(p.x,rawPadX,padY);
- if(!c||st.air||st.swim)return false;
+ if(!c||(!current&&st.air)||st.swim)return false;
  if(c!==current){
   human.plugin.route=c.id;
+  st.caveVy=0;
   delete human.plugin.coordinatedGait;
  }
  const caveLeft=c.left,caveRight=c.right;
  const dir=Math.sign(walk)||facing,duck=padY>.24&&padY>Math.abs(rawPadX)*1.35;st.compress=(st.compress||0)+((duck?Math.min(1,(padY-.24)/.65):0)-(st.compress||0))*Math.min(1,dt*.24);crouchPose=st.compress;crouched=st.compress>.3;st.vx+=(Math.max(-2,Math.min(2,walk*travelMultiplier))*(1-.75*st.compress)-st.vx)*Math.min(1,dt*.2);let nx=p.x+st.vx*dt;
  if(c.closedRight&&nx>=caveBackWallStop(c)){nx=caveBackWallStop(c);st.vx=0;}
- if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){delete human.plugin.route;delete human.plugin.coordinatedGait;return false;}
+ if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){delete human.plugin.route;delete human.plugin.coordinatedGait;delete st.caveVy;st.air=false;st.vy=0;return false;}
  nx=Math.max(Math.min(caveLeft,p.x),Math.min(Math.max(caveRight,p.x),nx));st.air=false;st.vy=0;st.prep=0;st.charge=0;st.push=null;st.impact=null;st.recover=null;jumpPrep=jumpCharge=jumpRequest=0;facing=dir;
  let envelope=resolveCaveEnvelope(c,nx,st.compress);
  if(!envelope.allowed){nx=p.x;st.vx=0;envelope=resolveCaveEnvelope(c,nx,st.compress);}
@@ -227,8 +228,15 @@ function walkCave(st,dt){
  let cy=p.y+(target-p.y)*Math.min(1,dt*.35);
  if(envelope.allowed&&interval&&nx>=c.left+c.entryRun&&(c.closedRight||nx<=c.right-(c.exitRun||0))){
   const half=(74-28*st.compress)/2;
-  cy=Math.max(interval.top+half,Math.min(interval.bottom-half,cy));
- }
+  const top=interval.top+half,bottom=interval.bottom-half;
+  // Same gravity scale as exterior gait; floor support only acts on contact.
+  st.caveVy=Math.min(12,(st.caveVy||0)+.24*dt);
+  cy=p.y+st.caveVy*dt;
+  if(cy>=bottom){cy=bottom;st.caveVy=0;}
+  if(cy<top){cy=top;st.caveVy=0;}
+  st.air=cy<bottom-.5;
+  st.vy=st.caveVy;
+ }else{st.caveVy=0;st.air=false;}
  Body.setPosition(human,{x:nx,y:cy});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
 }
 const caveStone={
