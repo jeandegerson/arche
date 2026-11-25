@@ -567,3 +567,7 @@
 ## 0.11.16 — Smoother shared movement
 - Send moving player poses up to ten times per second. Interpolate remote limbs and body positions on a 125 ms buffer, following the shortest rotation between poses.
 - Verified simulated pose delivery, remote carry rendering, interpolation across irregular intervals, angle wrapping and movement after an idle gap. Physical devices were not tested.
+
+## 0.11.17 — Shared world only
+- Remove the Play solo button. The official link and old mode-specific URLs open the current shared map.
+- Verified shared startup, name entry and simulated presence for the official link and both legacy mode URLs.
