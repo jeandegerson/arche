@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.11.86</span><header><h1>Archē</h1><small>v0.11.86 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.11.87</span><header><h1>Archē</h1><small>v0.11.87 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
 const travelMultiplier=requestedSpeed==='15'?15:requestedSpeed==='5'?5:requestedSpeed==='3'?3:1;
 if(travelMultiplier>1)document.querySelector('#versionLabel').textContent+=' · '+travelMultiplier+'× travel';
 const archeWorld=createArcheWorld(),worldWidth=archeWorld.width,baseY=620,worldFloor=1320,worldCeiling=-1500;
@@ -24,45 +24,6 @@ if(q)y=Math.min(y,q.a.y+(q.b.y-q.a.y)*(x-q.a.x)/geoStep);for(const c of cliffs){
  return {addRoute,connect,choose,support};
 }
 const walkableRoutes=createWalkableRoutes(solidGaitSurface);
-const coniferGeology={
- datum:{x:43550,depth:310},
- beds:[
-  {depth:0,dip:.012,opening:116,permeable:true},
-  {depth:151,dip:.029,opening:78,permeable:true}
- ],
- fractures:[
-  {x:43000,runPerDepth:1.52,penetration:190},
-  {x:44100,runPerDepth:-2.25,penetration:195}
- ]
-};
-function caveBedLevel(geology,bed,x){
- return geology.datum.depth+bed.depth+(x-geology.datum.x)*bed.dip;
-}
-function coniferDrainage(geology){
- const [upper,lower]=geology.beds;
- if(!upper?.permeable||!lower?.permeable||lower.dip<=0)return null;
- const crossings=geology.fractures.flatMap(fracture=>{
-  const gap=caveBedLevel(geology,lower,fracture.x)-caveBedLevel(geology,upper,fracture.x);
-  const run=fracture.runPerDepth*gap/(1-lower.dip*fracture.runPerDepth);
-  const depth=gap+lower.dip*run;
-  if(depth<=0||depth>fracture.penetration||Math.abs(run)<depth*1.25)return [];
-  return [{mouth:fracture.x,bed:fracture.x+run}];
- }).sort((a,b)=>a.mouth-b.mouth);
- const inlet=crossings.find(c=>c.bed>c.mouth);
- const outlet=crossings.find(c=>c.bed<c.mouth&&c.bed>inlet?.bed+120);
- if(!inlet||!outlet)return null;
- return {id:'conifer-lower',parent:'conifer',left:inlet.mouth,right:outlet.mouth,
-  descent:inlet.bed-inlet.mouth,ascent:outlet.mouth-outlet.bed,
-  geology,bed:lower};
-}
-const coniferLower=coniferDrainage(coniferGeology);
-const caves=[{id:'cave',left:27300,right:28210,closedRight:true},{id:'woodland',left:39440,right:40780},{id:'conifer',left:42500,right:44600,geology:coniferGeology,bed:coniferGeology.beds[0]},{id:'eastern',left:68000,right:69200},{id:'desert',left:82000,right:83700}];
-const caveBranches=[...(coniferLower?[coniferLower]:[]),{id:'desert-lower',parent:'desert',left:82400,right:83300,depth:124,descent:300,ascent:195,grade:-14}];
-const allCaveRoutes=[...caves,...caveBranches];
-function caveRegion(x){return caves.some(c=>x>=c.left-125&&x<=c.right+125);}
-function exteriorVisualSurface(x){return solidGaitSurface(x);}
-function caveById(id){return allCaveRoutes.find(c=>c.id===id);}
-function activeCave(){return caveById(human?.plugin.route);}
 function caveEase(t){
  const u=Math.max(0,Math.min(1,t));
  return u*u*(3-2*u);
@@ -82,98 +43,101 @@ function caveSurface(x){
  return Math.min(rockA,rockB)<519?
   Math.min(soil,rockA+(rockB-rockA)*(x-rockLeft)/geoStep):soil;
 }
-// Each feature shapes both sides of the opening through the same piece of rock.
-const caveFormations={
- cave:[{at:.66,width:145,floor:-29,roof:35,kind:'collapse'}],
- conifer:[...coniferGeology.fractures.map(fracture=>({at:(fracture.x-42500)/2100,width:95,floor:7,roof:25,kind:'fracture'})),{at:.69,width:150,floor:-16,roof:12,kind:'shelf'}],
- 'conifer-lower':[{at:.74,width:143,floor:-15,roof:12,kind:'collapse'}],
- desert:[{at:.41,width:180,floor:-12,roof:13,kind:'shelf'}],
- 'desert-lower':[{at:.49,width:175,floor:18,roof:12,kind:'channel'},{at:.73,width:110,floor:-9,roof:5,kind:'channel'}]
-};
-function caveFormationX(c,feature){
- return c.left+(c.right-c.left)*feature.at;
+
+// Bed dip and soluble-bed continuity vary in fixed world coordinates.
+function caveRockNoise(x,scale,salt){
+ const cell=Math.floor(x/scale);
+ const sample=i=>{
+  const n=Math.sin(i*127.1+salt*311.7)*43758.5453;
+  return n-Math.floor(n);
+ };
+ const t=caveEase(x/scale-cell);
+ return sample(cell)*(1-t)+sample(cell+1)*t;
 }
-function caveFormationOffset(c,x,side){
- let offset=0;
- for(const feature of caveFormations[c.id]||[]){
-  const distance=x-caveFormationX(c,feature);
-  const width=feature.width*(distance<0?.8:1.2);
-  offset+=feature[side]*caveEase(1-Math.abs(distance)/width);
+function caveBed(c,x){
+ const distance=x-c.left;
+ return c.datum+c.dip*distance+28*(caveRockNoise(x,260,7)-caveRockNoise(c.left,260,7));
+}
+function caveOpening(c,x){
+ return 76+85*caveRockNoise(x,205,3)+37*caveRockNoise(x,430,5);
+}
+function generateCaveWorld(){
+ const hosts=[
+  {id:'cave',biomes:['meadow']},{id:'woodland',biomes:['woodland']},
+  {id:'conifer',biomes:['conifer']},{id:'eastern',biomes:['steppe']},
+  {id:'desert',biomes:['arid','sandstone']}
+ ];
+ const routes=[];
+ for(const host of hosts){
+  let best=null;
+  for(let x=archeWorld.shore+960;x<archeWorld.width-2300;x+=80){
+   const terrain=archeWorld.sample(x);
+   if(terrain.wet||!host.biomes.includes(terrain.biome))continue;
+   if(routes.some(c=>x<c.right+520&&x+2150>c.left))continue;
+   const datum=caveSurface(x);
+   const rise=datum-caveSurface(x+240);
+   if(rise<5||Math.abs(caveSurface(x-24)-datum)>20)continue;
+   const dip=.24+.10*caveRockNoise(x,850,11);
+   const c={id:host.id,left:x,datum,dip,entryRun:240};
+   let right=x+240;
+   let closedRight=true;
+   const reach=900+Math.round(caveRockNoise(x,500,23)*52)*20;
+   for(let d=240;d<=reach;d+=20){
+    const at=x+d;
+    const ground=caveSurface(at);
+    const depth=caveBed(c,at)-ground;
+    if(caveBed(c,at)>worldFloor-35)break;
+    if(depth<98&&d>=400){
+     for(let offset=20;offset<=200;offset+=20){
+      const exit=at+offset;
+      if(caveSurface(exit)>=caveBed(c,exit)&&!archeWorld.sample(exit).wet){right=exit;closedRight=false;break;}
+     }
+     break;
+    }
+    right=at;
+    if(d>680&&caveRockNoise(at,410,13)<.35)break;
+   }
+   if(right-x<680)continue;
+   c.right=right;c.closedRight=closedRight;
+   if(!closedRight)c.exitRun=180;
+   const stop=c.closedRight?c.right-56:c.right-240;
+   let playable=true;
+   for(let at=x+300;at<=stop;at+=10){
+    if(caveFloor(at,c)-caveCeiling(at,c)<68){playable=false;break;}
+   }
+   if(!playable)continue;
+   // A long run through rock takes precedence over a shallow notch.
+   const score=right-x+Math.min(95,rise)*3+180*caveRockNoise(x,680,17);
+   if(!best||score>best.score)best={c,score};
+  }
+  if(best)routes.push(best.c);
  }
- return offset;
+ return routes;
 }
-// Running profiles record floor elevation and roof clearance at the same stations.
-const caveProfiles={
- // Carlsbad: the entrance corridor descends into a broad terminal room.
- cave:[[0,0,76],[.21,105,78],[.39,169,92],[.57,190,146],[.75,175,159],[1,171,75]],
- // Lehman: near-level bed with several rooms and constrictions.
- woodland:[[0,0,76],[.22,154,93],[.36,213,149],[.52,216,85],[.69,233,154],[.82,190,108],[1,0,76]],
- // Mammoth: independent levels; station floor values here are offsets from each dipping bed.
- conifer:[[0,0,82],[.25,0,104],[.43,-8,176],[.60,4,145],[.76,8,101],[1,0,82]],
- 'conifer-lower':[[0,0,73],[.24,0,78],[.42,6,83],[.64,1,76],[.78,-4,94],[1,0,73]],
- // Mammoth historic profile: a deep river hall below an asymmetric approach.
- eastern:[[0,0,80],[.22,148,89],[.38,183,120],[.59,221,172],[.76,190,83],[.86,110,88],[1,0,77]],
- // Carlsbad's mapped descent and lower passages: broad bench over a deeper, low conduit.
- desert:[[0,0,78],[.21,180,108],[.34,233,122],[.54,248,99],[.72,237,108],[.87,125,83],[1,0,75]],
- 'desert-lower':[[0,0,74],[.26,0,76],[.39,10,83],[.61,18,78],[.78,4,85],[1,0,74]]
-};
-function caveProfileValue(c,x,column){
- const stations=caveProfiles[c.id];
- const t=Math.max(0,Math.min(1,(x-c.left)/(c.right-c.left)));
- let i=1;
- while(i<stations.length-1&&t>stations[i][0])i++;
- const a=stations[i-1],b=stations[i];
- const mix=caveEase((t-a[0])/(b[0]-a[0]));
- return a[column]+(b[column]-a[column])*mix;
-}
+const caves=generateCaveWorld();
+const allCaveRoutes=caves;
+function caveRegion(x){return caves.some(c=>x>=c.left-125&&x<=c.right+125);}
+function exteriorVisualSurface(x){return solidGaitSurface(x);}
+function caveById(id){return caves.find(c=>c.id===id);}
+function activeCave(){return caveById(human?.plugin.route);}
 function caveFloor(x,c){
- if(c.parent){
-  const parent=caveById(c.parent);
-  const local=caveFloor(x,parent);
-  const blend=caveEase(Math.min((x-c.left)/c.descent,(c.right-x)/c.ascent));
-  if(!blend)return local;
-  const t=(x-c.left)/(c.right-c.left);
-  const middle=(c.left+c.right)/2;
-  const bed=c.bed?caveSurface(c.geology.datum.x)+caveBedLevel(c.geology,c.bed,x):
-   caveFloor(middle,parent)+c.depth+c.grade*(t-.5);
-  return local+(bed-local)*blend+caveProfileValue(c,x,1)+caveFormationOffset(c,x,'floor');
- }
- const distance=c.closedRight?x-c.left:Math.min(x-c.left,c.right-x);
- const width=c.right-c.left;
- const bedDepth=c.bed?c.geology.datum.depth:0;
- const depth=bedDepth*caveEase(distance/Math.min(380,width*.34))+caveProfileValue(c,x,1);
- const surface=caveSurface(x);
- const t=Math.max(0,Math.min(1,(x-c.left)/width));
- const grade=c.bed?caveSurface(c.geology.datum.x)+caveBedLevel(c.geology,c.bed,x)-bedDepth:
-  caveSurface(c.left)*(1-t)+caveSurface(c.right)*t;
- const blend=caveEase(distance/(width*.25));
- const bedrock=blend*(5*Math.sin(x*.012)+2*Math.sin(x*.028));
- const rubble=c.closedRight?24*caveEase((t-.76)/.24):0;
- return surface+(grade-surface)*blend+depth+bedrock-rubble+caveFormationOffset(c,x,'floor');
+ const mouth=caveSurface(x);
+ const entry=caveEase((x-c.left)/c.entryRun);
+ const exit=c.exitRun?caveEase((c.right-x)/c.exitRun):1;
+ return mouth+(caveBed(c,x)-mouth)*entry*exit;
 }
 function caveBackWallStop(c){return c.right-56;}
 function caveCeiling(x,c){
- const ledges=5*Math.sin(x*.038)+3*Math.sin(x*.091);
- const bedOpening=c.bed?c.bed.opening-(c.parent?78:116):0;
- const clearance=Math.max(70,caveProfileValue(c,x,2)+bedOpening+ledges+caveFormationOffset(c,x,'roof'));
- if(c.parent)return caveFloor(x,c)-clearance;
- const distance=c.right-x;
- const shoulder=caveEase((distance-95)/135);
- const cap=c.closedRight?caveEase(distance/(c.right-caveBackWallStop(c))):1;
  const floor=caveFloor(x,c);
- const roof=floor-(c.closedRight?70+(clearance-70)*shoulder:clearance)*cap;
- const mouthDistance=c.closedRight?x-c.left:Math.min(x-c.left,c.right-x);
- const cover=30*caveEase((mouthDistance-85)/140);
- const buriedRoof=caveSurface(x)+cover;
- // Round the blend between the chamber crown and the rock above it.
- const join=Math.max(0,12-Math.abs(roof-buriedRoof));
- const ceiling=Math.max(roof,buriedRoof)+join*join/48;
- return Math.min(floor,ceiling);
+ const distance=Math.min(x-c.left,c.closedRight?Infinity:c.right-x);
+ const cover=26*caveEase((distance-75)/145);
+ const taper=c.closedRight?caveEase((c.right-x)/56):1;
+ return Math.min(floor,Math.max(caveSurface(x)+cover,floor-caveOpening(c,x)*taper));
 }
 for(const c of allCaveRoutes)walkableRoutes.addRoute(c.id,c.left,c.right,x=>caveFloor(x,c));
 function caveMouth(c,dir){
  if(c.closedRight&&dir<0)return null;
- return {edge:dir>0?c.left:c.right,approach:c.parent?65:125,inside:c.parent?12:110};
+ return {edge:dir>0?c.left:c.right,approach:125,inside:110};
 }
 function caveMouthContains(c,x,dir){
  const mouth=caveMouth(c,dir);
@@ -189,27 +153,19 @@ function caveIntent(x,dx,dy){
  return caveEntryGesture(dx,dy)?caves.find(c=>caveMouthContains(c,x,Math.sign(dx))):null;
 }
 function gaitRouteSurface(x){const c=activeCave();return c?caveFloor(x,c):walkableRoutes.support('surface',x);}
-function caveBranchIntent(c,x,dx,dy){
- if(!caveEntryGesture(dx,dy))return null;
- return caveBranches.find(branch=>branch.parent===c.id&&caveMouthContains(branch,x,Math.sign(dx)));
-}
 function walkCave(st,dt){
  const p=human.position;
  const current=activeCave();
- let c=current||caveIntent(p.x,rawPadX,padY);
+ const c=current||caveIntent(p.x,rawPadX,padY);
  if(!c||st.air||st.swim)return false;
- if(Math.abs(padY)<.15)st.caveBranchLatch=false;
- const branch=current&&!st.caveBranchLatch&&caveBranchIntent(current,p.x,rawPadX,padY);
- if(branch)c=branch;
  if(c!==current){
-  st.caveBranchLatch=true;
   human.plugin.route=c.id;
   delete human.plugin.coordinatedGait;
  }
  const caveLeft=c.left,caveRight=c.right;
  const dir=Math.sign(walk)||facing,duck=padY>.24&&padY>Math.abs(rawPadX)*1.35;st.compress=(st.compress||0)+((duck?Math.min(1,(padY-.24)/.65):0)-(st.compress||0))*Math.min(1,dt*.24);crouchPose=st.compress;crouched=st.compress>.3;st.vx+=(Math.max(-2,Math.min(2,walk*travelMultiplier))*(1-.75*st.compress)-st.vx)*Math.min(1,dt*.2);let nx=p.x+st.vx*dt;
  if(c.closedRight&&nx>=caveBackWallStop(c)){nx=caveBackWallStop(c);st.vx=0;}
- if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){if(c.parent){st.caveBranchLatch=true;human.plugin.route=c.parent;Body.setPosition(human,{x:nx,y:caveFloor(nx,caveById(c.parent))-37+14*st.compress});Body.setVelocity(human,{x:0,y:0});delete human.plugin.coordinatedGait;return true;}delete human.plugin.route;delete human.plugin.coordinatedGait;return false;}
+ if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){delete human.plugin.route;delete human.plugin.coordinatedGait;return false;}
  nx=Math.max(Math.min(caveLeft,p.x),Math.min(Math.max(caveRight,p.x),nx));st.air=false;st.vy=0;st.prep=0;st.charge=0;st.push=null;st.impact=null;st.recover=null;jumpPrep=jumpCharge=jumpRequest=0;facing=dir;
  Body.setPosition(human,{x:nx,y:p.y+(caveFloor(nx,c)-37+14*st.compress-p.y)*Math.min(1,dt*.35)});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
 }
@@ -217,10 +173,8 @@ const caveStone={
  cave:{light:'#7b6b52',rock:'#44413a',dark:'#252925',seam:'#a59679',bed:'#786851',grain:'#a69575'},
  woodland:{light:'#75745b',rock:'#43483d',dark:'#242b25',seam:'#a1a084',bed:'#665b48',grain:'#99876c'},
  conifer:{light:'#707975',rock:'#424e4b',dark:'#232d2e',seam:'#9aaba1',bed:'#59635d',grain:'#8c9991'},
- 'conifer-lower':{light:'#5d7169',rock:'#374741',dark:'#202c2b',seam:'#849c92',bed:'#4e615b',grain:'#82968e'},
  eastern:{light:'#89796b',rock:'#514743',dark:'#302827',seam:'#b5a093',bed:'#786654',grain:'#aa957f'},
  desert:{light:'#9b7959',rock:'#674b3b',dark:'#392d29',seam:'#bf9b77',bed:'#987552',grain:'#c5a17c'},
- 'desert-lower':{light:'#846b53',rock:'#544437',dark:'#312923',seam:'#a88d71',bed:'#716354',grain:'#a99b88'}
 };
 function caveTextureNoise(n){
  const value=Math.sin(n*127.1+311.7)*43758.5453;
@@ -231,7 +185,7 @@ function paintCaveRock(ctx,c,material,start,end,top,bottom){
  for(let y=Math.floor(top/rowHeight)*rowHeight;y<bottom+rowHeight;y+=rowHeight){
   const offset=(y/rowHeight%2)*38;
   for(let x=Math.floor((start-offset)/columnWidth)*columnWidth+offset;x<end+columnWidth;x+=columnWidth){
-   const key=x*.19+y*.031+c.left*.07+(c.parent?19:0);
+   const key=x*.19+y*.031+c.left*.07;
    const n=caveTextureNoise(key);
    const lean=(caveTextureNoise(key+1)-.5)*24;
    ctx.beginPath();
@@ -273,52 +227,6 @@ function paintCaveRock(ctx,c,material,start,end,top,bottom){
  }
  ctx.globalAlpha=1;
 }
-function paintCaveFormation(ctx,c,material,start,end){
- for(const feature of caveFormations[c.id]||[]){
-  const center=caveFormationX(c,feature);
-  if(center+feature.width<start||center-feature.width>end)continue;
-  const left=Math.max(start,center-feature.width*.68);
-  const right=Math.min(end,center+feature.width*.85);
-  if(left>=right)continue;
-  if(feature.kind==='channel'){
-   const wash=ctx.createLinearGradient(center-feature.width*.68,0,center+feature.width*.85,0);
-   wash.addColorStop(0,'transparent');
-   wash.addColorStop(.5,material.grain);
-   wash.addColorStop(1,'transparent');
-   ctx.fillStyle=wash;ctx.globalAlpha=.42;
-   ctx.beginPath();ctx.moveTo(left,caveFloor(left,c));
-   for(let x=left;x<right;x+=8)ctx.lineTo(x,caveFloor(x,c)-13);
-   ctx.lineTo(right,caveFloor(right,c));
-   for(let x=right;x>left;x-=8)ctx.lineTo(x,caveFloor(x,c));
-   ctx.closePath();ctx.fill();
-   continue;
-  }
-  for(let x=center+Math.floor((left-center)/17)*17;x<right;x+=17){
-   const n=caveTextureNoise(x+center);
-   const size=(feature.kind==='collapse'?14:8)*(1+n);
-   const floor=caveFloor(x,c)-1;
-   ctx.beginPath();
-   ctx.moveTo(x-size*.7,floor);
-   ctx.lineTo(x-size*.38,floor-size*.48);
-   ctx.lineTo(x+size*.46,floor-size*.72);
-   ctx.lineTo(x+size*.71,floor-size*.38);
-   ctx.lineTo(x+size*.56,floor);ctx.closePath();
-   ctx.globalAlpha=.72;
-   ctx.fillStyle=n>.42?material.light:material.rock;
-   ctx.fill();
-   ctx.strokeStyle=material.dark;ctx.lineWidth=1;ctx.stroke();
-  }
-  if(feature.kind!=='shelf'){
-   const crown=caveCeiling(center,c);
-   ctx.globalAlpha=.64;ctx.lineWidth=3;ctx.strokeStyle=material.dark;
-   ctx.beginPath();ctx.moveTo(center-16,crown-12);
-   ctx.lineTo(center-5,crown+13);
-   ctx.lineTo(center+11,crown+21);
-   ctx.lineTo(center+4,crown+40);ctx.stroke();
-  }
- }
- ctx.globalAlpha=1;
-}
 function paintCaveTread(ctx,c,material,points,start,end){
  ctx.fillStyle=material.bed;
  ctx.beginPath();
@@ -349,7 +257,6 @@ function paintCaveTread(ctx,c,material,points,start,end){
 function paintCave(c){
  const ctx=r.context,lo=r.bounds.min.x,hi=r.bounds.max.x;
  if(c.right<lo||c.left>hi)return;
- const parent=caveById(c.parent);
  const material=caveStone[c.id];
  const {light:lip,rock:wall,dark:shadow}=material;
  const points=[];
@@ -357,7 +264,7 @@ function paintCave(c){
  const end=Math.min(c.right,c.left+Math.ceil((hi-c.left)/8)*8);
  for(let x=start;;x=Math.min(end,x+8)){
   const floor=caveFloor(x,c);
-  const roof=Math.max(caveSurface(x),parent?caveCeiling(x,parent):-Infinity,caveCeiling(x,c));
+  const roof=caveCeiling(x,c);
   points.push({x,floor,roof:Math.min(floor,roof)});
   if(x===end)break;
  }
@@ -380,9 +287,8 @@ function paintCave(c){
  ctx.fillRect(start,top,end-start,bottom-top);
  paintCaveRock(ctx,c,material,start,end,top,bottom);
  paintCaveTread(ctx,c,material,points,start,end);
- paintCaveFormation(ctx,c,material,start,end);
  const daylight=sunlight();
- if(!parent){
+ {
   for(const edge of c.closedRight?[c.left]:[c.left,c.right]){
    if(edge+200<lo||edge-200>hi)continue;
    const dir=edge===c.left?1:-1;
@@ -410,7 +316,7 @@ function paintCave(c){
  ctx.restore();
 }
 function paintCaveFloor(c){
- const ctx=r.context,parent=caveById(c.parent);
+ const ctx=r.context;
  const lo=r.bounds.min.x,hi=r.bounds.max.x;
  if(c.right+125<lo||c.left-125>hi)return;
  function stroke(start,end,floor,color,width){
@@ -427,11 +333,9 @@ function paintCaveFloor(c){
  }
  ctx.save();
  const floor=x=>caveFloor(x,c)-1;
- // A branch shares its parent's floor at the mouth and gains its own edge as it descends.
- const inset=parent?45:0;
- const origin=c.left+inset;
+ const origin=c.left;
  const start=Math.max(origin,origin+Math.floor((lo-5-origin)/5)*5);
- const end=Math.min(origin+Math.ceil((hi+5-origin)/5)*5,c.closedRight?caveBackWallStop(c):c.right-inset);
+ const end=Math.min(origin+Math.ceil((hi+5-origin)/5)*5,c.closedRight?caveBackWallStop(c):c.right);
  if(start<end)stroke(start,end,floor,caveStone[c.id].grain,1);
  for(const dir of [1,-1]){
   const mouth=caveMouth(c,dir);
@@ -445,15 +349,8 @@ function paintCaveFloor(c){
   grad.addColorStop(center*.55,'rgba(211,196,152,.32)');
   grad.addColorStop(center,'rgba(231,213,167,.82)');
   grad.addColorStop(1,'rgba(211,196,152,.28)');
-  stroke(from,to,x=>(parent?caveFloor(x,parent):caveFloor(x,c))-1,grad,2.5);
-  // Continue the highlighted edge beyond the lip down the actual branch floor.
-  if(parent){
-   const end=edge+dir*125;
-   const ramp=ctx.createLinearGradient(edge,0,end,0);
-   ramp.addColorStop(0,'rgba(231,213,167,.85)');
-   ramp.addColorStop(1,'rgba(231,213,167,0)');
-   stroke(edge,end,floor,ramp,3);
-  }
+  stroke(from,to,floor,grad,2.5);
+
  }
  ctx.restore();
 }
@@ -812,7 +709,7 @@ Events.on(r,'afterRender',()=>{drawRegionalBackground(r.context,archeWorld,r.opt
 const leftY=exteriorVisualSurface(left),midY=exteriorVisualSurface(mid),rightY=exteriorVisualSurface(right);
 ctx.fillStyle=archeWorld.sample(mid).color;
 ctx.beginPath();ctx.moveTo(left,leftY);ctx.lineTo(mid,midY);ctx.lineTo(right,rightY);
-ctx.lineTo(right,rightY+3);ctx.lineTo(mid,midY+3);ctx.lineTo(left,leftY+3);ctx.closePath();ctx.fill();for(let x=b.bounds.min.x+3;x<b.bounds.max.x;x+=5){const n=landscapeNoise(x),hab=habitatAt(x);if(hab.wet||!['woodland','meadow','conifer'].includes(hab.biome)||n>hab.cover)continue;const y=exteriorVisualSurface(x),len=(3+n*9)*hab.cover*(.65+.35*Math.max(0,seasonalWarmth())),sway=Math.sin(t*(1+weatherWind*2)+x*.09)*(1+weatherWind*4);ctx.strokeStyle=seasonalWarmth()<-.25?(n>.5?'#a69b70':'#777b51'):n>.5?'#82964f':'#506b3b';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(x,y+1);ctx.quadraticCurveTo(x+sway,y-len*.6,x+sway+1,y-len);ctx.stroke();if(n>.84&&hab.cover>.85){ctx.fillStyle='#d6c18a';ctx.beginPath();ctx.arc(x+sway+1,y-len,1.8,0,7);ctx.fill()}}}for(const p of plants){if(p.stage<4||p.x<lo||p.x>hi||!p.parts.length)continue;const scale=.8+landscapeNoise(p.x)*.5,cy=p.y-49;for(let j=0;j<13;j++){const n=landscapeNoise(p.x+j*19),a=j*2.399,rr=8+n*15;ctx.fillStyle=['#405e38','#55783e','#72914d'][j%3];ctx.beginPath();ctx.ellipse(p.x+Math.cos(a)*rr*scale+Math.sin(t*.9+j)*1.2,cy+Math.sin(a)*rr*.65,12*scale,8*scale,a,0,7);ctx.fill()}}ctx.restore()});worldOverlay(()=>{for(const c of [...caveBranches,...caves])paintCave(c);for(const c of allCaveRoutes)paintCaveFloor(c);if(activeCave())paintLocalHuman()});Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,t=e.timing.timestamp/1000,day=sunlight(),twilight=Math.max(0,1-Math.min(Math.abs(solarTime-6),Math.abs(solarTime-18))/1.8),ox=r.bounds.min.x;ctx.save();ctx.globalCompositeOperation='destination-over';for(let i=0;i<7;i++){const x=((i*263+t*2.2-ox*.12)%(w+360)+w+360)%(w+360)-180,y=35+landscapeNoise(i+80)*h*.22;ctx.fillStyle='rgba('+Math.round(100+day*135)+','+Math.round(113+day*113)+','+Math.round(139+day*85)+','+(.15+day*.28)+')';for(let j=0;j<5;j++){ctx.beginPath();ctx.ellipse(x+j*22,y+Math.sin(j*2+i)*6,28+landscapeNoise(i*5+j)*20,9+landscapeNoise(j+i)*9,0,0,7);ctx.fill()}}const g=ctx.createLinearGradient(0,0,0,h*.85);g.addColorStop(0,'rgb('+Math.round(10+day*60)+','+Math.round(18+day*111)+','+Math.round(39+day*145)+')');g.addColorStop(1,'rgb('+Math.round(27+day*143+twilight*100)+','+Math.round(35+day*147+twilight*42)+','+Math.round(56+day*130)+')');if(day<.25){for(let i=0;i<75;i++){const x=landscapeNoise(i+800)*w,y=landscapeNoise(i+900)*h*.55;ctx.fillStyle='rgba(240,244,255,'+((1-day*4)*(.25+landscapeNoise(i)*.6))+')';ctx.beginPath();ctx.arc(x,y,.6+landscapeNoise(i+10)*.8,0,7);ctx.fill()}}ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.restore()});function updateWalkingClearance(){if(!human)return;for(const b of Composite.allBodies(e.world)){if(b.isStatic||b.plugin.human||b.plugin.water||b.plugin.rope||b.plugin.ice)continue;const q=b.bounds,w=q.max.x-q.min.x,h=q.max.y-q.min.y;const small=w<=38&&h<=38&&!grips.some(g=>g?.bodyB===b); if(small){if(b.plugin.walkMask===undefined)b.plugin.walkMask=b.collisionFilter.mask;b.collisionFilter.mask=b.plugin.walkMask&~2}else if(b.plugin.walkMask!==undefined){b.collisionFilter.mask=b.plugin.walkMask;delete b.plugin.walkMask}}}Events.on(e,'beforeUpdate',updateWalkingClearance);const biomePlants={
+ctx.lineTo(right,rightY+3);ctx.lineTo(mid,midY+3);ctx.lineTo(left,leftY+3);ctx.closePath();ctx.fill();for(let x=b.bounds.min.x+3;x<b.bounds.max.x;x+=5){const n=landscapeNoise(x),hab=habitatAt(x);if(hab.wet||!['woodland','meadow','conifer'].includes(hab.biome)||n>hab.cover)continue;const y=exteriorVisualSurface(x),len=(3+n*9)*hab.cover*(.65+.35*Math.max(0,seasonalWarmth())),sway=Math.sin(t*(1+weatherWind*2)+x*.09)*(1+weatherWind*4);ctx.strokeStyle=seasonalWarmth()<-.25?(n>.5?'#a69b70':'#777b51'):n>.5?'#82964f':'#506b3b';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(x,y+1);ctx.quadraticCurveTo(x+sway,y-len*.6,x+sway+1,y-len);ctx.stroke();if(n>.84&&hab.cover>.85){ctx.fillStyle='#d6c18a';ctx.beginPath();ctx.arc(x+sway+1,y-len,1.8,0,7);ctx.fill()}}}for(const p of plants){if(p.stage<4||p.x<lo||p.x>hi||!p.parts.length)continue;const scale=.8+landscapeNoise(p.x)*.5,cy=p.y-49;for(let j=0;j<13;j++){const n=landscapeNoise(p.x+j*19),a=j*2.399,rr=8+n*15;ctx.fillStyle=['#405e38','#55783e','#72914d'][j%3];ctx.beginPath();ctx.ellipse(p.x+Math.cos(a)*rr*scale+Math.sin(t*.9+j)*1.2,cy+Math.sin(a)*rr*.65,12*scale,8*scale,a,0,7);ctx.fill()}}ctx.restore()});worldOverlay(()=>{for(const c of caves)paintCave(c);for(const c of allCaveRoutes)paintCaveFloor(c);if(activeCave())paintLocalHuman()});Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,t=e.timing.timestamp/1000,day=sunlight(),twilight=Math.max(0,1-Math.min(Math.abs(solarTime-6),Math.abs(solarTime-18))/1.8),ox=r.bounds.min.x;ctx.save();ctx.globalCompositeOperation='destination-over';for(let i=0;i<7;i++){const x=((i*263+t*2.2-ox*.12)%(w+360)+w+360)%(w+360)-180,y=35+landscapeNoise(i+80)*h*.22;ctx.fillStyle='rgba('+Math.round(100+day*135)+','+Math.round(113+day*113)+','+Math.round(139+day*85)+','+(.15+day*.28)+')';for(let j=0;j<5;j++){ctx.beginPath();ctx.ellipse(x+j*22,y+Math.sin(j*2+i)*6,28+landscapeNoise(i*5+j)*20,9+landscapeNoise(j+i)*9,0,0,7);ctx.fill()}}const g=ctx.createLinearGradient(0,0,0,h*.85);g.addColorStop(0,'rgb('+Math.round(10+day*60)+','+Math.round(18+day*111)+','+Math.round(39+day*145)+')');g.addColorStop(1,'rgb('+Math.round(27+day*143+twilight*100)+','+Math.round(35+day*147+twilight*42)+','+Math.round(56+day*130)+')');if(day<.25){for(let i=0;i<75;i++){const x=landscapeNoise(i+800)*w,y=landscapeNoise(i+900)*h*.55;ctx.fillStyle='rgba(240,244,255,'+((1-day*4)*(.25+landscapeNoise(i)*.6))+')';ctx.beginPath();ctx.arc(x,y,.6+landscapeNoise(i+10)*.8,0,7);ctx.fill()}}ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.restore()});function updateWalkingClearance(){if(!human)return;for(const b of Composite.allBodies(e.world)){if(b.isStatic||b.plugin.human||b.plugin.water||b.plugin.rope||b.plugin.ice)continue;const q=b.bounds,w=q.max.x-q.min.x,h=q.max.y-q.min.y;const small=w<=38&&h<=38&&!grips.some(g=>g?.bodyB===b); if(small){if(b.plugin.walkMask===undefined)b.plugin.walkMask=b.collisionFilter.mask;b.collisionFilter.mask=b.plugin.walkMask&~2}else if(b.plugin.walkMask!==undefined){b.collisionFilter.mask=b.plugin.walkMask;delete b.plugin.walkMask}}}Events.on(e,'beforeUpdate',updateWalkingClearance);const biomePlants={
   sea:{density:.29,type:'blades',height:27,color:'#577763'},
   island:{density:.54,type:'shrub',height:13,color:'#657a4c',accent:'#849364'},
   coast:{density:.51,type:'blades',height:18,color:'#a29a62'},
@@ -1147,11 +1044,11 @@ populateWildlife();function surfaceAt(x){
   let saved=null;try{saved=JSON.parse(localStorage.getItem('arche-character-state')||'null')}catch{}
   const valid=saved&&saved.id===characterId&&Number.isFinite(saved.x)&&saved.x>=0&&saved.x<=worldWidth;
   const testRoute=new URLSearchParams(location.search).get('test');
-  const caveTest=caveById(testRoute==='conifer-upper'?'conifer-lower':testRoute);const x=caveTest?caveTest.left-45:valid?Math.max(20,Math.min(worldWidth-20,saved.x)):spawnX;
+  const caveTest=caveById(testRoute?.replace(/-(upper|lower)$/,''));const x=caveTest?caveTest.left-45:valid?Math.max(20,Math.min(worldWidth-20,saved.x)):spawnX;
   streamTerrain(x);refreshPonds();populateScenicTrees();populateWildlife();
   const q=archeWorld.sample(x),floor=solidGaitSurface(x);
-  const savedCave=valid&&caveById(saved.route==='conifer-upper'?'conifer':saved.route);
-  const startCave=caveTest?caveById(caveTest.parent):savedCave;
+  const savedCave=valid&&saved.caveWorld===2&&caveById(saved.route);
+  const startCave=caveTest?null:savedCave;
   if(startCave&&x>=startCave.left-125&&x<=startCave.right+125)human.plugin.route=startCave.id;
   else delete human.plugin.route;
   const y=activeCave()?caveFloor(x,activeCave())-37:q.wet&&!q.frozen&&Number.isFinite(q.water)?q.water-8:floor-37;
@@ -1162,7 +1059,7 @@ populateWildlife();function surfaceAt(x){
   facing=valid&&saved.face===-1?-1:1;
   delete human.plugin.groundTravel;delete human.plugin.coordinatedGait;
 }
-nameGate.remove();resolve()}});function drawRemote(ctx,pose,meta){const anatomy=pose.slice(1).map(v=>({position:{x:v[0],y:v[1]},angle:v[2],plugin:{}})),forearms=[anatomy[7],anatomy[9]],hands=[anatomy[8],anatomy[10]],p={x:pose[0][0],y:pose[0][1]},facing=meta.face===-1?-1:1,bob=meta.bob||0,angle=pose[0][2]+(meta.lean||0),c=Math.cos(angle),d=Math.sin(angle);const pt=(x,y)=>({x:p.x+x*c-y*d,y:p.y-bob+x*d+y*c});const end=(b,h)=>({x:b.position.x-Math.sin(b.angle)*h,y:b.position.y+Math.cos(b.angle)*h});const mid=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});function line(a,b,w,color){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}function leg(i,far){const t=anatomy[3+i*2],s=anatomy[4+i*2],hip=pt(-facing*5*(meta.crouch)+(i?1.5:-1.5),10-5*(meta.crouch)),knee=mid(end(t,6),end(s,-6)),ankle=end(s,6),pitch=s.plugin.footPitch||0;line(hip,knee,7,far?'#75644f':'#a28a70');line(knee,ankle,5.5,far?'#685746':'#826c55');line(ankle,{x:ankle.x+facing*5*Math.cos(pitch),y:ankle.y+facing*5*Math.sin(pitch)},4,'#55483b')}function arm(i,far){const a=anatomy[1+i],f=forearms[i],h=hands[i],shoulder=pt(i?2:-2,-8),elbow=mid(end(a,7),end(f,-6)),wrist=mid(end(f,6),h.position),skin=far?'#a98a70':'#d9b797';line(shoulder,elbow,5.5,skin);line(shoulder,{x:shoulder.x+(elbow.x-shoulder.x)*.32,y:shoulder.y+(elbow.y-shoulder.y)*.32},7,far?'#56654f':'#71816a');line(elbow,wrist,4.5,skin);line(wrist,h.position,5,skin)}ctx.save();const flip=meta.flip;if(flip){ctx.translate(p.x,p.y);ctx.rotate(flip.angle);ctx.translate(-p.x,-p.y);}const recovery=meta.recover;if(recovery){const a=recovery.angle*Math.pow(Math.max(0,1-recovery.t/(recovery.duration||48)),2);ctx.translate(p.x,p.y+Math.abs(Math.sin(a))*12);ctx.rotate(a);ctx.translate(-p.x,-p.y);}const far=facing>0?0:1,near=1-far;leg(far,true);arm(far,true);leg(near,false);const neck=pt(0,-12),head=anatomy[0],hp=head.position;line(neck,hp,5,'#d9b797');ctx.save();ctx.translate(p.x,p.y-bob);ctx.rotate(angle);ctx.fillStyle='#71816a';ctx.beginPath();ctx.moveTo(-5,-13);ctx.bezierCurveTo(-10,-11,-9,-5,-7,1);ctx.quadraticCurveTo(-5,6,-6,10);ctx.quadraticCurveTo(0,14,6,10);ctx.quadraticCurveTo(5,6,7,1);ctx.bezierCurveTo(9,-5,10,-11,5,-13);ctx.closePath();ctx.fill();ctx.restore();arm(near,false);ctx.translate(hp.x,hp.y);ctx.rotate(head.angle);ctx.fillStyle='#d9b797';ctx.beginPath();ctx.ellipse(0,0,5.8,7,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#655344';ctx.beginPath();ctx.ellipse(-facing*1.2,-3,5.3,4.2,0,Math.PI,Math.PI*2);ctx.fill();ctx.fillStyle='#d9b797';ctx.beginPath();ctx.moveTo(facing*5,-1);ctx.lineTo(facing*7,1);ctx.lineTo(facing*5,2);ctx.fill();ctx.fillStyle='#51463c';ctx.beginPath();ctx.arc(facing*3,-1,.7,0,Math.PI*2);ctx.fill();ctx.restore()}function saveCharacter(){if(!playerName||!human)return;try{localStorage.setItem('arche-character-state',JSON.stringify({id:characterId,x:human.position.x,route:human.plugin.route||'surface',face:facing,name:playerName}))}catch{}}setInterval(saveCharacter,2000);addEventListener('pagehide',saveCharacter);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveCharacter()});const treeEvents=new Map();const peers=new Map(),id=crypto.randomUUID(),status=document.createElement('div');status.style.cssText='position:fixed;right:16px;top:calc(env(safe-area-inset-top,0px) + 100px);color:white;background:#222b29aa;padding:5px;z-index:1100;font:12px system-ui';document.body.appendChild(status);let connected=false,connectionStatus='Connecting…',presenceCount=0,received=0,sent=0,lastStatus=0,lastPose='',lastSent=0;const colors=['#d9b797','#d9b797','#d9b797','#a28a70','#826c55','#a28a70','#826c55','#d9b797','#d9b797','#d9b797','#d9b797'];const dims=[[13,13],[5,15],[5,15],[6,13],[6,13],[6,13],[6,13],[5,13],[7,6],[5,13],[7,6]];const poseInterval=100,poseBufferDelay=125;
+nameGate.remove();resolve()}});function drawRemote(ctx,pose,meta){const anatomy=pose.slice(1).map(v=>({position:{x:v[0],y:v[1]},angle:v[2],plugin:{}})),forearms=[anatomy[7],anatomy[9]],hands=[anatomy[8],anatomy[10]],p={x:pose[0][0],y:pose[0][1]},facing=meta.face===-1?-1:1,bob=meta.bob||0,angle=pose[0][2]+(meta.lean||0),c=Math.cos(angle),d=Math.sin(angle);const pt=(x,y)=>({x:p.x+x*c-y*d,y:p.y-bob+x*d+y*c});const end=(b,h)=>({x:b.position.x-Math.sin(b.angle)*h,y:b.position.y+Math.cos(b.angle)*h});const mid=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});function line(a,b,w,color){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}function leg(i,far){const t=anatomy[3+i*2],s=anatomy[4+i*2],hip=pt(-facing*5*(meta.crouch)+(i?1.5:-1.5),10-5*(meta.crouch)),knee=mid(end(t,6),end(s,-6)),ankle=end(s,6),pitch=s.plugin.footPitch||0;line(hip,knee,7,far?'#75644f':'#a28a70');line(knee,ankle,5.5,far?'#685746':'#826c55');line(ankle,{x:ankle.x+facing*5*Math.cos(pitch),y:ankle.y+facing*5*Math.sin(pitch)},4,'#55483b')}function arm(i,far){const a=anatomy[1+i],f=forearms[i],h=hands[i],shoulder=pt(i?2:-2,-8),elbow=mid(end(a,7),end(f,-6)),wrist=mid(end(f,6),h.position),skin=far?'#a98a70':'#d9b797';line(shoulder,elbow,5.5,skin);line(shoulder,{x:shoulder.x+(elbow.x-shoulder.x)*.32,y:shoulder.y+(elbow.y-shoulder.y)*.32},7,far?'#56654f':'#71816a');line(elbow,wrist,4.5,skin);line(wrist,h.position,5,skin)}ctx.save();const flip=meta.flip;if(flip){ctx.translate(p.x,p.y);ctx.rotate(flip.angle);ctx.translate(-p.x,-p.y);}const recovery=meta.recover;if(recovery){const a=recovery.angle*Math.pow(Math.max(0,1-recovery.t/(recovery.duration||48)),2);ctx.translate(p.x,p.y+Math.abs(Math.sin(a))*12);ctx.rotate(a);ctx.translate(-p.x,-p.y);}const far=facing>0?0:1,near=1-far;leg(far,true);arm(far,true);leg(near,false);const neck=pt(0,-12),head=anatomy[0],hp=head.position;line(neck,hp,5,'#d9b797');ctx.save();ctx.translate(p.x,p.y-bob);ctx.rotate(angle);ctx.fillStyle='#71816a';ctx.beginPath();ctx.moveTo(-5,-13);ctx.bezierCurveTo(-10,-11,-9,-5,-7,1);ctx.quadraticCurveTo(-5,6,-6,10);ctx.quadraticCurveTo(0,14,6,10);ctx.quadraticCurveTo(5,6,7,1);ctx.bezierCurveTo(9,-5,10,-11,5,-13);ctx.closePath();ctx.fill();ctx.restore();arm(near,false);ctx.translate(hp.x,hp.y);ctx.rotate(head.angle);ctx.fillStyle='#d9b797';ctx.beginPath();ctx.ellipse(0,0,5.8,7,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#655344';ctx.beginPath();ctx.ellipse(-facing*1.2,-3,5.3,4.2,0,Math.PI,Math.PI*2);ctx.fill();ctx.fillStyle='#d9b797';ctx.beginPath();ctx.moveTo(facing*5,-1);ctx.lineTo(facing*7,1);ctx.lineTo(facing*5,2);ctx.fill();ctx.fillStyle='#51463c';ctx.beginPath();ctx.arc(facing*3,-1,.7,0,Math.PI*2);ctx.fill();ctx.restore()}function saveCharacter(){if(!playerName||!human)return;try{localStorage.setItem('arche-character-state',JSON.stringify({id:characterId,x:human.position.x,route:human.plugin.route||'surface',caveWorld:2,face:facing,name:playerName}))}catch{}}setInterval(saveCharacter,2000);addEventListener('pagehide',saveCharacter);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveCharacter()});const treeEvents=new Map();const peers=new Map(),id=crypto.randomUUID(),status=document.createElement('div');status.style.cssText='position:fixed;right:16px;top:calc(env(safe-area-inset-top,0px) + 100px);color:white;background:#222b29aa;padding:5px;z-index:1100;font:12px system-ui';document.body.appendChild(status);let connected=false,connectionStatus='Connecting…',presenceCount=0,received=0,sent=0,lastStatus=0,lastPose='',lastSent=0;const colors=['#d9b797','#d9b797','#d9b797','#a28a70','#826c55','#a28a70','#826c55','#d9b797','#d9b797','#d9b797','#d9b797'];const dims=[[13,13],[5,15],[5,15],[6,13],[6,13],[6,13],[6,13],[5,13],[7,6],[5,13],[7,6]];const poseInterval=100,poseBufferDelay=125;
 function interpolatePeerPose(peer,renderTime){
   const frames=peer.frames;
   while(frames.length>1&&frames[1].at<=renderTime)frames.shift();
