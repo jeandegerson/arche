@@ -192,6 +192,19 @@ function characterBoundaryContacts(x,y,radius=24){
  const c=activeCave();
  return physicalGeometry.contacts(x,y,radius).filter(hit=>c?hit.edge.caveId===c.id:!hit.edge.caveId);
 }
+// Resolve the character's effective standing/crouching envelope against cave geometry.
+// Entrance taper retains the existing transition until exterior and cave collision are unified.
+function resolveCaveEnvelope(c,x,compression){
+ const q=physicalGeometry.intervals(x).find(v=>v.id===c.id);
+ const transition=x<c.left+c.entryRun||(!c.closedRight&&x>c.right-(c.exitRun||0));
+ const height=74-28*Math.max(0,Math.min(1,compression));
+ if(!q||transition)return {allowed:true,compression,center:characterSupportAt(x,c)-height/2};
+ const gap=q.bottom-q.top;
+ if(gap<46)return {allowed:false,compression,center:null};
+ const required=Math.max(0,(74-gap)/28);
+ const effective=Math.max(compression,required);
+ return {allowed:true,compression:effective,center:q.bottom-(74-28*effective)/2};
+}
 function walkCave(st,dt){
  const p=human.position;
  const current=activeCave();
@@ -206,7 +219,17 @@ function walkCave(st,dt){
  if(c.closedRight&&nx>=caveBackWallStop(c)){nx=caveBackWallStop(c);st.vx=0;}
  if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){delete human.plugin.route;delete human.plugin.coordinatedGait;return false;}
  nx=Math.max(Math.min(caveLeft,p.x),Math.min(Math.max(caveRight,p.x),nx));st.air=false;st.vy=0;st.prep=0;st.charge=0;st.push=null;st.impact=null;st.recover=null;jumpPrep=jumpCharge=jumpRequest=0;facing=dir;
- Body.setPosition(human,{x:nx,y:p.y+(characterSupportAt(nx,c)-37+14*st.compress-p.y)*Math.min(1,dt*.35)});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
+ let envelope=resolveCaveEnvelope(c,nx,st.compress);
+ if(!envelope.allowed){nx=p.x;st.vx=0;envelope=resolveCaveEnvelope(c,nx,st.compress);}
+ if(envelope.allowed){st.compress=envelope.compression;crouchPose=st.compress;crouched=st.compress>.3;}
+ const target=envelope.allowed?envelope.center:p.y;
+ const interval=physicalGeometry.intervals(nx).find(q=>q.id===c.id);
+ let cy=p.y+(target-p.y)*Math.min(1,dt*.35);
+ if(envelope.allowed&&interval&&nx>=c.left+c.entryRun&&(c.closedRight||nx<=c.right-(c.exitRun||0))){
+  const half=(74-28*st.compress)/2;
+  cy=Math.max(interval.top+half,Math.min(interval.bottom-half,cy));
+ }
+ Body.setPosition(human,{x:nx,y:cy});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});coordinatedGroundGait(dt);return true;
 }
 const caveStone={
  cave:{light:'#7b6b52',rock:'#44413a',dark:'#252925',seam:'#a59679',bed:'#786851',grain:'#a69575'},
