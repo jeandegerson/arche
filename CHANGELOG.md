@@ -637,3 +637,7 @@
 
 ## 0.11.32
 - Fix oversized background water projection: cap vertical extent at 8.5% of viewport, constrain far edge below upper landscape, reduce lateral distortion. Perspective guard only; terrain-aware occlusion still pending. Syntax and projection bounds checks passed.
+
+
+## 0.11.33
+- Add 5 deterministic river crossings with explicit waterKind, distinct background shape and faster directional surface ripples. Preserve existing lakes and ice. 12521 terrain checks and syntax passed. No physical current or connected drainage simulation; saved objects and live rendering unverified.
