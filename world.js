@@ -282,10 +282,34 @@
     const islandStart=6012,islandEnd=7848,islandExtra=1836,beachStart=14232,beachEnd=16824,beachExtra=2592;
     function toOld(x){if(x<islandStart)return x;if(x<islandEnd+islandExtra)return islandStart+(x-islandStart)/2;x-=islandExtra;if(x<beachStart)return x;if(x<beachEnd+beachExtra)return beachStart+(x-beachStart)/2;return x-beachExtra;}
     function toNew(x){if(x<islandStart)return x;if(x<islandEnd)return islandStart+(x-islandStart)*2;if(x<beachStart)return x+islandExtra;if(x<beachEnd)return beachStart+islandExtra+(x-beachStart)*2;return x+islandExtra+beachExtra;}
-    function sample(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};if(q.biome==='island'&&!q.wet){const u=clamp((oldX-islandStart)/(islandEnd-islandStart),0,1),forest=smoothstep(.12,.27,u)*(1-smoothstep(.73,.88,u)),mountain=Math.pow(Math.sin(Math.PI*u),2.4)*forest;return {...q,surface:q.surface-mountain*(350+noise(x,620,201)*42+noise(x,170,202)*12),tropical:forest,cover:mix(.14,.94,forest)};}return q;}
+    function baseLandscape(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};if(q.biome==='island'&&!q.wet){const u=clamp((oldX-islandStart)/(islandEnd-islandStart),0,1),forest=smoothstep(.12,.27,u)*(1-smoothstep(.73,.88,u)),mountain=Math.pow(Math.sin(Math.PI*u),2.4)*forest;return {...q,surface:q.surface-mountain*(350+noise(x,620,201)*42+noise(x,170,202)*12),tropical:forest,cover:mix(.14,.94,forest)};}return q;}
+    // Joint landform and cavity formation: the same inclined bed produces the
+    // exposed valley approach, overlying ridge and buried eroded seam.
+    const formations=[],step=8;
+    for(let center=toNew(shore)+2200;center<width+extension+4428-1800;center+=3900){
+      const q=baseLandscape(center);
+      if(!['woodland','meadow','conifer','alpine','steppe','arid','sandstone'].includes(q.biome)||q.wet||q.frozen)continue;
+      const dir=random(center,301)>.5?1:-1,length=800+Math.floor(random(center,302)*400/step)*step,datum=q.surface;
+      const left=Math.min(center-dir*240,center+dir*(length+240)),right=Math.max(center-dir*240,center+dir*(length+240));
+      if(formations.some(f=>left<f.right&&right>f.left))continue;
+      let valid=true;for(let x=left;x<=right;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||p.biome!==q.biome){valid=false;break}}
+      if(!valid)continue;
+      const bed=d=>datum+d*(.24+random(center,303)*.12)+8*Math.sin(d/83)+4*Math.sin(d/37);
+      const aperture=d=>(90+24*noise(center+d,180,304))*smooth(clamp(d/110,0,1))*smooth(clamp((length-d)/100,0,1));
+      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-100)*.28);
+      const points=[];for(let d=0;d<=length;d+=step)points.push({top:bed(d)-aperture(d),bottom:bed(d)});
+      formations.push({center,dir,length,left,right,relief,points,biome:q.biome});
+    }
+    function sample(x){
+      const q=baseLandscape(x),f=formations.find(f=>x>=f.left&&x<=f.right);
+      if(!f)return q;
+      const d=(x-f.center)*f.dir,weight=smooth(clamp((d+240)/240,0,1))*smooth(clamp((f.length+240-d)/240,0,1));
+      return {...q,surface:mix(q.surface,f.relief(d),weight)};
+    }
+    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:f.dir<0,closedRight:f.dir>0,entryRun:f.dir>0?110:0,exitRun:f.dir<0?110:0}));
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
-    return {sample,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
+    return {sample,geologicalPassages,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
 
   }
 
