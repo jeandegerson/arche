@@ -596,3 +596,8 @@
 
 ## 0.11.22
 - Altitude-dependent patchy snow tint for terrain and pine foliage; blended coastal soil and background biome palettes; soften alpine snow facets. Existing physical world and tree population unchanged. Browser rendering unverified.
+
+
+## 0.11.23
+- Extend world east by 27,000 units to 95,160. Add arid steppe, dune sea, two oasis basins and sandstone mountains with desert palettes and sparse vegetation. Preserve original lake search extent and coastal rendering extent.
+- 2,841 original-world sample comparisons identical; new terrain samples finite; inline JavaScript syntax passed. Live water, persistence, mobile rendering and deployment unverified. Desert-specific weather and deep sand physics deferred.

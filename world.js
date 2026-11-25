@@ -4,7 +4,8 @@
   // Distances reflect travel time. Elevations are in the game's physics units.
   const shore = 14400;
   const mainlandLength = 53760;
-  const width = shore + mainlandLength;
+  const originalWidth = shore + mainlandLength;
+  const width = originalWidth + 27000;
   const shelf = 610;
   const clamp = (x, min, max) => Math.max(min, Math.min(max, x));
   const smooth = x => x*x*(3-2*x);
@@ -12,7 +13,7 @@
   const colors = {
     sea:'#5d6863', island:'#e4c689', coast:'#ddbd7f', marsh:'#8c793e',
     woodland:'#637a41', meadow:'#a4a259', conifer:'#415e52', alpine:'#c4d2d0', steppe:'#b18d51',
-    salt:'#b7a58a'
+    salt:'#b7a58a', arid:'#bda174', dunes:'#dfbc80', sandstone:'#b98660', oasis:'#a6ad73'
   };
   const bands = [
     [0, 594], [.035, 579], [.073, 604], [.11, 600], [.145, 575],
@@ -54,6 +55,7 @@
       return mix(shape(a,periodA),shape(b,periodB),blend);
     }
     function baseSample(x) {
+      if(x>originalWidth){const d=x-originalWidth, u=d/27000, edge=baseSample(originalWidth).surface;const blend=smooth(clamp(d/1800,0,1));const dune=Math.pow(.5+.5*Math.sin(d/310+noise(d,2400,31)*2),1.7);const mountain=smooth(clamp((u-.72)/.22,0,1));let surface=mix(edge,565+noise(d,1900,32)*38-95*dune*smooth(clamp((u-.15)/.15,0,1))-mountain*(160+noise(d,1200,33)*95),blend);let biome=u<.08?'steppe':u<.26?'arid':u<.76?'dunes':'sandstone',water=null;for(const center of [11200,18100]){const a=Math.abs(d-center)/520;if(a<1){const basin=smooth(1-a);surface=mix(surface,625,basin);biome='oasis';if(surface>590)water=590;}}return {surface,biome,water};}
       const t=clamp((x-shore)/mainlandLength,0,1);
       let surface,biome,water=null;
       if(x<shore){
@@ -121,7 +123,7 @@
     const lakes=[];
     for(const [biome,target,radius,depth] of lakeSites){
       let best=null;
-      for(let x=radius+24;x+radius<width;x+=48){
+      for(let x=radius+24;x+radius<originalWidth;x+=48){
         if(biome==='coast'&&x<shore+600)continue;
         if(biome==='conifer'&&x<shore+mainlandLength*.755)continue;
         const center=baseSample(x),left=baseSample(x-radius),right=baseSample(x+radius);
@@ -154,11 +156,11 @@
       const canopy=noise(x,980,6);
       const cover=wet||frozen?0:({
         coast:.14,island:.42,marsh:.57,meadow:.54,woodland:.68+canopy*.24,
-        conifer:.69+canopy*.22,alpine:.08,steppe:.16,salt:.05
+        conifer:.69+canopy*.22,alpine:.08,steppe:.16,salt:.05,arid:.035,dunes:0,sandstone:.015,oasis:.48
       }[biome]??0);
       return {surface,water,wet,frozen,biome,cover,color:colors[biome]};
     }
-    return {sample,width,shore,lakes,spawn:shore+264};
+    return {sample,width,originalWidth,shore,lakes,spawn:shore+264};
   }
 
   if(typeof module!=='undefined')module.exports=createArcheWorld;
