@@ -847,3 +847,7 @@
 - Replace tunnel-following stripes with world-aligned rock bedding, fractured faces and clipped rock shading in every cave. Give the main and lower passages distinct floor materials, with rubble against the small cave's back wall.
 - Use a subdued walking edge, concentrated mouth and junction highlights, and daylight fading inward.
 - Syntax and canvas drawing checks passed across all seven routes, at both night and day. Cave geometry and movement code are unchanged. Live visual playtesting pending.
+
+## 0.11.84
+- Shape the small cave collapse, Conifer fractures and rubble ascent, and Desert's shelf and lower channel with shared roof and floor features. Render matching rock scars, debris and sediment along the actual walking terrain.
+- Syntax, mock canvas rendering, seven-route traversal, interior clearance and rock separation checks passed. Live visual playtesting pending.
