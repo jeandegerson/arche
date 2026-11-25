@@ -824,3 +824,8 @@
 - Give cave ceilings irregular rock ledges and alternating low and high sections. Add clipped bedding lines, stone colors by region, and fading daylight at surface mouths.
 - Add small floor undulations while preserving continuous walking edges, marked junctions, and the two-tunnel limit.
 - JavaScript syntax, watershed, junction alignment and bidirectional traversal passed. Visual playtesting pending.
+
+## 0.11.79
+- Shape the first cave as a single-mouth passage opening into a tall chamber with a rising stone floor at its closed back wall.
+- Give the conifer main tunnel a tall central chamber and its lower loop a low ceiling with a modest widening.
+- JavaScript syntax, watershed, mouth alignment, closed-wall turnaround and bidirectional loop traversal checks passed. Live visual playtesting pending.
