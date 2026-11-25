@@ -492,3 +492,7 @@
 - Open directly into one continuous side-on world based on the coastal and alpine concept sketch. A single rocky island sits in the western ocean. The mainland crosses dunes, reed marsh, broadleaf woodland, conifer slopes, the alpine ridge, and a dry steppe with a salt lake.
 - Generate nearby terrain, geological contacts, scenery, and wildlife as the player moves. Keep excavation edits and position in a new save while leaving prior save data in place. This release uses local play because the previous shared coordinates belong to different geography.
 - Verified seeded terrain over three seeds. Mobile-viewport Chromium with Matter.js completed the entire mainland crossing in about 59 simulated minutes and verified streaming, excavation persistence, reload position, and island and lake terrain. Safari was not tested.
+
+## 0.11.1
+- Add a temporary 3× travel mode via `?speed=3` for testing the mainland. Walking, wading, and swimming go faster. Both speeds use the same world save.
+- Verified the complete accelerated mainland crossing in mobile-sized Chromium with Matter.js in about 20 simulated minutes.
