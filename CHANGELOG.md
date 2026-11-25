@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.46
+- Rank candidate cave entrances and both directions by rock resistance and cover, so the map scan cannot consistently reserve space for eastward passages first. The new layout has nine left-only caves, four right-only caves, and eighteen through caves.
+- Restore saved cave routes only at coordinates still inside them after regeneration. Chromium verified all 49 entrances and exits at 1× and 15×, plus cave controls and branch crossings. Watershed tests passed.
+
 ## 0.12.45
 - Use shared fracture variation to shape low ridges and hollows in cave beds. Vary the allowed grade along the bed so steep sections do not turn into long straight ramps. Preserve overhead clearance and fade relief at entrances and closed ends.
 - Chromium checks passed for floor grades, cave controls and interior crossings. All 44 entrances and exits passed at 1× and 15×. Watershed tests passed.

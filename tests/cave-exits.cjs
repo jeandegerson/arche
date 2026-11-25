@@ -40,6 +40,9 @@ const assert=require('node:assert/strict');
       }
      }
     }
+    if(!caves.some(c=>c.closedLeft&&!c.closedRight))throw Error('Expected a right-only entrance');
+    if(!caves.some(c=>!c.closedLeft&&c.closedRight))throw Error('Expected a left-only entrance');
+    if(!caves.some(c=>!c.closedLeft&&!c.closedRight))throw Error('Expected a through cave');
     if(!branches)throw Error('Expected secondary cave passages');
     const tick=()=>Engine.update(e,1000/60);
     function joystick(dx,dy){
@@ -75,12 +78,14 @@ const assert=require('node:assert/strict');
      for(let i=0;i<180&&(!human.plugin.route||dir*(human.position.x-edge)<125);i++)tick();
      if(human.plugin.route!==cave.id||dir*(human.position.x-edge)<125)
       throw Error('Held diagonal stopped at entrance '+cave.id);
-     const x=edge+dir*260;
-     const room=physicalGeometry.walkingRegion(x,cave.id);
-     if(!Number.isFinite(room.top)||room.bottom-room.top<74)throw Error('Invalid underground crouch fixture');
-     position(x,dir,cave);
-     checkCrouch('inside '+cave.id);
     }
+    const standingCave=caves.find(c=>{
+     const room=physicalGeometry.walkingRegion((c.left+c.right)/2,c.id);
+     return Number.isFinite(room.top)&&room.bottom-room.top>=74;
+    });
+    if(!standingCave)throw Error('Expected a standing-height passage');
+    position((standingCave.left+standingCave.right)/2,1,standingCave);
+    checkCrouch('inside '+standingCave.id);
     for(const cave of caves)for(const dir of [-1,1]){
      if(dir>0?cave.closedLeft:cave.closedRight)continue;
      const edge=dir>0?cave.left:cave.right;
@@ -91,8 +96,10 @@ const assert=require('node:assert/strict');
       throw Error('Held diagonal stopped at '+cave.id+' '+dir+' offset '+(human.position.x-edge));
      if(facing!==dir)throw Error('Faced away from entrance '+cave.id);
     }
-    for(const [id,crossing] of [['seam-19720',20372],['seam-50800',51656],['seam-86920',87140]]){
+    for(const branch of caves.filter(c=>c.id.includes('-branch-'))){
+     const id=branch.id.split('-branch-')[0];
      const cave=caves.find(c=>c.id===id);
+     const crossing=(branch.left+branch.right)/2;
      for(const dir of [-1,1]){
       position(crossing-dir*65,dir,cave);
       joystick(dir,0);
