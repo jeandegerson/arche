@@ -289,19 +289,19 @@
     for(let center=toNew(shore)+2200;center<width+extension+4428-1800;center+=3900){
       const q=baseLandscape(center);
       if(!['woodland','meadow','conifer','alpine','steppe','arid','sandstone'].includes(q.biome)||q.wet||q.frozen)continue;
-      const kind=formations.length%4,dir=random(center,301)>.5?1:-1,length=Math.floor(([440,1050,1450,1900][kind]+random(center,302)*180)/step)*step,datum=q.surface;
+      const kind=formations.length%4,dir=random(center,301)>.5?1:-1,length=Math.floor(([800,1500,2100,2900][kind]+random(center,302)*180)/step)*step,datum=q.surface;
       const left=Math.min(center-dir*240,center+dir*(length+240)),right=Math.max(center-dir*240,center+dir*(length+240));
       if(formations.some(f=>left<f.right&&right>f.left))continue;
       let valid=true;for(let x=left;x<=right;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||p.biome!==q.biome){valid=false;break}}
       if(!valid)continue;
       const inner=d=>smooth(clamp((d-220)/180,0,1));
       const through=kind===1||kind===2;
-      const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*([-d*.22, -d*.19+35*Math.sin(d/145), -d*.10+55*Math.sin(d/210), d*.13+30*Math.sin(d/115)][kind]);
+      const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*([-d*.22, -d*.19+35*Math.sin(d/145), -d*.10+55*Math.sin(d/210), -d*.01+30*Math.sin(d/115)][kind]);
       const endDatum=baseLandscape(center+dir*length).surface;
       const bed=d=>through?rawBed(d)+(endDatum-rawBed(length))*smooth(clamp((d-220)/(length-220),0,1)):rawBed(d);
       const chamber=(d,c,r)=>Math.exp(-(((d-c)/r)**2));
       const aperture=d=>{const u=d/length,base=90+24*noise(center+d,180,304),shape=[-15,105*chamber(u,.58,.19),95*chamber(u,.35,.12)+125*chamber(u,.76,.14)-32*chamber(u,.55,.09),45*Math.sin(u*19)+65*chamber(u,.8,.18)][kind];return Math.max(58,base+inner(d)*shape)*smooth(clamp(d/110,0,1))*smooth(clamp((length-d)/100,0,1));};
-      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-220)*.28)*(through?smooth(clamp((length-d-220)/180,0,1)):1);
+      const relief=d=>{const roof=bed(d)-aperture(d),burial=Math.min([100,240,390,680][kind],Math.max(0,d-220)*[.22,.42,.55,.62][kind])*(through?smooth(clamp((length-d-220)/420,0,1)):1);return roof-burial;};
       const points=[];for(let d=0;d<=length;d+=step)points.push({top:bed(d)-aperture(d),bottom:bed(d)});
       formations.push({center,dir,length,left,right,relief,points,kind,through,biome:q.biome});
     }
