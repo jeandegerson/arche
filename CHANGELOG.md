@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.40
+- Open the cave mouth through the visible terrain and taper its walking ramp into the ground. Keep secondary passages clear of the ramp so they cannot interrupt the climb out.
+- Use connected cave support while ascending, preserve exterior footing after release, and retry a shorter step when fast travel hits a steep ramp.
+- Chromium regression passed for all 44 generated cave mouths at 1× and 15×. Watershed tests passed. The legacy world test still expects the older 68,160-unit map.
+
 ## 0.0.2 — 2026-11-24 (proposed)
 - Added Earth, Moon, zero and reverse gravity modes for experimentation with physical interactions.
 - Fixed viewport resizing to remove each old boundary individually before adding replacements, avoiding stale collision walls.

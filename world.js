@@ -366,6 +366,8 @@
         const points=[];let separated=false;
         for(let i=0;i<=n;i++){
           const x=x0+sign*i*step,ground=baseLandscape(x).surface;
+          // Keep secondary passages clear of the parent ramp to the surface.
+          if((!parent.closedLeft&&x-parent.left<150)||(!parent.closedRight&&parent.right-x<150))break;
           const radius=(45+45*(1-rockResistance(x,y)))*Math.sqrt(clamp((n-i)/8,0,1));
           if(y-radius<ground+12||y+radius>1290)break;
           points.push({top:y-radius,bottom:y+radius});

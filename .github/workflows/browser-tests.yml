@@ -15,4 +15,5 @@ jobs:
       - run: |
           python3 -m http.server 8080 > /tmp/arche-server.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/ >/dev/null && break; sleep 1; done
+          node tests/cave-exits.cjs
           node tests/smoke.cjs
