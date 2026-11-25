@@ -71,11 +71,13 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
 // Extract all solid/void interfaces from the same field using marching squares.
 function contours(field){
  const {width:w,height:h,solid}=field,segments=[];
- const cases=[[],[[3,0]],[[0,1]],[[3,1]],[[1,2]],[[3,0],[1,2]],[[0,2]],[[3,2]],[[2,3]],[[0,2]],[[0,1],[2,3]],[[1,2]],[[1,3]],[[0,1]],[[3,0]],[]];
  for(let y=0;y<h-1;y++)for(let x=0;x<w-1;x++){
- const i=y*w+x,k=solid[i]+2*solid[i+1]+4*solid[i+w+1]+8*solid[i+w];
- const p=[[x+.5,y],[x+1,y+.5],[x+.5,y+1],[x,y+.5]];
- for(const [a,b] of cases[k])segments.push([p[a],p[b]]);
+ const i=y*w+x,v=[solid[i],solid[i+1],solid[i+w+1],solid[i+w]],p=[[x,y],[x+1,y],[x+1,y+1],[x,y+1]];
+ const alt=v[0]===v[2]&&v[1]===v[3]&&v[0]!==v[1]&&v[0]===1;
+ for(const tri of alt?[[0,1,3],[1,2,3]]:[[0,1,2],[0,2,3]]){
+ const hits=[];for(let j=0;j<3;j++){const a=tri[j],b=tri[(j+1)%3];if(v[a]!==v[b])hits.push([(p[a][0]+p[b][0])/2,(p[a][1]+p[b][1])/2]);}
+ if(hits.length===2)segments.push(hits);
+ }
  }
  return segments;
 }
@@ -93,7 +95,18 @@ function boundaryPaths(field){
 }
 function physicalField(field){
  const paths=boundaryPaths(field);
- const isSolid=(x,y)=>{const a=Math.round(x),b=Math.round(y);return a<0||a>=field.width||b>=field.height?true:b<0?false:!!field.solid[b*field.width+a]};
+ // Piecewise-linear occupancy on triangles matching marching-squares interfaces.
+ const sample=(x,y)=>{if(y<0)return 0;if(x<0||x>=field.width||y>=field.height)return 1;return field.solid[y*field.width+x]};
+ const isSolid=(x,y)=>{
+ const a=Math.floor(x),b=Math.floor(y),u=x-a,v=y-b;
+ const A=sample(a,b),B=sample(a+1,b),C=sample(a+1,b+1),D=sample(a,b+1);
+ // Ambiguous squares keep diagonally touching solid cells disconnected.
+ const alternate=A===C&&B===D&&A!==B?A===1:false;
+ let value;
+ if(alternate)value=u+v<=1?A+(B-A)*u+(D-A)*v:C+(D-C)*(1-u)+(B-C)*(1-v);
+ else value=u>=v?A+(B-A)*u+(C-B)*v:A+(C-D)*u+(D-A)*v;
+ return value>=.5;
+ };
  const column=x=>{const a=Math.round(x),out=[];if(a<0||a>=field.width)return out;let start=null;
  for(let y=0;y<=field.height;y++){if(y<field.height&&!isSolid(a,y)){if(start===null)start=y-.5;}else if(start!==null){out.push({top:start,bottom:y-.5});start=null;}}return out;};
  return {paths,isSolid,column};
