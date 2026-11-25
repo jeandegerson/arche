@@ -501,3 +501,8 @@
 - Shrink the world to 59,520 units, one fifth of its previous width. Keep its offshore island and all major mainland regions. Alternate broadleaf forest with open meadow and add more frequent local changes in relief.
 - Start a separate save for the new geography. Previous saves remain stored.
 - Ran generator assertions across three seeds and checked inline script syntax. Browser traversal was not tested.
+
+## 0.11.3
+- Give each biome distinct vegetation. Dune grass, tidal eelgrass, cattails, woodland ferns, meadow flowers, conifer understory, alpine cushions, dry steppe grasses, salt-tolerant shrubs, and wind-bent island pines use local placement and wind sway.
+- Add smoothly blended local relief, including dunes, marsh hummocks, wooded rises, mountain shoulders, and steppe terraces. Keep the world's dimensions and save key. Move a restored character clear of the ground if the new relief covers their saved position.
+- Generator assertions passed across three seeds. Mobile-sized Chromium rendered all ten environments, restored position and excavations, and completed a full mainland crossing at 3× speed. iPad Safari was not tested.

@@ -21,6 +21,14 @@
     [.75, 319], [.80, 493], [.86, 568], [.905, 591], [.935, 571], [1, 508]
   ];
 
+  // Regional relief fades between dunes, hummocks, forested ridges and terraces.
+  const reliefBands = [
+    [0, 8, 280], [.035, 15, 320], [.055, 7, 240], [.13, 11, 310],
+    [.17, 23, 720], [.36, 29, 820], [.50, 35, 710], [.61, 34, 560],
+    [.73, 40, 790], [.82, 29, 670], [.88, 19, 520], [.905, 5, 560],
+    [.927, 14, 580], [.96, 29, 680], [1, 31, 730]
+  ];
+
   function createArcheWorld(seed = 20261125) {
     function random(i, salt) {
       let h = seed ^ Math.imul(i,0x27d4eb2d) ^ Math.imul(salt,0x85ebca77);
@@ -31,6 +39,18 @@
       const a=Math.floor(x/wavelength), t=x/wavelength-a;
       return mix(2*random(a,salt)-1,2*random(a+1,salt)-1,smooth(t));
     }
+    function localRelief(x,t) {
+      let i=0;
+      while(i<reliefBands.length-2&&t>reliefBands[i+1][0])i++;
+      const [start,a,periodA]=reliefBands[i],[end,b,periodB]=reliefBands[i+1];
+      const blend=smooth((t-start)/(end-start));
+      function shape(amplitude,period) {
+        const phase=x/period*Math.PI*2+noise(x,1800,15)*.65;
+        return amplitude*(Math.sin(phase)*.65+Math.sin(phase*2+.9)*.17
+          +noise(x,period*1.3,16)*.36);
+      }
+      return mix(shape(a,periodA),shape(b,periodB),blend);
+    }
     function sample(x) {
       const t=clamp((x-shore)/mainlandLength,0,1);
       let surface,biome,water=null;
@@ -38,7 +58,7 @@
         const islandX=(x-shore*.48)/(shore*.12);
         const island=Math.abs(islandX)<1?Math.cos(islandX*Math.PI/2)**2:0;
         const seabed=675+noise(x,480,1)*9;
-        surface=mix(seabed,505+noise(x,220,2)*7,island);
+        surface=mix(seabed,505+noise(x,220,2)*7+noise(x,110,19)*9,island);
         surface=mix(surface,594,smooth(clamp((x-shore+440)/440,0,1)));
         if(surface>shelf)water=shelf;
         biome=water!==null?'sea':island>0?'island':'coast';
@@ -52,6 +72,7 @@
         const terraces=t>.83?7*Math.tanh(noise(x,1450,8)*3):0;
         surface=base+detail*(noise(x,1260,3)*(11+relief*49)
           +noise(x,370,4)*(3+relief*13)+noise(x,130,5)*(1+relief*5)+terraces);
+        surface+=detail*localRelief(x,t);
         if(t<.045)biome='coast';
         else if(t<.145){
           biome='marsh';
