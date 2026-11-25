@@ -855,3 +855,7 @@
 ## 0.11.85
 - Prototype geology-driven topology in Conifer. Dipping permeable beds set passage grades, and penetrating inclined fractures determine the lower loop's junction positions and connector lengths. An incomplete pair or impermeable lower bed leaves the loop closed. Keep the existing surface mouths as access points for the prototype.
 - JavaScript syntax, fracture relocation and removal, permeability, rock cover, clearance, connector grade, divider thickness and traversal of all seven routes passed. Live visual playtesting pending.
+
+## 0.11.86
+- Rebuild all five caves and their two lower routes from running profiles with paired floor and roof-clearance stations. Adapt the shapes of Carlsbad's Main Corridor and lower levels, Lehman's chamber sequence, and Mammoth's multilevel and historic river-hall profiles to Archē's world and walkable grades. Conifer's loop still derives its junctions from bed and fracture intersections.
+- Syntax, seven-route simulated traversal, interior rock cover, headroom, grades and rock dividers passed. Live visual playtesting pending.
