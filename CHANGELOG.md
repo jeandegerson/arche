@@ -709,3 +709,7 @@
 
 ## 0.11.50
 - Extend near scenic ocean 36 units behind foreground wave troughs, only across sea cells, to eliminate exposed background seam. Wave physics unchanged. Syntax and amplitude bound checked; live visual verification pending.
+
+
+## 0.11.51
+- Free logs in sea render at deterministic wave surface with tilt; persistent positions unchanged (visual buoyancy only). More dispersed shallow crest foam and proximity-modulated procedural surf audio. Existing background overlap retained. Syntax and numerical checks passed; live audio and visuals unverified.
