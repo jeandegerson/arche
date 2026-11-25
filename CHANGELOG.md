@@ -609,3 +609,7 @@
 
 ## 0.11.25
 - Insert 5,000 units of new conifer terrain at x=59,000, shifting eastern geography by 5,000 without replacing existing terrain. Total width 100,160. Original sample equivalence and syntax checks passed. Existing persisted entity coordinates east of insertion are not migrated; live deployment unverified.
+
+
+## 0.11.26
+- Grade eastern conifer forest into a long descent comparable to western ascent; retain lake depth and geography outside eastern foothills. Existing object heights not migrated; live rendering and water behavior unverified.
