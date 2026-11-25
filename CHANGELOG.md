@@ -777,3 +777,7 @@
 
 ## 0.11.67
 - Experimental cave at x27300–28100, intentional diagonal entry, walking exits, local route checkpoint and ?test=cave entrance. Route-controlled character movement and cross-section rendering; physical matter carving and cave object interactions remain pending. Syntax passed; live device testing pending.
+
+
+## 0.11.68
+- Widen cave approach selection to 125 units outside and 110 inside; retain surface for horizontal or vertical input. Restore gradual crouching underground and slower crouched movement. Syntax and seven gesture checks passed.
