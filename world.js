@@ -112,7 +112,6 @@
 
     // Site a basin within each biome. Its rim blends back into the same height field.
     const lakeSites=[
-      ['coast',shore+1600,450,77],
       ['marsh',shore+mainlandLength*.105,485,87],
       ['woodland',shore+mainlandLength*.32,475,92],
       ['meadow',shore+mainlandLength*.25,465,83],
@@ -283,7 +282,7 @@
     const islandStart=6012,islandEnd=7848,islandExtra=1836,beachStart=14232,beachEnd=16824,beachExtra=2592;
     function toOld(x){if(x<islandStart)return x;if(x<islandEnd+islandExtra)return islandStart+(x-islandStart)/2;x-=islandExtra;if(x<beachStart)return x;if(x<beachEnd+beachExtra)return beachStart+(x-beachStart)/2;return x-beachExtra;}
     function toNew(x){if(x<islandStart)return x;if(x<islandEnd)return islandStart+(x-islandStart)*2;if(x<beachStart)return x+islandExtra;if(x<beachEnd)return beachStart+islandExtra+(x-beachStart)*2;return x+islandExtra+beachExtra;}
-    function sample(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};return q;}
+    function sample(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};if(q.biome==='island'&&!q.wet){const u=clamp((oldX-islandStart)/(islandEnd-islandStart),0,1),forest=smoothstep(.12,.27,u)*(1-smoothstep(.73,.88,u)),mountain=Math.pow(Math.sin(Math.PI*u),2.4)*forest;return {...q,surface:q.surface-mountain*(350+noise(x,620,201)*42+noise(x,170,202)*12),tropical:forest,cover:mix(.14,.94,forest)};}return q;}
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
     return {sample,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
