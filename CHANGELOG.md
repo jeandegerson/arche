@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.50
+- Extend the chamber prototype to all generated caves. Biome profiles vary chamber width, height and spacing, wall color, fracture scale, bedding and sediment. Render overlapping openings over the same rock cutaway so passages no longer cancel one another visually.
+- Chromium rendered all 35 passages across 10 biomes and verified all 49 openings at 1× and 15×. Watershed tests passed.
+
 ## 0.12.49
 - Start crouch-walking after about 300 ms of holding the joystick diagonally down. Use low, short steps, with a speed cap during fast travel. Keep the descent gesture at cave mouths and straight-down crouching in place.
 - Chromium tested crouch-walking through the conifer throat in both directions, stopping in a crouch, and all 49 entries and exits at 1× and 15×. Watershed tests passed.

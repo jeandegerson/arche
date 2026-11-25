@@ -292,6 +292,12 @@
       return clamp(.18+.48*seam+.22*fracture+.12*noise(x+y*.2,620,408),.08,.98);
     }
     const formations=[],step=8;
+    const chamberProfiles={
+      island:[55,125,1],coast:[34,210,2],marsh:[26,280,1],
+      woodland:[49,190,2],meadow:[32,310,1],conifer:[60,180,2],
+      alpine:[82,112,3],steppe:[33,240,2],arid:[44,220,2],
+      dunes:[27,340,1],sandstone:[64,255,2],oasis:[37,250,1],salt:[28,300,1]
+    };
     const entranceSites=[];
     for(let center=400;center<width+extension+4428-400;center+=420){
       const q=baseLandscape(center);
@@ -394,6 +400,18 @@
           p.top=mix(p.bottom,p.top,closure);
         }
       }
+      if(!chamber){
+        const [height,span,count]=chamberProfiles[q.biome];
+        const centers=Array.from({length:count},(_,i)=>
+          length*(i+1)/(count+1)+(random(center,520+i)-.5)*Math.min(105,length*.1));
+        for(let i=0;i<points.length;i++){
+          const d=i*step,p=points[i],x=center+dir*d;
+          const fade=smooth(clamp((Math.min(d,length-d)-185)/115,0,1));
+          const vault=Math.max(...centers.map(at=>smooth(clamp(1-Math.abs(d-at)/span,0,1))));
+          const cover=p.top-baseLandscape(x).surface;
+          p.top-=Math.min(Math.max(0,cover-18),height*vault*fade);
+        }
+      }
       // Spread sharp changes in accessible floor depth over the adjoining
       // bed. Preserve the roof profile where it leaves enough clearance.
       const floorProfile=points.map((p,i)=>{
@@ -420,7 +438,7 @@
       formations.push({center,dir,length,left,right,points,through,chamber,biome:q.biome});
     }
     function sample(x){return baseLandscape(x);}
-    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,chamber:f.chamber,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
+    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,chamber:f.chamber,biome:f.biome,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
     // Secondary dissolution fronts originate inside existing voids and
     // propagate through adjacent weak rock. Their intersections are unions.
     for(const parent of geologicalPassages.slice()){
@@ -461,7 +479,7 @@
         // Seal the distal end even when the front reached resistant bounds.
         for(let i=0;i<Math.min(8,points.length);i++){const p=points[points.length-1-i],mid=(p.top+p.bottom)/2,r=(p.bottom-p.top)/2*i/8;p.top=mid-r;p.bottom=mid+r;}
         const end=x0+sign*(points.length-1)*step;
-        geologicalPassages.push({id:parent.id+'-branch-'+branch,material:parent.material,left:Math.min(x0,end),right:Math.max(x0,end),fieldPoints:sign>0?points:points.reverse(),fieldScale:step,closedLeft:true,closedRight:true,entryRun:0,exitRun:0});
+        geologicalPassages.push({id:parent.id+'-branch-'+branch,material:parent.material,biome:parent.biome,left:Math.min(x0,end),right:Math.max(x0,end),fieldPoints:sign>0?points:points.reverse(),fieldScale:step,closedLeft:true,closedRight:true,entryRun:0,exitRun:0});
       }
     }
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
