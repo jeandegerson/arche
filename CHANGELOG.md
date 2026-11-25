@@ -749,3 +749,7 @@
 
 ## 0.11.60
 - Impact-scaled splash droplets and synthesized sound, stroke-triggered surface splashes, underwater bubbles and head-submersion ambient lowpass with hysteresis. Local effects only; syntax checked, live audio and rendering pending.
+
+
+## 0.11.61
+- Route surf and environmental action sounds through the underwater acoustic filter as well. Syntax checked.
