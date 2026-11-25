@@ -669,3 +669,7 @@
 
 ## 0.11.40
 - Sample basin contours at four-unit intervals and extend to adjacent terrain centers. Draw opaque water backing before local character, translucent tint and ripples afterward. Syntax and shore intersection test passed; live clipping and remote swimmer tint unverified.
+
+
+## 0.11.41
+- Render near-background inland water using cached analytical basin boundaries and quadratic curves, preserving depth ordering and mesh resolution. Playable geography unchanged. Syntax and mock curve rendering passed; live occlusion and FPS unverified.
