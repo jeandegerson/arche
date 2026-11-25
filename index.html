@@ -210,6 +210,18 @@ function resolveCaveEnvelope(c,x,compression){
  const effective=Math.max(compression,required);
  return {allowed:true,compression:effective,center:q.bottom-(74-28*effective)/2};
 }
+function caveClimbContact(hits,dir){
+ return hits.find(h=>h.edge.kind==='cave-floor'&&h.inclination>=Math.PI/4&&h.normal.x*dir<-.35);
+}
+function caveClimbStep(c,p,dir,dt,compression){
+ const hit=caveClimbContact(characterBoundaryContacts(p.x+dir*10,p.y+12,42),dir);
+ if(!hit)return null;
+ const x=p.x+dir*Math.max(.2,Math.abs(Math.cos(hit.inclination)))*1.35*dt;
+ if(x<c.left||x>c.right||(c.closedRight&&x>=caveBackWallStop(c)))return null;
+ const q=resolveCaveEnvelope(c,x,compression);
+ if(!q.allowed||q.center>=p.y||p.y-q.center>5*dt)return null;
+ return {x,y:q.center,compression:q.compression};
+}
 function walkCave(st,dt){
  const p=human.position;
  const current=activeCave();
@@ -225,6 +237,15 @@ function walkCave(st,dt){
  if(c.closedRight&&nx>=caveBackWallStop(c)){nx=caveBackWallStop(c);st.vx=0;}
  if(nx<caveLeft&&dir<0||nx>caveRight&&dir>0){delete human.plugin.route;delete human.plugin.coordinatedGait;delete st.caveVy;delete st.caveJumpX;jumpRequest=0;st.air=false;st.vy=0;return false;}
  nx=Math.max(Math.min(caveLeft,p.x),Math.min(Math.max(caveRight,p.x),nx));st.air=false;st.vy=0;st.prep=0;st.charge=0;st.push=null;st.impact=null;st.recover=null;facing=dir;
+ const climbDir=Math.sign(rawPadX);
+ const grip=padY<-.35&&Math.abs(rawPadX)>.25&&current?caveClimbStep(c,p,climbDir,dt,st.compress):null;
+ if(grip){
+  st.caveVy=0;delete st.caveJumpX;st.air=false;st.vy=0;st.vx=0;st.compress=grip.compression;
+  crouchPose=st.compress;crouched=st.compress>.3;facing=climbDir;
+  Body.setPosition(human,{x:grip.x,y:grip.y});Body.setAngle(human,0);Body.setVelocity(human,{x:0,y:0});
+  human.collisionFilter.mask=0;Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});
+  coordinatedGroundGait(dt);return true;
+ }
  let envelope=resolveCaveEnvelope(c,nx,st.compress);
  if(!envelope.allowed){nx=p.x;st.vx=0;envelope=resolveCaveEnvelope(c,nx,st.compress);}
  if(envelope.allowed){st.compress=envelope.compression;crouchPose=st.compress;crouched=st.compress>.3;}
