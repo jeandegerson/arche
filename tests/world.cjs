@@ -24,7 +24,7 @@ for (const seed of [1, 17, 20261125]) {
       }
     } else {
       inlandBiomes.add(terrain.biome);
-      if (terrain.wet) assert.ok(terrain.surface-terrain.water < 42);
+      if (terrain.wet) assert.ok(terrain.surface-terrain.water < 110);
       if (previous) assert.ok(Math.abs(terrain.surface-previous.surface) < 10);
     }
     previous = terrain;
@@ -45,7 +45,7 @@ for (const seed of [1, 17, 20261125]) {
     const center=world.sample(lake.x);
     assert.equal(center.biome,lake.biome);
     assert.equal(center.water,lake.level);
-    assert.ok(center.surface-center.water>=29);
+    assert.ok(center.surface-center.water>=62);
     for(const side of [-1,1])assert.ok(world.sample(lake.x+side*lake.radius).surface<lake.level);
   }
   assert.deepEqual(oceanRuns, [false,true,false,true]);

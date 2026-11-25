@@ -92,9 +92,9 @@
           if(surface>598)water=598;
         }else if(t>.815){
           biome='steppe';
-          const lake=Math.abs((t-.905)/.018);
+          const lake=Math.abs((t-.905)/.026);
           if(lake<1){
-            surface+=22*Math.cos(lake*Math.PI/2)**2;
+            surface+=65*Math.cos(lake*Math.PI/2)**2;
             if(surface>592){water=592;biome='salt'}
           }
         }else if(surface<314)biome='alpine';
@@ -106,13 +106,13 @@
 
     // Site a basin within each biome. Its rim blends back into the same height field.
     const lakeSites=[
-      ['island',shore*.48,150,29], ['coast',shore+1600,235,31],
-      ['marsh',shore+mainlandLength*.105,280,31],
-      ['woodland',shore+mainlandLength*.32,270,38],
-      ['meadow',shore+mainlandLength*.25,265,34],
-      ['conifer',shore+mainlandLength*.788,290,39],
-      ['alpine',shore+mainlandLength*.68,305,41],
-      ['steppe',shore+mainlandLength*.962,290,35]
+      ['island',shore*.48,255,62], ['coast',shore+1600,450,77],
+      ['marsh',shore+mainlandLength*.105,485,87],
+      ['woodland',shore+mainlandLength*.32,475,92],
+      ['meadow',shore+mainlandLength*.25,465,83],
+      ['conifer',shore+mainlandLength*.788,490,95],
+      ['alpine',shore+mainlandLength*.68,515,102],
+      ['steppe',shore+mainlandLength*.962,495,86]
     ];
     const lakes=[];
     for(const [biome,target,radius,depth] of lakeSites){
@@ -136,7 +136,7 @@
       if(lake){
         const u=Math.abs(x-lake.x)/lake.radius;
         const bed=lake.level+lake.depth-(lake.depth+5)*smooth(clamp(u/.78,0,1));
-        surface=mix(bed,surface,smooth(clamp((u-.47)/.53,0,1)));
+        surface=mix(bed,surface,smooth(clamp((u-.34)/.66,0,1)));
         biome=lake.biome;
         water=surface>lake.level?lake.level:null;
       }
