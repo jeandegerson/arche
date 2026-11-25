@@ -82,7 +82,11 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  }
  if(queue.length>=8)components.push({area:queue.length,minX,maxX,minY,maxY,openingColumns:[...openings].sort((a,b)=>a-b)});
  }
- return {width,height,solid,weak,flow,debris,resistance,components,regime};
+ const water=new Uint8Array(n),queue=[];
+ // Flood only connected voids below a local hydraulic head; rock remains impermeable.
+ for(let x=0;x<width;x++){const head=surface(x)+22+12*(1-Math.min(1,env[x].recharge));for(let y=Math.max(0,Math.ceil(head));y<height;y++){const i=idx(x,y);if(!solid[i]&&flow[i]>peak*.12&&env[x].recharge>.4){water[i]=1;queue.push(i);break}}}
+ for(let k=0;k<queue.length;k++){const i=queue[k],x=i%width,y=Math.floor(i/width);for(const [dx,dy] of [[-1,0],[1,0],[0,-1],[0,1]]){const a=x+dx,b=y+dy;if(a<0||a>=width||b<0||b>=height||b<surface(a)+22+12*(1-Math.min(1,env[a].recharge)))continue;const j=idx(a,b);if(!solid[j]&&!water[j]){water[j]=1;queue.push(j)}}}
+ return {width,height,solid,weak,flow,debris,resistance,water,components,regime};
 }
 // Extract all solid/void interfaces from the same field using marching squares.
 function contours(field){
