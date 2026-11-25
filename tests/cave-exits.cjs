@@ -125,6 +125,30 @@ const assert=require('node:assert/strict');
      if(human.plugin.route!==chamber.id||dir*(end-human.position.x)>0)
       throw Error('Pilot chamber is blocked');
     }
+    for(const dir of [-1,1]){
+     const start=chamber.left+(dir>0?175:325);
+     const end=chamber.left+(dir>0?325:175);
+     position(start,-dir,chamber);
+     joystick(dir,1);
+     for(let i=0;i<12;i++)tick();
+     if(Math.abs(human.position.x-start)>1||crouchPose<.5)
+      throw Error('Brief diagonal should crouch before stepping');
+     let tookStep=false;
+     for(let i=0;i<480&&dir*(end-human.position.x)>0;i++){
+      tick();
+      if(human.plugin.coordinatedGait?.feet.some(foot=>foot.t<1))tookStep=true;
+      if(human.plugin.route!==chamber.id||human.position.y-(37-14*crouchPose)<caveCeiling(human.position.x,chamber)-.5)
+       throw Error('Crouch-walk left the passage clearance');
+     }
+     if(dir*(end-human.position.x)>0||!tookStep||facing!==dir||crouchPose<.8)
+      throw Error('Held diagonal failed to crouch-walk through the pilot throat');
+     joystick(0,1);
+     for(let i=0;i<30;i++)tick();
+     const stopped=human.position.x;
+     for(let i=0;i<15;i++)tick();
+     if(Math.abs(human.position.x-stopped)>.2||crouchPose<.8)
+      throw Error('Straight down should crouch in place');
+    }
     // Exercise the display path as well as its collision geometry.
     const ctx=r.context;
     const left=r.bounds.min.x,right=r.bounds.max.x;
