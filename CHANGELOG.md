@@ -506,3 +506,9 @@
 - Give each biome distinct vegetation. Dune grass, tidal eelgrass, cattails, woodland ferns, meadow flowers, conifer understory, alpine cushions, dry steppe grasses, salt-tolerant shrubs, and wind-bent island pines use local placement and wind sway.
 - Add smoothly blended local relief, including dunes, marsh hummocks, wooded rises, mountain shoulders, and steppe terraces. Keep the world's dimensions and save key. Move a restored character clear of the ground if the new relief covers their saved position.
 - Generator assertions passed across three seeds. Mobile-sized Chromium rendered all ten environments, restored position and excavations, and completed a full mainland crossing at 3× speed. iPad Safari was not tested.
+
+## 0.11.4
+- Add snow-covered pines in sheltered alpine stands and increase changes in elevation inside each biome.
+- Generate a lake in each land biome, including the island, while retaining the steppe salt lake. Use the exposed geological surface for the lakebed so alpine water follows the actual rock banks.
+- Deepen the offshore seabed while keeping shallow approaches to the mainland and island. The release uses the existing save.
+- Generator checks passed across three seeds. Mobile Chromium verified all eight new lakes, snowy trees, a complete mainland crossing, and a swim from the mainland to the island. Safari was not tested.
