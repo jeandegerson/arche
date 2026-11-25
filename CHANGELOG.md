@@ -725,3 +725,7 @@
 
 ## 0.11.54
 - Grouped broad ocean swells with smaller ripples, irregular scenic crest spacing/length/opacity, surface sheen and wider foam dispersion. Shared wave function retained. Syntax and amplitude checks passed; live visual verification pending.
+
+
+## 0.11.55
+- Depth-dependent crest asymmetry and ripple attenuation, deterministic recent-wave wet sand shading, shoreline foam and stronger shallow crest highlights. Approximate shoaling, not fluid simulation or variable propagation speed. Syntax and numerical checks passed; live rendering pending.
