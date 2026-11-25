@@ -286,14 +286,11 @@
     // Joint landform and cavity formation: the same inclined bed produces the
     // exposed valley approach, overlying ridge and buried eroded seam.
     const formations=[],step=8;
-    for(let center=toNew(shore)+2200;center<width+extension+4428-1800;center+=2100){
+    for(let center=400;center<width+extension+4428-400;center+=420){
       const q=baseLandscape(center);
-      if(!['woodland','meadow','conifer','alpine','steppe','arid','sandstone','coast'].includes(q.biome)||q.wet||q.frozen)continue;
-      const kind=formations.length%4,dir=random(center,301)>.5?1:-1,length=Math.floor(([800,1300,1800,2600][kind]+random(center,302)*180)/step)*step,datum=q.surface;
-      const left=Math.min(center-dir*240,center+dir*(length+240)),right=Math.max(center-dir*240,center+dir*(length+240));
-      if(formations.some(f=>left<f.right&&right>f.left))continue;
-      let valid=true;for(let x=left;x<=right;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||!['woodland','meadow','conifer','alpine','steppe','arid','sandstone','coast'].includes(p.biome)){valid=false;break}}
-      if(!valid)continue;
+      if(!['woodland','meadow','conifer','alpine','steppe','arid','sandstone','coast','island','marsh','dunes','oasis','salt'].includes(q.biome)||q.wet||q.frozen)continue;
+      let kind=formations.length%4,dir=1,length=0,left=0,right=0;const datum=q.surface;
+      for(const k of [kind,0]){for(const sign of [1,-1]){const len=Math.floor(([800,1300,1800,2600][k]+random(center,302)*180)/step)*step,l=Math.min(center-sign*240,center+sign*(len+240)),r=Math.max(center-sign*240,center+sign*(len+240));if(l<0||r>width+extension+4428||formations.some(f=>l<f.right&&r>f.left))continue;let ok=true;for(let x=l;x<=r;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||p.biome==='sea'){ok=false;break}}if(ok){kind=k;dir=sign;length=len;left=l;right=r;break}}if(length)break}if(!length)continue;
       const inner=d=>smooth(clamp((d-220)/180,0,1));
       const through=kind===1||kind===2;
       const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*([-d*.22, -d*.19+35*Math.sin(d/145), -d*.10+55*Math.sin(d/210), -d*.01+30*Math.sin(d/115)][kind]);
