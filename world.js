@@ -301,7 +301,20 @@
       const through=random(center,310)<.43;
       const dip=.06+random(center,311)*.32,burialMax=80+Math.pow(random(center,312),1.3)*1050;
       const wavelength=180+random(center,313)*440,phase=random(center,314)*6.28;
-      const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*(d*(dip-.29)+ (25+random(center,315)*75)*(Math.sin(d/wavelength+phase)-Math.sin(phase))+35*(noise(center+d,240,316)-noise(center,240,316)));
+      // Follow weaker rock with bounded local changes of direction.
+      const trace=[datum];let velocity=.29;
+      for(let d=step;d<=length;d+=step){
+        const x=center+dir*d,y=trace.at(-1),preferred=mix(.29,dip,inner(d));
+        let best=velocity,cost=Infinity;
+        for(const slope of [-.65,-.4,-.2,0,.2,.4,.65,.85]){
+          const yy=y+slope*step;
+          const score=rockResistance(x,yy+20)+.55*Math.abs(slope-preferred)+.24*Math.abs(slope-velocity);
+          if(score<cost){cost=score;best=slope;}
+        }
+        velocity=mix(velocity,best,.22);
+        trace.push(y+velocity*step);
+      }
+      const rawBed=d=>{const i=Math.min(trace.length-2,Math.floor(d/step));return mix(trace[i],trace[i+1],d/step-i);};
       const endDatum=baseLandscape(center+dir*length).surface;
       const bed=d=>Math.min(1250,through?rawBed(d)+(endDatum-rawBed(length))*smooth(clamp((d-220)/(length-220),0,1)):rawBed(d));
       // Erosion follows a continuous resistance field shared by all passages.
