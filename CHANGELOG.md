@@ -859,3 +859,8 @@
 ## 0.11.86
 - Rebuild all five caves and their two lower routes from running profiles with paired floor and roof-clearance stations. Adapt the shapes of Carlsbad's Main Corridor and lower levels, Lehman's chamber sequence, and Mammoth's multilevel and historic river-hall profiles to Archē's world and walkable grades. Conifer's loop still derives its junctions from bed and fracture intersections.
 - Syntax, seven-route simulated traversal, interior rock cover, headroom, grades and rock dividers passed. Live visual playtesting pending.
+
+## 0.11.87
+- Replace authored cave positions, profiles and loops with a deterministic world-generation pass. Scan dry hillside terrain in eligible biomes, follow dipping rock through sufficient cover, and end each passage at a change in rock or where it reaches the surface. Derive the walking floor and ceiling directly from the generated opening.
+- The current map yields five single-mouth caves. Old cave saves resume on the surface at their saved horizontal location.
+- Syntax, deterministic regeneration, a flat-terrain negative case, simulated traversal and interior cover and clearance passed for all five generated caves. Live visual playtesting pending.
