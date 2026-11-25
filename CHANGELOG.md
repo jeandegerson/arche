@@ -693,3 +693,7 @@
 
 ## 0.11.46
 - Tropical island central mountain, dense mixed broadleaf/palm canopy, sandy coastal margins; remove mainland coastal lake. World width unchanged. Terrain sampling and syntax passed; live visuals and existing object elevations unverified.
+
+
+## 0.11.47
+- Ocean-only procedural swells with shared epoch, variable amplitude, seabed-clipped shoreline and shallow foam. Depth gradient. Physics and background waves unchanged; mock render and syntax checked.
