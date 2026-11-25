@@ -79,5 +79,24 @@ function contours(field){
  }
  return segments;
 }
-root.ArcheGeology={generate,contours};
+// Assemble boundary segments into continuous paths without inventing new geometry.
+function boundaryPaths(field){
+ const edges=contours(field),adj=new Map(),used=new Set(),paths=[];
+ const key=p=>p.join(',');
+ edges.forEach((e,i)=>e.forEach(p=>{const k=key(p);if(!adj.has(k))adj.set(k,[]);adj.get(k).push(i)}));
+ function trace(i,start){const points=[start];let p=start;
+ while(i!==undefined&&!used.has(i)){used.add(i);const e=edges[i];p=key(e[0])===key(p)?e[1]:e[0];points.push(p);i=adj.get(key(p)).find(j=>!used.has(j));}
+ return {points,closed:key(points[0])===key(points.at(-1))};}
+ for(const [k,ids] of adj)if(ids.length===1&&!used.has(ids[0]))paths.push(trace(ids[0],k.split(',').map(Number)));
+ edges.forEach((e,i)=>{if(!used.has(i))paths.push(trace(i,e[0]))});
+ return paths;
+}
+function physicalField(field){
+ const paths=boundaryPaths(field);
+ const isSolid=(x,y)=>{const a=Math.round(x),b=Math.round(y);return a<0||a>=field.width||b>=field.height?true:b<0?false:!!field.solid[b*field.width+a]};
+ const column=x=>{const a=Math.round(x),out=[];if(a<0||a>=field.width)return out;let start=null;
+ for(let y=0;y<=field.height;y++){if(y<field.height&&!isSolid(a,y)){if(start===null)start=y-.5;}else if(start!==null){out.push({top:start,bottom:y-.5});start=null;}}return out;};
+ return {paths,isSolid,column};
+}
+root.ArcheGeology={generate,contours,boundaryPaths,physicalField};
 })(typeof globalThis!=='undefined'?globalThis:this);
