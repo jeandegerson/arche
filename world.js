@@ -292,11 +292,44 @@
       return clamp(.18+.48*seam+.22*fracture+.12*noise(x+y*.2,620,408),.08,.98);
     }
     const formations=[],step=8;
+    const entranceSites=[];
     for(let center=400;center<width+extension+4428-400;center+=420){
       const q=baseLandscape(center);
       if(!['woodland','meadow','conifer','alpine','steppe','arid','sandstone','coast','island','marsh','dunes','oasis','salt'].includes(q.biome)||q.wet||q.frozen)continue;
-      let dir=1,length=0,left=0,right=0;const datum=q.surface;
-      for(const factor of [1,.65,.35]){for(const sign of [1,-1]){const len=Math.floor(Math.max(680,(720+Math.pow(random(center,302),1.5)*3100)*factor)/step)*step,l=Math.min(center-sign*240,center+sign*(len+240)),r=Math.max(center-sign*240,center+sign*(len+240));if(l<0||r>width+extension+4428||formations.some(f=>l<f.right&&r>f.left))continue;let ok=true;for(let x=l;x<=r;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||p.biome==='sea'){ok=false;break}}if(ok){dir=sign;length=len;left=l;right=r;break}}if(length)break}if(!length)continue;
+      // Compare cover and resistance along the dipping bed on each side.
+      const directions=[1,-1].map(sign=>{
+        let cost=0;
+        for(const distance of [80,160,240]){
+          const x=center+sign*distance,y=q.surface+distance*.29;
+          const cover=y-baseLandscape(x).surface;
+          cost+=rockResistance(x,y)+Math.abs(cover-distance*.22)/120;
+        }
+        return {sign,cost};
+      }).sort((a,b)=>a.cost-b.cost);
+      entranceSites.push({center,q,directions});
+    }
+    // Place the strongest sites first, before nearby candidates claim the
+    // available rock from one side of the map.
+    entranceSites.sort((a,b)=>a.directions[0].cost-b.directions[0].cost);
+    for(const {center,q,directions} of entranceSites){
+      let dir=1,length=0,left=0,right=0;
+      const datum=q.surface;
+      for(const factor of [1,.65,.35]){
+        const len=Math.floor(Math.max(680,(720+Math.pow(random(center,302),1.5)*3100)*factor)/step)*step;
+        for(const {sign} of directions){
+          const l=Math.min(center-sign*240,center+sign*(len+240));
+          const r=Math.max(center-sign*240,center+sign*(len+240));
+          if(l<0||r>width+extension+4428||formations.some(f=>l<f.right&&r>f.left))continue;
+          let dry=true;
+          for(let x=l;x<=r;x+=24){
+            const p=baseLandscape(x);
+            if(p.wet||p.frozen||p.biome==='sea'){dry=false;break;}
+          }
+          if(dry){dir=sign;length=len;left=l;right=r;break;}
+        }
+        if(length)break;
+      }
+      if(!length)continue;
       const inner=d=>smooth(clamp((d-220)/180,0,1));
       const through=random(center,310)<.43;
       const dip=.06+random(center,311)*.32,burialMax=80+Math.pow(random(center,312),1.3)*1050;
