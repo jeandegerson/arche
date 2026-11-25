@@ -111,6 +111,30 @@ const assert=require('node:assert/strict');
       if(dir*(human.position.x-crossing)<65)throw Error('Blocked crossing at '+id);
      }
     }
+    const chamber=caves.find(c=>c.chamber);
+    if(!chamber)throw Error('Expected the conifer pilot chamber');
+    const clearance=x=>caveFloor(x,chamber)-caveCeiling(x,chamber);
+    if(clearance(chamber.left+460)<clearance(chamber.left+215)+60)
+     throw Error('The pilot throat should open into a taller chamber');
+    for(const dir of [-1,1]){
+     const start=chamber.left+(dir>0?220:820);
+     const end=chamber.left+(dir>0?820:220);
+     position(start,dir,chamber);
+     joystick(dir,0);
+     for(let i=0;i<720&&dir*(end-human.position.x)>0;i++)tick();
+     if(human.plugin.route!==chamber.id||dir*(end-human.position.x)>0)
+      throw Error('Pilot chamber is blocked');
+    }
+    // Exercise the display path as well as its collision geometry.
+    const ctx=r.context;
+    const left=r.bounds.min.x,right=r.bounds.max.x;
+    ctx.save();
+    r.bounds.min.x=chamber.left;
+    r.bounds.max.x=chamber.left+820;
+    try{paintCave(chamber);}finally{
+     r.bounds.min.x=left;r.bounds.max.x=right;
+     ctx.restore();
+    }
     let count=0;
     for(const cave of caves)for(const dir of [-1,1]){
      if(dir<0?cave.closedLeft:cave.closedRight)continue;

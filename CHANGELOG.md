@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.48
+- Prototype a conifer cave with a constricted throat, higher chamber, sediment shelf and tapered blind end. Render fractured rock faces, recessed bedding, scree and fading entrance light using the same boundary as the passage.
+- Chromium verified the pilot chamber in both directions, its rendering path, and all 49 cave mouths at 1× and 15×. Watershed tests passed.
+
 ## 0.12.47
 - Draw the biome rim from the exact same vertices as the geological silhouette, removing the coarse foreground strip that could bridge steep notches.
 - JavaScript syntax and a synthetic notch drawing check passed. Browser testing was unavailable locally.

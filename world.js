@@ -380,6 +380,20 @@
         points.push({top:Math.max(ground,top),bottom:Math.max(ground,bottom)});
       }
       if(!valid)continue;
+      const chamber=seed===20261125&&center===63400&&dir===1&&!through;
+      if(chamber){
+        for(let i=0;i<points.length;i++){
+          const d=i*step,p=points[i],ground=baseLandscape(center+d).surface;
+          const vault=smooth(clamp(1-Math.abs(d-460)/220,0,1));
+          const throat=smooth(clamp(1-Math.abs(d-215)/75,0,1));
+          p.top=Math.max(ground,p.top+25*throat);
+          if(vault>0)p.top=Math.max(ground+18,p.top-62*vault);
+          const shelf=smooth(clamp(1-Math.abs(d-530)/115,0,1));
+          p.bottom=Math.max(p.top+80*shelf,p.bottom-19*shelf);
+          const closure=smooth(clamp((length-d)/112,0,1));
+          p.top=mix(p.bottom,p.top,closure);
+        }
+      }
       // Spread sharp changes in accessible floor depth over the adjoining
       // bed. Preserve the roof profile where it leaves enough clearance.
       const floorProfile=points.map((p,i)=>{
@@ -403,10 +417,10 @@
         p.top=Math.max(ground+cover,Math.min(p.top,bottom-clearance));
         p.bottom=bottom;
       }
-      formations.push({center,dir,length,left,right,points,through,biome:q.biome});
+      formations.push({center,dir,length,left,right,points,through,chamber,biome:q.biome});
     }
     function sample(x){return baseLandscape(x);}
-    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
+    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,chamber:f.chamber,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
     // Secondary dissolution fronts originate inside existing voids and
     // propagate through adjacent weak rock. Their intersections are unions.
     for(const parent of geologicalPassages.slice()){
