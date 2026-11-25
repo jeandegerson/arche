@@ -517,3 +517,8 @@
 - Replace repeated ridges with seeded terrain at several scales. The western conifer forest rises steadily into a much taller snowy range with two summits and a saddle. The conifer lake sits on the eastern descent.
 - Widen the ocean, deepen offshore water, and enlarge the island. The reshaped world starts a fresh save.
 - Passed three-seed generator checks and a mobile Chromium crossing over the snowy summits and an ocean swim to the island. Safari was not tested.
+
+## 0.11.6
+- Add scattered trees on stable ground in the dunes, marsh, meadow and steppe. The uppermost alpine rock remains above the treeline.
+- Increase the width and depth of all eight biome lakes and enlarge the salt lake. Blend the wider banks back into the surrounding terrain.
+- Generator checks passed across three seeds. Mobile Chromium verified trees in the four previously excluded biomes and completed the mainland crossing through the enlarged lakes.
