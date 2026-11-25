@@ -629,3 +629,7 @@
 
 ## 0.11.30
 - Visual geology: continuous regional rock palette and folded bedding, biome-sensitive soil and sediment thickness, roots, gravel, fractures and sand lamination. Unified rendering for terrain and rock spans. No physics or terrain changes. Syntax and mock canvas checks passed; actual mobile rendering/performance unverified.
+
+
+## 0.11.31
+- Stable water-body identities derived from the full map; project narrow meandering river and broad lake continuations behind the playable slice, plus a closer vegetation layer. Visual only: width-based river classification, no drainage simulation or current changes. Syntax and mock canvas checks passed; live rendering unverified.
