@@ -351,6 +351,40 @@
     }
     function sample(x){return baseLandscape(x);}
     const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
+    // Secondary dissolution fronts originate inside existing voids and
+    // propagate through adjacent weak rock. Their intersections are unions.
+    for(const parent of geologicalPassages.slice()){
+      const span=parent.right-parent.left;
+      if(span<1000)continue;
+      for(let branch=0;branch<2;branch++){
+        const start=Math.floor((.25+.3*branch+random(parent.left,450+branch)*.12)*span/step);
+        const origin=parent.fieldPoints[start],x0=parent.left+start*step;
+        if(!origin||origin.bottom-origin.top<70)continue;
+        const sign=random(x0,460)<.5?-1:1,vertical=random(x0,461)<.5?-1:1;
+        const n=Math.floor((280+random(x0,462)*620)/step);
+        let y=(origin.top+origin.bottom)/2,v=vertical*.65;
+        const points=[];let separated=false;
+        for(let i=0;i<=n;i++){
+          const x=x0+sign*i*step,ground=baseLandscape(x).surface;
+          const radius=(45+45*(1-rockResistance(x,y)))*Math.sqrt(clamp((n-i)/8,0,1));
+          if(y-radius<ground+12||y+radius>1290)break;
+          points.push({top:y-radius,bottom:y+radius});
+          const p=parent.fieldPoints[start+sign*i];
+          if(p&&(y-radius>p.bottom+8||y+radius<p.top-8))separated=true;
+          let best=v,cost=Infinity;
+          for(const slope of [-.85,-.5,-.2,.2,.5,.85]){
+            const score=rockResistance(x+sign*step,y+slope*step)+.18*Math.abs(slope-v)+.24*Math.abs(slope-vertical*.5);
+            if(score<cost){cost=score;best=slope;}
+          }
+          v=mix(v,best,.25);y+=v*step;
+        }
+        if(!separated||points.length<25)continue;
+        // Seal the distal end even when the front reached resistant bounds.
+        for(let i=0;i<Math.min(8,points.length);i++){const p=points[points.length-1-i],mid=(p.top+p.bottom)/2,r=(p.bottom-p.top)/2*i/8;p.top=mid-r;p.bottom=mid+r;}
+        const end=x0+sign*(points.length-1)*step;
+        geologicalPassages.push({id:parent.id+'-branch-'+branch,material:parent.material,left:Math.min(x0,end),right:Math.max(x0,end),fieldPoints:sign>0?points:points.reverse(),fieldScale:step,closedLeft:true,closedRight:true,entryRun:0,exitRun:0});
+      }
+    }
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
     return {sample,rockResistance,geologicalPassages,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
