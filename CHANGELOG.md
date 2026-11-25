@@ -677,3 +677,7 @@
 
 ## 0.11.42
 - Share one continuous gradient per background water body and overlap internal curved strip edges to hide antialiasing seams while retaining terrain occlusion. Playable terrain and swimmer rendering unchanged. Syntax and mock gradient/curve tests passed; live visuals and FPS unverified.
+
+
+## 0.11.43
+- Preserve frozen basin depth separately from walkable ice collision surface. Render ice and underwater cross-section, tint background ice pale blue. Existing collision and wet flags unchanged. Sample equivalence and syntax passed; mobile visuals unverified.
