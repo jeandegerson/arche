@@ -689,3 +689,7 @@
 
 ## 0.11.45
 - Double island and mainland beach spans by inserting 4428 world units. Preserve inland geography and ocean spans. No inland island water. Saved entity coordinates not migrated; live visuals unverified.
+
+
+## 0.11.46
+- Tropical island central mountain, dense mixed broadleaf/palm canopy, sandy coastal margins; remove mainland coastal lake. World width unchanged. Terrain sampling and syntax passed; live visuals and existing object elevations unverified.
