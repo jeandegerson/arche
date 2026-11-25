@@ -535,3 +535,8 @@
 ## 0.11.9 — Beach sand in cross-section
 - Render deep, grain-textured sand beneath dunes and palms and taper the deposit offshore and inland.
 - Three-seed world checks, beach-depth checks and inline script syntax passed.
+
+## 0.11.10 — Continuous beach slopes
+- Draw the sand deposit as continuous contours and follow the ground slope with the surface trim and grass.
+- Interpolate ground height between adjoining soil cells so walking and wading do not encounter artificial steps. The update uses the existing world save.
+- Inline JavaScript syntax and Matter.js simulation checks passed. The simulation crossed both island shores and the mainland shoreline at 1× and 5× using a mocked DOM and canvas. Browser rendering and Safari touch controls were not tested.
