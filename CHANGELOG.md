@@ -633,3 +633,7 @@
 
 ## 0.11.31
 - Stable water-body identities derived from the full map; project narrow meandering river and broad lake continuations behind the playable slice, plus a closer vegetation layer. Visual only: width-based river classification, no drainage simulation or current changes. Syntax and mock canvas checks passed; live rendering unverified.
+
+
+## 0.11.32
+- Fix oversized background water projection: cap vertical extent at 8.5% of viewport, constrain far edge below upper landscape, reduce lateral distortion. Perspective guard only; terrain-aware occlusion still pending. Syntax and projection bounds checks passed.
