@@ -717,3 +717,7 @@
 
 ## 0.11.52
 - Add destination-over ocean seam backing using playable sea banks rather than scenic samples, before distant ridges. Syntax and shoreline coverage test passed; device visual verification pending.
+
+
+## 0.11.53
+- Loose planks and branches use the same deterministic visual ocean buoyancy as logs; carried items and piles retain existing poses. No persistent drift or pickup changes. Syntax checked; device rendering pending.
