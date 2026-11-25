@@ -23,10 +23,10 @@
 
   // Regional relief fades between dunes, hummocks, forested ridges and terraces.
   const reliefBands = [
-    [0, 8, 280], [.035, 15, 320], [.055, 7, 240], [.13, 11, 310],
-    [.17, 23, 720], [.36, 29, 820], [.50, 35, 710], [.61, 34, 560],
-    [.73, 40, 790], [.82, 29, 670], [.88, 19, 520], [.905, 5, 560],
-    [.927, 14, 580], [.96, 29, 680], [1, 31, 730]
+    [0, 12, 340], [.035, 23, 390], [.055, 13, 340], [.13, 20, 410],
+    [.17, 35, 760], [.36, 46, 880], [.50, 52, 820], [.61, 49, 690],
+    [.73, 57, 850], [.82, 43, 780], [.88, 28, 620], [.905, 9, 560],
+    [.927, 23, 640], [.96, 48, 780], [1, 49, 820]
   ];
 
   function createArcheWorld(seed = 20261125) {
@@ -51,16 +51,23 @@
       }
       return mix(shape(a,periodA),shape(b,periodB),blend);
     }
-    function sample(x) {
+    function baseSample(x) {
       const t=clamp((x-shore)/mainlandLength,0,1);
       let surface,biome,water=null;
       if(x<shore){
-        const islandX=(x-shore*.48)/(shore*.12);
+        const islandX=(x-shore*.48)/(shore*.155);
         const island=Math.abs(islandX)<1?Math.cos(islandX*Math.PI/2)**2:0;
         const seabed=675+noise(x,480,1)*9;
-        surface=mix(seabed,505+noise(x,220,2)*7+noise(x,110,19)*9,island);
+        surface=mix(seabed,505+noise(x,220,2)*7+noise(x,170,19)*8,island);
         surface=mix(surface,594,smooth(clamp((x-shore+440)/440,0,1)));
-        if(surface>shelf)water=shelf;
+        const shoreHeight=surface-shelf;
+        surface-=island*Math.sign(shoreHeight)*27*(1-Math.exp(-Math.abs(shoreHeight)/45));
+        if(surface>shelf){
+          water=shelf;
+          // Keep the beaches shallow and drop into a deeper offshore basin.
+          const offshore=smooth(clamp((surface-shelf-14)/49,0,1));
+          surface+=offshore*(242+noise(x,640,20)*26);
+        }
         biome=water!==null?'sea':island>0?'island':'coast';
       }else{
         let i=0;
@@ -88,6 +95,44 @@
         else if(surface<508)biome='conifer';
         else biome=noise(x,2150,9)>.21?'meadow':'woodland';
       }
+      return {surface,biome,water};
+    }
+
+    // Site a basin within each biome. Its rim blends back into the same height field.
+    const lakeSites=[
+      ['island',shore*.48,150,29], ['coast',shore+1600,235,31],
+      ['marsh',shore+mainlandLength*.105,280,31],
+      ['woodland',shore+mainlandLength*.32,270,38],
+      ['meadow',shore+mainlandLength*.25,265,34],
+      ['conifer',shore+mainlandLength*.52,290,39],
+      ['alpine',shore+mainlandLength*.68,305,41],
+      ['steppe',shore+mainlandLength*.962,290,35]
+    ];
+    const lakes=[];
+    for(const [biome,target,radius,depth] of lakeSites){
+      let best=null;
+      for(let x=radius+24;x+radius<width;x+=48){
+        if(biome==='coast'&&x<shore+600)continue;
+        const center=baseSample(x),left=baseSample(x-radius),right=baseSample(x+radius);
+        if(center.biome!==biome||left.biome!==biome||right.biome!==biome)continue;
+        if([-radius/2,radius/2].some(offset=>baseSample(x+offset).biome!==biome))continue;
+        const score=Math.abs(x-target)*.018+Math.abs(left.surface-right.surface)*1.4
+          +Math.abs((left.surface+right.surface)/2-center.surface)*.6;
+        if(best&&score>=best.score)continue;
+        best={biome,x,radius,depth,level:Math.max(left.surface,right.surface,center.surface)+3,score};
+      }
+      if(best)lakes.push(best);
+    }
+    function sample(x){
+      let {surface,biome,water}=baseSample(x);
+      const lake=lakes.find(basin=>Math.abs(x-basin.x)<basin.radius);
+      if(lake){
+        const u=Math.abs(x-lake.x)/lake.radius;
+        const bed=lake.level+lake.depth-(lake.depth+5)*smooth(clamp(u/.78,0,1));
+        surface=mix(bed,surface,smooth(clamp((u-.68)/.32,0,1)));
+        biome=lake.biome;
+        water=surface>lake.level?lake.level:null;
+      }
       const wet=water!==null;
       const canopy=noise(x,980,6);
       const cover=wet?0:({
@@ -96,7 +141,7 @@
       }[biome]??0);
       return {surface,water,wet,biome,cover,color:colors[biome]};
     }
-    return {sample,width,shore,spawn:shore+264};
+    return {sample,width,shore,lakes,spawn:shore+264};
   }
 
   if(typeof module!=='undefined')module.exports=createArcheWorld;
