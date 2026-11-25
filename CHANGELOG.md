@@ -657,3 +657,7 @@
 
 ## 0.11.37
 - Shared near terrain/water mesh with exclusive basin ownership, depth-ordered rendering and opaque underwater base. Playable terrain unchanged. Syntax and mock mesh tests passed; mobile visuals and performance unverified. Distant ridges remain separate.
+
+
+## 0.11.38
+- Finer near mesh, reduced facet contrast and seam coverage, conifer silhouettes, finite lake basins with raised far banks. Playable terrain unchanged. Syntax and mock geography/render checks passed; live visuals and mobile performance unverified.
