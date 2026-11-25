@@ -805,3 +805,7 @@
 
 ## 0.11.74
 - Require a fresh downward gesture for lower passages, advance across return junctions, render parent passages over lower branch overlaps, replace branch daylight beams with subtle junction floor highlights. Syntax passed; live testing pending.
+
+
+## 0.11.75
+- Align branch roof bounds with parent cave at junctions, close rendered polygons at exact endpoints, and restrict branch selection to the approach side. Syntax and four junction continuity checks passed; live shared-client testing pending.
