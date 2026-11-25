@@ -165,13 +165,34 @@
       return {surface,water,wet,frozen,biome,cover,color:colors[biome]};
     }
     const insertion=59000, extension=5000;
-    function sample(x){
+    function expandedSample(x){
       if(x<=insertion)return legacySample(x);
       if(x>=insertion+extension)return legacySample(x-extension);
       const d=x-insertion,u=d/extension,edge=legacySample(insertion).surface;
       const envelope=Math.sin(Math.PI*u)**2;
       const surface=edge+envelope*(-35+noise(d,1100,81)*48+noise(d,290,82)*13);
       return {surface,water:null,wet:false,frozen:false,biome:'conifer',cover:.69+noise(x,980,6)*.22,color:colors.conifer};
+    }
+    // A long eastern descent comparable to the western conifer slope.
+    function easternDelta(x){
+      if(x<=55000||x>=66500)return 0;
+      const u=clamp((x-56000)/10000,0,1);
+      const grade=153+u*410+noise(x,1250,91)*12+noise(x,420,92)*4;
+      const weight=smooth(clamp((x-55000)/1000,0,1))*smooth(clamp((66500-x)/1000,0,1));
+      const lake=lakes.find(l=>l.biome==='conifer'&&Math.abs(x-l.x)<l.radius+180);
+      const reference=lake?lake.x:x;
+      const baseline=lake?expandedSample(reference+lake.radius+30).surface:expandedSample(x).surface;
+      const target=lake?153+clamp((reference-56000)/10000,0,1)*410:grade;
+      const ordinary=grade-expandedSample(x).surface;
+      const blend=lake?smooth(clamp((lake.radius+180-Math.abs(x-lake.x))/180,0,1)):0;
+      return weight*mix(ordinary,target-baseline,blend);
+    }
+    function sample(x){
+      const q=expandedSample(x),delta=easternDelta(x);
+      if(!delta)return q;
+      const surface=q.surface+delta,water=q.water===null?null:q.water+delta;
+      const biome=!q.wet&&!q.frozen&&x>=56000&&x<65500?'conifer':q.biome;
+      return {...q,surface,water,biome,color:colors[biome],cover:biome==='conifer'&&!q.wet&&!q.frozen?.69+noise(x,980,6)*.22:q.cover};
     }
     return {sample,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
