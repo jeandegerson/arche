@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.00</span><header><h1>Archē</h1><small>v0.12.00 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.01</span><header><h1>Archē</h1><small>v0.12.01 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=18"></script><script src="world.js?v=0.11.46"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
 const travelMultiplier=requestedSpeed==='15'?15:requestedSpeed==='5'?5:requestedSpeed==='3'?3:1;
 if(travelMultiplier>1)document.querySelector('#versionLabel').textContent+=' · '+travelMultiplier+'× travel';
 const archeWorld=createArcheWorld(),worldWidth=archeWorld.width,baseY=620,worldFloor=1320,worldCeiling=-1500;
@@ -117,47 +117,38 @@ function caveOpening(c,x){
 }
 // Form buried chambers around permeable beds, then select reachable surface intersections.
 function generateCaveWorld(){
- const hosts=[{id:'cave',biomes:['meadow']},{id:'woodland',biomes:['woodland']},{id:'conifer',biomes:['conifer']},{id:'eastern',biomes:['steppe']},{id:'desert',biomes:['arid','sandstone']}];
- const routes=[];
- for(const host of hosts){
-  const candidates=[];
-  for(let center=archeWorld.shore+1200;center<archeWorld.width-1800;center+=180){
-   if(!host.biomes.includes(archeWorld.sample(center).biome)||archeWorld.sample(center).wet)continue;
-   const half=240+Math.round(caveRockNoise(center,390,83)*30)*20;
-   const left=center-half,right=center+half;
-   const datum=caveSurface(center)+110+180*caveRockNoise(center,570,84);
-   if(datum>worldFloor-45)continue;
-   const conduit=[];
-   for(let x=left;x<=right;x+=20){
-    const u=(x-center)/half,base=datum+beddingOffset(x)-beddingOffset(center);
-    let best=null;
-    for(let dy=-60;dy<=60;dy+=12){
-     const y=Math.min(worldFloor-35,Math.max(caveSurface(x)+100,base+dy));
-     const score=dissolutionPotential(x,y-45,caveSurface(x))-Math.abs(dy)/180;
-     if(!best||score>best.score)best={x,y,score};
-    }
-    conduit.push({x,y:best.y});
+ const hosts={meadow:'cave',woodland:'woodland',conifer:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert',alpine:'conifer'};
+ const routes=[],scale=16,W=144,H=100;
+ for(let center=archeWorld.shore+2200;center<archeWorld.width-1400;center+=3100){
+  const q=archeWorld.sample(center),material=hosts[q.biome];if(!material||q.wet||q.frozen)continue;
+  const left=center-W*scale/2,heights=Array.from({length:W},(_,i)=>caveSurface(left+i*scale)),origin=Math.min(...heights)-scale*8;
+  const surface=x=>(heights[Math.max(0,Math.min(W-1,Math.round(x)))]-origin)/scale;
+  const field=ArcheGeology.generate({width:W,height:H,seed:Math.round(center),surface,regime:material==='desert'?'sandstone':material==='conifer'?'fractured':'limestone',maturity:1+Math.floor(caveRockNoise(center,700,123)*3)});
+  const tracks=[];let previous=[];
+  for(let i=0;i<W;i++){
+   const runs=[];let start=null;
+   for(let y=Math.max(0,Math.ceil(surface(i)));y<=H;y++){
+    if(y<H&&!field.solid[y*W+i]&&origin+(y+1)*scale<worldFloor-20){if(start===null)start=y;}
+    else if(start!==null){if(y-start>=4)runs.push({top:origin+(start-.5)*scale,bottom:origin+(y-.5)*scale});start=null;}
    }
-   const access=edge=>!archeWorld.sample(edge).wet&&Math.abs(caveSurface(edge)-datum)<340;
-   const l=access(left),r=access(right);
-   if(!l&&!r)continue;
-   const dl=Math.abs(caveSurface(left)-datum),dr=Math.abs(caveSurface(right)-datum);
-   const both=l&&r&&Math.abs(dl-dr)<65&&caveRockNoise(center,280,89)>.48;
-   const openLeft=l&&(both||!r||dl<=dr),openRight=r&&(both||!l||dr<dl);
-   const c={id:host.id,material:host.id,left,right,datum,dip:0,conduit,closedLeft:!openLeft,closedRight:!openRight,entryRun:openLeft?180:0,exitRun:openRight?180:0,aperture:65+155*caveRockNoise(center,440,91)};
-   let good=true;
-   for(let x=left+(openLeft?220:80);x<=right-(openRight?220:80);x+=20)if(caveFloor(x,c)-caveCeiling(x,c)<46){good=false;break;}
-   if(good)candidates.push({c,score:dissolutionPotential(center,datum-45,caveSurface(center))+caveRockNoise(center,310,93)});
+   const next=[];
+   for(const run of runs){const matches=previous.filter(t=>Math.min(t.last.bottom,run.bottom)-Math.max(t.last.top,run.top)>=32&&!next.includes(t)).sort((a,b)=>Math.abs(a.last.bottom-run.bottom)-Math.abs(b.last.bottom-run.bottom));const t=matches[0]||{start:i,points:[]};if(!matches.length)tracks.push(t);t.points.push(run);t.last=run;next.push(t);}
+   previous=next;
   }
-  candidates.sort((a,b)=>b.score-a.score);
-  let count=0;
-  for(const {c} of candidates){
-   if(routes.some(q=>c.left<q.right+260&&c.right>q.left-260))continue;
-   c.id=count?host.id+'-'+(count+1):host.id;routes.push(c);if(++count>=5)break;
-  }
+  const usable=tracks.filter(t=>t.points.length>=10);
+  const main=usable.filter(t=>{const a=t.points[0],b=t.points.at(-1);return Math.min(a.top-heights[t.start],b.top-heights[t.start+t.points.length-1])<48;}).sort((a,b)=>b.points.length-a.points.length)[0];
+  if(!main)continue;
+  const add=(t,primary)=>{const a=t.start,b=a+t.points.length-1,L=left+a*scale,R=left+b*scale;
+   const openLeft=primary&&t.points[0].top-heights[a]<=t.points.at(-1).top-heights[b],openRight=primary&&!openLeft;
+   const c={id:material+'-'+Math.round(center)+(primary?'':'-branch-'+a),material,left:L,right:R,fieldPoints:t.points,fieldScale:scale,closedLeft:!openLeft,closedRight:!openRight,entryRun:openLeft?Math.min(112,(R-L)/3):0,exitRun:openRight?Math.min(112,(R-L)/3):0};
+   routes.push(c);
+  };
+  add(main,true);
+  for(const t of usable)if(t!==main&&t.start<main.start+main.points.length&&t.start+t.points.length>main.start)add(t,false);
  }
  return routes;
 }
+function fieldCaveSample(c,x,key){const u=Math.max(0,Math.min(c.fieldPoints.length-1,(x-c.left)/c.fieldScale)),i=Math.floor(u),a=c.fieldPoints[i][key],b=c.fieldPoints[Math.min(i+1,c.fieldPoints.length-1)][key];return a+(b-a)*(u-i);}
 const caves=generateCaveWorld();
 const caveDiagnostics=caves.map(c=>({id:c.id,left:c.left,right:c.right,length:c.right-c.left,entrances:Number(!c.closedLeft)+Number(!c.closedRight),orientation:c.closedLeft?'right':c.closedRight?'left':'both',maxDepth:Math.round(Math.max(...Array.from({length:Math.ceil((c.right-c.left)/20)+1},(_,i)=>{const x=Math.min(c.right,c.left+i*20);return caveFloor(x,c)-caveSurface(x)})))}));
 window.archeCaveDiagnostics=caveDiagnostics;
@@ -171,11 +162,12 @@ function caveFloor(x,c){
  const mouth=caveSurface(x);
  const entry=c.closedLeft?1:caveEase((x-c.left)/c.entryRun);
  const exit=c.exitRun?caveEase((c.right-x)/c.exitRun):1;
- return mouth+(caveBed(c,x)-mouth)*entry*exit;
+ return mouth+((c.fieldPoints?fieldCaveSample(c,x,'bottom'):caveBed(c,x))-mouth)*entry*exit;
 }
 function caveBackWallStop(c){return c.right-56;}
 function caveCeiling(x,c){
  const floor=caveFloor(x,c);
+ if(c.fieldPoints){const entry=c.closedLeft?1:caveEase((x-c.left)/c.entryRun),exit=c.exitRun?caveEase((c.right-x)/c.exitRun):1;return Math.min(floor,caveSurface(x)+(fieldCaveSample(c,x,'top')-caveSurface(x))*entry*exit);}
  const distance=Math.min(c.closedLeft?Infinity:x-c.left,c.closedRight?Infinity:c.right-x);
  const cover=26*caveEase((distance-75)/145);
  const taper=(c.closedRight?caveEase((c.right-x)/56):1)*(c.closedLeft?caveEase((x-c.left)/56):1);
