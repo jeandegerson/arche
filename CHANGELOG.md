@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.43
+- Keep the main walking bed continuous where secondary erosion approaches it. Cut back branches that would remove the floor and force a sudden drop at the junction. Resume saves from shortened or removed branches on the main passage where there is room.
+- Chromium verified interior crossings in both directions and all 44 cave exits at 1× and 15×. Watershed tests passed.
+
 ## 0.12.42
 - Spread steep floor changes along the cave bed while retaining underground headroom and rock cover. Grow branch openings gradually from within the main passage so their starts cannot carve a vertical face into the rock.
 - Chromium geometry and movement checks passed for branch ends, floor grades, crouching, entering, and all 44 exits at 1× and 15×. Watershed tests passed.

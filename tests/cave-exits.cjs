@@ -75,6 +75,19 @@ const assert=require('node:assert/strict');
      position(x,dir,cave);
      checkCrouch('inside '+cave.id);
     }
+    for(const [id,crossing] of [['seam-19720',20372],['seam-50800',51656],['seam-86920',87140]]){
+     const cave=caves.find(c=>c.id===id);
+     for(const dir of [-1,1]){
+      position(crossing-dir*65,dir,cave);
+      joystick(dir,0);
+      for(let i=0;i<200&&dir*(human.position.x-crossing)<65;i++){
+       tick();
+       const {x,y}=human.position;
+       if(human.plugin.route!==id||y+37>caveFloor(x,cave)+2)throw Error('Lost main footing at '+id);
+      }
+      if(dir*(human.position.x-crossing)<65)throw Error('Blocked crossing at '+id);
+     }
+    }
     let count=0;
     for(const cave of caves)for(const dir of [-1,1]){
      if(dir<0?cave.closedLeft:cave.closedRight)continue;
