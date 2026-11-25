@@ -809,3 +809,8 @@
 
 ## 0.11.75
 - Align branch roof bounds with parent cave at junctions, close rendered polygons at exact endpoints, and restrict branch selection to the approach side. Syntax and four junction continuity checks passed; live shared-client testing pending.
+
+## 0.11.76
+- Add a conifer upper passage that rejoins the main tunnel in both directions. Pull the joystick diagonally up toward a rising floor highlight to enter. Lower branches still use a downward diagonal.
+- Draw junction highlights after the cave passes so the parent tunnel cannot cover them, and stage the branch test spawn inside the parent tunnel.
+- Syntax, watershed and bidirectional checks for all three branch loops passed. The existing world test still expects a width of 68,160 for the 104,588-unit map. Browser and live multiplayer verification pending.
