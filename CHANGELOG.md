@@ -765,3 +765,7 @@
 
 ## 0.11.64
 - Shared world solar time and season derive from a common UTC epoch, independent of session start, frame rate and travel speed. Retains 480-second day and existing seasonal rate. Device clock accuracy required; weather remains separate. Syntax and 2000 clock checks passed.
+
+
+## 0.11.65
+- Deterministic shared regional weather from UTC epoch, world position and terrain elevation. Rain, clouds, wind and estimated recent rainfall soil wetness no longer depend on session duration. Preserve underwater wind muffling. Syntax and 3000 deterministic weather checks passed; device clocks and live testing limitations remain.
