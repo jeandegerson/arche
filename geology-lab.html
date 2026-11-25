@@ -1,6 +1,6 @@
-<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archē geological laboratory</title><style>body{background:#202624;color:#e5dfd2;font:16px system-ui;margin:16px}canvas{width:100%;min-height:160px;height:auto;image-rendering:auto;background:#a9b9bd}input,button{font:inherit;padding:8px}pre{white-space:pre-wrap}</style><h1>Geological laboratory</h1><p>Experimental field — not the shared world.</p><label>Seed <input id="seed" type="number" value="42"></label> <label>Rock <select id="regime"><option value="limestone">Limestone</option><option value="sandstone">Sandstone</option><option value="fractured">Fractured rock</option></select></label> <button id="run">Generate</button> <label><input type="checkbox" id="edges" checked> Boundaries</label><label><input type="checkbox" id="sections"> Vertical sections</label><label>View <select id="zoom"><option value="1">Overview</option><option value="2" selected>Explore 2×</option><option value="3">Explore 3×</option></select></label><canvas id="view" width="960" height="400"></canvas><div style="display:flex;flex-wrap:wrap;gap:10px;touch-action:none;margin:12px 0"><button id="left">◀</button><button id="right">▶</button><button id="jump">Jump</button><button id="crouch">Crouch</button><button id="climb">Climb</button><button id="reset">Respawn</button></div><pre id="stats"></pre><script>// Deterministic experimental geological field; independent of live world.
+<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archē geological laboratory</title><style>body{background:#202624;color:#e5dfd2;font:16px system-ui;margin:16px}canvas{width:100%;min-height:160px;height:auto;image-rendering:auto;background:#a9b9bd}input,button{font:inherit;padding:8px}pre{white-space:pre-wrap}</style><h1>Geological laboratory</h1><p>Experimental field — not the shared world.</p><label>Seed <input id="seed" type="number" value="42"></label> <label>Rock <select id="regime"><option value="limestone">Limestone</option><option value="sandstone">Sandstone</option><option value="fractured">Fractured rock</option></select></label> <label>Geological age <select id="maturity"><option value="1">Young</option><option value="2" selected>Mature</option><option value="4">Old</option></select></label> <button id="run">Generate</button> <label><input type="checkbox" id="edges" checked> Boundaries</label><label><input type="checkbox" id="sections"> Vertical sections</label><label>View <select id="zoom"><option value="1">Overview</option><option value="2" selected>Explore 2×</option><option value="3">Explore 3×</option></select></label><canvas id="view" width="960" height="400"></canvas><div style="display:flex;flex-wrap:wrap;gap:10px;touch-action:none;margin:12px 0"><button id="left">◀</button><button id="right">▶</button><button id="jump">Jump</button><button id="crouch">Crouch</button><button id="climb">Climb</button><button id="reset">Respawn</button></div><pre id="stats"></pre><script>// Deterministic experimental geological field; independent of live world.
 (function(root){
-function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone'}={}){
+function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2}={}){
  const profiles={limestone:{bed:.45,fracture:.65,down:.48,erosion:1},sandstone:{bed:.85,fracture:.25,down:.18,erosion:.75},fractured:{bed:.18,fracture:.95,down:.72,erosion:.85}};const p=profiles[regime]||profiles.limestone;
  const n=width*height,solid=new Uint8Array(n),weak=new Float32Array(n),flow=new Float32Array(n);
  const hash=(x,y)=>{let v=Math.sin(x*127.1+y*311.7+seed*74.7)*43758.5453;return v-Math.floor(v)};
@@ -26,14 +26,26 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  if(!best)break;x=best.a;y=best.b;
  }
  }
- const peak=Math.max(...flow);
+ let peak=0;for(const v of flow)peak=Math.max(peak,v);
  for(let y=1;y<height-2;y++)for(let x=1;x<width-1;x++){
  const f=flow[idx(x,y)];if(f<Math.max(9,peak*.045))continue;
- const radius=Math.min(8,1+Math.floor(Math.sqrt(f)*.30*p.erosion));
+ const chamber=.55+.9*hash(Math.floor(x/24),Math.floor(y/18));
+ const radius=Math.min(15,1+Math.floor(Math.sqrt(f)*.30*p.erosion*chamber*(.75+.25*maturity)));
  for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++){
  const a=x+dx,b=y+dy;if(a<1||a>=width-1||b<1||b>=height-2)continue;
  if(dx*dx+dy*dy<=radius*radius*(.65+.55*weak[idx(a,b)]))solid[idx(a,b)]=0;
  }
+ }
+ // Secondary circulation: widen existing conduits where nearby permeable rock receives flow.
+ for(let pass=1;pass<maturity;pass++){
+ const remove=[];
+ for(let y=2;y<height-3;y++)for(let x=2;x<width-2;x++){
+ const i=idx(x,y);if(!solid[i]||y<surface(x)+2)continue;
+ let wet=0,open=0;
+ for(const j of [i-1,i+1,i-width,i+width])if(!solid[j]){open++;wet+=flow[j]}
+ if(open&&weak[i]>.42&&wet>peak*.018&&hash(x+pass*width,y)<Math.min(.85,weak[i]*.65))remove.push(i);
+ }
+ for(const i of remove){solid[i]=0;flow[i]=Math.max(flow[i],peak*.025)}
  }
  // Unsupported thin roof fragments fall into the first available space below.
  const debris=new Uint8Array(n);
@@ -118,7 +130,7 @@ const canvas=document.getElementById('view'),ctx=canvas.getContext('2d'),seed=do
 const terrainCache=document.createElement('canvas');terrainCache.width=960;terrainCache.height=400;let dirty=true;const zoom=document.getElementById('zoom');
 function paintTerrain(ctx){const scale=4;ctx.fillStyle='#a9b9bd';ctx.fillRect(0,0,960,400);const geo=ArcheGeology.physicalField(f);const img=ctx.createImageData(960,400);for(let py=0;py<400;py++)for(let px=0;px<960;px++){const x=(px-2)/4,y=(py-2)/4,i=Math.max(0,Math.min(f.solid.length-1,Math.round(y)*f.width+Math.max(0,Math.min(f.width-1,Math.round(x))))),j=(py*960+px)*4;let rgb;if(geo.isSolid(x,y)){const v=Math.round(105+35*f.weak[i]);rgb=f.debris[i]?[195,157,115]:[v+18,v,v-17]}else rgb=y>=20+8*Math.sin(x/30)?[41,47,48]:[169,185,189];img.data[j]=rgb[0];img.data[j+1]=rgb[1];img.data[j+2]=rgb[2];img.data[j+3]=255}ctx.putImageData(img,0,0);if(edges.checked){ctx.strokeStyle='#d0bda0';ctx.lineWidth=1;ctx.beginPath();for(const path of ArcheGeology.boundaryPaths(f)){path.points.forEach((p,i)=>i?ctx.lineTo(p[0]*scale+2,p[1]*scale+2):ctx.moveTo(p[0]*scale+2,p[1]*scale+2));if(path.closed)ctx.closePath()}ctx.stroke()}if(sections.checked){const physical=ArcheGeology.physicalField(f);ctx.strokeStyle='#73d9dd';ctx.lineWidth=1;for(let x=8;x<f.width;x+=8)for(const q of physical.column(x).slice(1)){ctx.beginPath();ctx.moveTo(x*scale+2,q.top*scale+2);ctx.lineTo(x*scale+2,q.bottom*scale+2);ctx.stroke()}}}
 function draw(){if(!f)return;if(dirty){paintTerrain(terrainCache.getContext('2d'));dirty=false}const z=Number(zoom.value),w=960/z,h=400/z,x=Math.max(0,Math.min(960-w,(player?.x||120)*4-w/2)),y=Math.max(0,Math.min(400-h,(player?.y||50)*4-h/2));ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(terrainCache,x,y,w,h,0,0,960,400);ctx.setTransform(z,0,0,z,-x*z,-y*z)}
-function run(){try{f=ArcheGeology.generate({seed:Number(seed.value),regime:document.getElementById('regime').value});spawn();dirty=true;draw();document.getElementById('stats').textContent=('Rock: '+f.regime+' | Debris cells: '+f.debris.reduce((a,b)=>a+b,0)+'\n')+f.components.map((c,i)=>'Formation '+(i+1)+': '+c.area+' cells; span '+(c.maxX-c.minX+1)+' × '+(c.maxY-c.minY+1)+'; '+(c.openingColumns.length?'surface-connected':'enclosed')).join('\n')}catch(e){document.getElementById('stats').textContent='Generation error: '+e.message;console.error(e)}}
+function run(){try{f=ArcheGeology.generate({seed:Number(seed.value),regime:document.getElementById('regime').value,maturity:Number(document.getElementById('maturity').value)});spawn();dirty=true;draw();document.getElementById('stats').textContent=('Rock: '+f.regime+' | Debris cells: '+f.debris.reduce((a,b)=>a+b,0)+'\n')+f.components.map((c,i)=>'Formation '+(i+1)+': '+c.area+' cells; span '+(c.maxX-c.minX+1)+' × '+(c.maxY-c.minY+1)+'; '+(c.openingColumns.length?'surface-connected':'enclosed')).join('\n')}catch(e){document.getElementById('stats').textContent='Generation error: '+e.message;console.error(e)}}
 let player,physical,keys={left:false,right:false,jump:false,crouch:false,climb:false},last=0;
 function spawn(){physical=ArcheGeology.physicalField(f);let x=12;const q=physical.column(x)[0];player={x,y:q.bottom-2.4,vy:0,ground:false,half:2.2};}
 function blocked(x,y,half=player.half){for(let dx=-.65;dx<=.66;dx+=.65)for(let i=0;i<=8;i++)if(physical.isSolid(x+dx,y-half+2*half*i/8))return true;return false}
