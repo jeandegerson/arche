@@ -737,3 +737,7 @@
 
 ## 0.11.57
 - Predict descending deep-water landings, blend into streamlined dive pose, retain entry momentum and briefly submerge before resurfacing. Minimum dive depth 70 units. Syntax checked; live pose and entry transitions unverified.
+
+
+## 0.11.58
+- Allow descending backflips to enter deep water, retain entry orientation and translational momentum, and recover swimming posture along shortest angular arc. Syntax checked; live animation pending.
