@@ -645,3 +645,7 @@
 
 ## 0.11.34
 - River depths +85%, other unfrozen inland water depths +35%; preserve shoreline and level. Taper distant rivers, fade far edge and add subtle bank contours. 25041 terrain checks and syntax passed. Live visuals and saved submerged objects unverified.
+
+
+## 0.11.35
+- Incised river channels and substantially deeper lake basins, distinct receding river and broad lake projections, different palettes and ripples. 25041 terrain comparisons and syntax passed. Live rendering and swimming unverified.
