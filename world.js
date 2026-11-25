@@ -295,12 +295,15 @@
       let valid=true;for(let x=left;x<=right;x+=24){const p=baseLandscape(x);if(p.wet||p.frozen||p.biome!==q.biome){valid=false;break}}
       if(!valid)continue;
       const inner=d=>smooth(clamp((d-220)/180,0,1));
-      const bed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*([-d*.22, -d*.19+35*Math.sin(d/145), -d*.10+55*Math.sin(d/210), d*.13+30*Math.sin(d/115)][kind]);
+      const through=kind===1||kind===2;
+      const rawBed=d=>datum+d*.29+8*Math.sin(d/83)+4*Math.sin(d/37)+inner(d)*([-d*.22, -d*.19+35*Math.sin(d/145), -d*.10+55*Math.sin(d/210), d*.13+30*Math.sin(d/115)][kind]);
+      const endDatum=baseLandscape(center+dir*length).surface;
+      const bed=d=>through?rawBed(d)+(endDatum-rawBed(length))*smooth(clamp((d-220)/(length-220),0,1)):rawBed(d);
       const chamber=(d,c,r)=>Math.exp(-(((d-c)/r)**2));
       const aperture=d=>{const u=d/length,base=90+24*noise(center+d,180,304),shape=[-15,105*chamber(u,.58,.19),95*chamber(u,.35,.12)+125*chamber(u,.76,.14)-32*chamber(u,.55,.09),45*Math.sin(u*19)+65*chamber(u,.8,.18)][kind];return Math.max(58,base+inner(d)*shape)*smooth(clamp(d/110,0,1))*smooth(clamp((length-d)/100,0,1));};
-      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-220)*.28);
+      const relief=d=>bed(d)-aperture(d)-Math.min(65,Math.max(0,d-220)*.28)*(through?smooth(clamp((length-d-220)/180,0,1)):1);
       const points=[];for(let d=0;d<=length;d+=step)points.push({top:bed(d)-aperture(d),bottom:bed(d)});
-      formations.push({center,dir,length,left,right,relief,points,kind,biome:q.biome});
+      formations.push({center,dir,length,left,right,relief,points,kind,through,biome:q.biome});
     }
     function sample(x){
       const q=baseLandscape(x),f=formations.find(f=>x>=f.left&&x<=f.right);
@@ -308,7 +311,7 @@
       const d=(x-f.center)*f.dir,weight=smooth(clamp((d+240)/240,0,1))*smooth(clamp((f.length+240-d)/240,0,1));
       return {...q,surface:mix(q.surface,f.relief(d),weight)};
     }
-    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,kind:f.kind,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:f.dir<0,closedRight:f.dir>0,entryRun:f.dir>0?110:0,exitRun:f.dir<0?110:0}));
+    const geologicalPassages=formations.map(f=>({id:'seam-'+f.center,kind:f.kind,material:({woodland:'woodland',conifer:'conifer',alpine:'conifer',steppe:'eastern',arid:'desert',sandstone:'desert'})[f.biome]||'cave',left:f.dir>0?f.center:f.center-f.length,right:f.dir>0?f.center+f.length:f.center,fieldPoints:f.dir>0?f.points:f.points.slice().reverse(),fieldScale:step,closedLeft:!f.through&&f.dir<0,closedRight:!f.through&&f.dir>0,entryRun:f.through||f.dir>0?110:0,exitRun:f.through||f.dir<0?110:0}));
     function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
     const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
     return {sample,geologicalPassages,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
