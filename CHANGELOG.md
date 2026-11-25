@@ -601,3 +601,7 @@
 ## 0.11.23
 - Extend world east by 27,000 units to 95,160. Add arid steppe, dune sea, two oasis basins and sandstone mountains with desert palettes and sparse vegetation. Preserve original lake search extent and coastal rendering extent.
 - 2,841 original-world sample comparisons identical; new terrain samples finite; inline JavaScript syntax passed. Live water, persistence, mobile rendering and deployment unverified. Desert-specific weather and deep sand physics deferred.
+
+
+## 0.11.24
+- Expand eastern conifer habitat across descending foothills toward the salt lake, with scattered eastern groves tapering into steppe. Sampled conifer extent 3624 to 4992 units. Preserve existing elevations, water, world width and desert coordinates. 3966 physical sample comparisons and inline syntax checks passed; live rendering and tree persistence unverified.
