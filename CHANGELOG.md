@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.41
+- Use the same joystick controls inside caves and on the surface. Straight down crouches, while a diagonal down gesture selects the descending ramp near a cave entrance. Low ceilings continue to constrain the character’s stance.
+- Chromium checks passed for crouching, standing, and entering from both directions. All 44 cave exits passed at 1× and 15× travel speed. Watershed tests passed.
+
 ## 0.12.40
 - Open the cave mouth through the visible terrain and taper its walking ramp into the ground. Keep secondary passages clear of the ramp so they cannot interrupt the climb out.
 - Use connected cave support while ascending, preserve exterior footing after release, and retry a shorter step when fast travel hits a steep ramp.
