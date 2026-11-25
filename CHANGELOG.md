@@ -571,3 +571,7 @@
 ## 0.11.17 — Shared world only
 - Remove the Play solo button. The official link and old mode-specific URLs open the current shared map.
 - Verified shared startup, name entry and simulated presence for the official link and both legacy mode URLs.
+
+## 0.11.18 — Shared action timing
+- Buffer remote carry, facing and tool state alongside each body pose, so visible objects and actions change on the same playback timeline rather than ahead of the character.
+- Inline JavaScript syntax and 700 simulated timeline checks passed. Live shared multiplayer and mobile browser tests unverified.
