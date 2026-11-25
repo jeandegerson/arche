@@ -757,3 +757,7 @@
 
 ## 0.11.62
 - Render scenic standing and falling trees before local player, preserving water overlay and tool effects. Syntax and layer order checks passed.
+
+
+## 0.11.63
+- Add clipped depth-dependent underwater attenuation, subtle animated sunlight shafts and world-anchored suspended particles in oceans and freshwater. Syntax and mock canvas checks passed; device visuals pending.
