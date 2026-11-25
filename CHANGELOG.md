@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.44
+- Keep a held diagonal descent active through the entrance ramp after entering the cave route. Face downhill during entry. Straight down still crouches at the mouth and inside the cave.
+- Chromium verified held diagonal entry and exit at all 44 cave mouths at 1× and 15× travel. Watershed tests passed.
+
 ## 0.12.43
 - Keep the main walking bed continuous where secondary erosion approaches it. Cut back branches that would remove the floor and force a sudden drop at the junction. Resume saves from shortened or removed branches on the main passage where there is room.
 - Chromium verified interior crossings in both directions and all 44 cave exits at 1× and 15×. Watershed tests passed.
