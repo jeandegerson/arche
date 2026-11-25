@@ -625,3 +625,7 @@
 
 ## 0.11.29
 - Add deterministic level clearings and terraces with smooth shoulders and biome-specific frequency. Preserve water, ice and biome layout. 12521 samples checked; 53 dry flat runs at least 96 units long. Inline syntax passed. Saved object elevations, live collision and deployment unverified.
+
+
+## 0.11.30
+- Visual geology: continuous regional rock palette and folded bedding, biome-sensitive soil and sediment thickness, roots, gravel, fractures and sand lamination. Unified rendering for terrain and rock spans. No physics or terrain changes. Syntax and mock canvas checks passed; actual mobile rendering/performance unverified.
