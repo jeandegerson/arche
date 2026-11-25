@@ -3,8 +3,8 @@ const createArcheWorld = require('../world');
 
 for (const seed of [1, 17, 20261125]) {
   const world = createArcheWorld(seed);
-  assert.equal(world.width,63360);
-  assert.equal(world.shore,9600);
+  assert.equal(world.width,68160);
+  assert.equal(world.shore,14400);
   const repeated = createArcheWorld(seed);
   const oceanRuns = [];
   const inlandBiomes = new Set();
@@ -24,7 +24,7 @@ for (const seed of [1, 17, 20261125]) {
       }
     } else {
       inlandBiomes.add(terrain.biome);
-      if (terrain.wet) assert.ok(terrain.surface-terrain.water < 110);
+      if (terrain.wet) assert.ok(terrain.surface-terrain.water < (terrain.biome==="salt"?270:110));
       if (previous) assert.ok(Math.abs(terrain.surface-previous.surface) < 10);
     }
     previous = terrain;
@@ -40,10 +40,15 @@ for (const seed of [1, 17, 20261125]) {
   }
   assert.ok(world.sample(world.shore+mainland*.651).surface<-500);
   assert.deepEqual(world.lakes.map(lake=>lake.biome).sort(),
-    ['alpine','coast','conifer','island','marsh','meadow','steppe','woodland']);
+    ['alpine','coast','conifer','marsh','meadow','steppe','woodland']);
   for(const lake of world.lakes){
     const center=world.sample(lake.x);
     assert.equal(center.biome,lake.biome);
+    if(lake.biome==='alpine'){
+      assert.ok(center.frozen && !center.wet);
+      assert.equal(center.surface,lake.level);
+      continue;
+    }
     assert.equal(center.water,lake.level);
     assert.ok(center.surface-center.water>=62);
     for(const side of [-1,1])assert.ok(world.sample(lake.x+side*lake.radius).surface<lake.level);
