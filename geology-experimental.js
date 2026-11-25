@@ -132,14 +132,17 @@ function physicalField(field){
  return {paths,isSolid,column};
 }
 function waterSimulation(field){
- const {width:w,height:h,solid}=field,n=w*h,amount=Float32Array.from(field.water),current=new Float32Array(n);let input=0,output=0;const inlets=[],outlets=[];for(let x=1;x<w-1;x++){for(let y=1;y<h-1;y++){const i=y*w+x;if(!solid[i]&&solid[i-1]&& !solid[i-w] && y> (field.surfaceHeights?.[x]??20)+2){inlets.push(i);break}}}for(let y=0;y<h;y++)for(const x of [0,w-1]){const i=y*w+x;if(!solid[i])outlets.push(i)}
+ const {width:w,height:h,solid}=field,n=w*h,amount=Float32Array.from(field.water),current=new Float32Array(n),moisture=new Float32Array(n),capacity=new Float32Array(n),permeability=new Float32Array(n);
+ let input=0,output=0;const inlets=[],outlets=[];
+ for(let x=0;x<w;x++){let first=true;for(let y=0;y<h;y++){const i=y*w+x;if(solid[i]){const soil=y<field.surfaceHeights[x]+4;capacity[i]=soil?.35:.035+.14*field.weak[i];permeability[i]=soil?.12:.005+.055*field.weak[i]*(1-field.resistance[i]*.7);if(first){inlets.push(i);first=false}}else if(x===0||x===w-1)outlets.push(i)}}
  function step(rain=0){
- current.fill(0);if(rain>0)for(const i of inlets){const q=Math.min(1-amount[i],rain*.025);amount[i]+=q;input+=q;}
- for(let y=h-2;y>=0;y--)for(let x=0;x<w;x++){const i=y*w+x,j=i+w;if(solid[i]||solid[j])continue;const q=Math.min(amount[i],1-amount[j],.35);if(q>0){amount[i]-=q;amount[j]+=q}}
- for(let y=0;y<h;y++)for(let x=0;x<w-1;x++){const i=y*w+x,j=i+1;if(solid[i]||solid[j])continue;const q=(amount[i]-amount[j])*.18;amount[i]-=q;amount[j]+=q;current[i]+=q;current[j]+=q}
+ current.fill(0);
+ if(rain>0)for(const i of inlets){const q=Math.min(capacity[i]-moisture[i],rain*.025);if(q>0){moisture[i]+=q;input+=q}}
+ for(let y=h-2;y>=0;y--)for(let x=0;x<w;x++){const i=y*w+x,j=i+w;if(solid[i]){const dest=solid[j]?moisture:amount,cap=solid[j]?capacity[j]:1;const q=Math.max(0,Math.min(moisture[i],cap-dest[j],permeability[i]));moisture[i]-=q;dest[j]+=q}else if(!solid[j]){const q=Math.min(amount[i],1-amount[j],.35);if(q>0){amount[i]-=q;amount[j]+=q}}}
+ for(let y=0;y<h;y++)for(let x=0;x<w-1;x++){const i=y*w+x,j=i+1;if(solid[i]&&solid[j]){const q=(moisture[i]/capacity[i]-moisture[j]/capacity[j])*Math.min(permeability[i],permeability[j],capacity[i],capacity[j])*.15;const v=q>0?Math.min(q,moisture[i],capacity[j]-moisture[j]):-Math.min(-q,moisture[j],capacity[i]-moisture[i]);moisture[i]-=v;moisture[j]+=v}else if(!solid[i]&&!solid[j]){const q=(amount[i]-amount[j])*.18;amount[i]-=q;amount[j]+=q;current[i]+=q;current[j]+=q}}
  for(const i of outlets){const q=Math.min(amount[i],.08);amount[i]-=q;output+=q}
  }
- return {amount,current,step,inlets,outlets,budget:()=>({input,output,stored:amount.reduce((a,b)=>a+b,0)})};
+ return {amount,current,moisture,capacity,permeability,step,inlets,outlets,budget:()=>{const free=amount.reduce((a,b)=>a+b,0),pore=moisture.reduce((a,b)=>a+b,0);return {input,output,free,pore,stored:free+pore}}};
 }
 root.ArcheGeology={generate,contours,boundaryPaths,physicalField,waterSimulation};
 })(typeof globalThis!=='undefined'?globalThis:this);
