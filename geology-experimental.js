@@ -86,7 +86,7 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  // Flood only connected voids below a local hydraulic head; rock remains impermeable.
  for(let x=0;x<width;x++){const head=surface(x)+22+12*(1-Math.min(1,env[x].recharge));for(let y=Math.max(0,Math.ceil(head));y<height;y++){const i=idx(x,y);if(!solid[i]&&flow[i]>peak*.12&&env[x].recharge>.4){water[i]=1;queue.push(i);break}}}
  for(let k=0;k<queue.length;k++){const i=queue[k],x=i%width,y=Math.floor(i/width);for(const [dx,dy] of [[-1,0],[1,0],[0,-1],[0,1]]){const a=x+dx,b=y+dy;if(a<0||a>=width||b<0||b>=height||b<surface(a)+22+12*(1-Math.min(1,env[a].recharge)))continue;const j=idx(a,b);if(!solid[j]&&!water[j]){water[j]=1;queue.push(j)}}}
- return {width,height,solid,weak,flow,debris,resistance,water,components,regime};
+ return {width,height,solid,weak,flow,debris,resistance,water,components,regime,surfaceHeights:Array.from({length:width},(_,x)=>surface(x))};
 }
 // Extract all solid/void interfaces from the same field using marching squares.
 function contours(field){
@@ -132,13 +132,14 @@ function physicalField(field){
  return {paths,isSolid,column};
 }
 function waterSimulation(field){
- const {width:w,height:h,solid}=field,n=w*h,amount=Float32Array.from(field.water),current=new Float32Array(n);
- function step(){
- current.fill(0);
+ const {width:w,height:h,solid}=field,n=w*h,amount=Float32Array.from(field.water),current=new Float32Array(n);let input=0,output=0;const inlets=[],outlets=[];for(let x=1;x<w-1;x++){for(let y=1;y<h-1;y++){const i=y*w+x;if(!solid[i]&&solid[i-1]&& !solid[i-w] && y> (field.surfaceHeights?.[x]??20)+2){inlets.push(i);break}}}for(let y=0;y<h;y++)for(const x of [0,w-1]){const i=y*w+x;if(!solid[i])outlets.push(i)}
+ function step(rain=0){
+ current.fill(0);if(rain>0)for(const i of inlets){const q=Math.min(1-amount[i],rain*.025);amount[i]+=q;input+=q;}
  for(let y=h-2;y>=0;y--)for(let x=0;x<w;x++){const i=y*w+x,j=i+w;if(solid[i]||solid[j])continue;const q=Math.min(amount[i],1-amount[j],.35);if(q>0){amount[i]-=q;amount[j]+=q}}
  for(let y=0;y<h;y++)for(let x=0;x<w-1;x++){const i=y*w+x,j=i+1;if(solid[i]||solid[j])continue;const q=(amount[i]-amount[j])*.18;amount[i]-=q;amount[j]+=q;current[i]+=q;current[j]+=q}
+ for(const i of outlets){const q=Math.min(amount[i],.08);amount[i]-=q;output+=q}
  }
- return {amount,current,step};
+ return {amount,current,step,inlets,outlets,budget:()=>({input,output,stored:amount.reduce((a,b)=>a+b,0)})};
 }
 root.ArcheGeology={generate,contours,boundaryPaths,physicalField,waterSimulation};
 })(typeof globalThis!=='undefined'?globalThis:this);
