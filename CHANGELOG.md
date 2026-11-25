@@ -550,3 +550,8 @@
 - Open the shared world by default and keep solo play available through Play solo.
 - Place every shared arrival at the same mainland spawn after name entry. Saved character coordinates no longer determine the entry location.
 - JavaScript syntax and simulated mode navigation, shared spawn with an old character save, name entry and online presence passed. Physical devices were not tested.
+
+## 0.11.13 — Shared player visibility
+- Validate incoming player positions against the current map bounds. The old horizontal cutoff discarded updates at the mainland spawn and farther east.
+- Stack nearby name labels when players overlap.
+- JavaScript checks and simulated incoming pose, out-of-bounds rejection, overlapping labels and online presence passed. Live two-device gameplay was not tested.
