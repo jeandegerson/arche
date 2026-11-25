@@ -681,3 +681,7 @@
 
 ## 0.11.43
 - Preserve frozen basin depth separately from walkable ice collision surface. Render ice and underwater cross-section, tint background ice pale blue. Existing collision and wet flags unchanged. Sample equivalence and syntax passed; mobile visuals unverified.
+
+
+## 0.11.44
+- Restore local character checkpoint on shared-world join, stream destination terrain before moving character, and use safe ground or water surface height. First-time spawn unchanged. Syntax checked; live reload unverified.
