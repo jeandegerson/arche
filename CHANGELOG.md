@@ -487,3 +487,8 @@
 - Clip standing water to the painted slope and lower Watershed river surfaces to their local banks where needed, removing abrupt vertical edges inside riverbeds.
 - Extend the soil fill below the visible floor in tall viewports while retaining the collision boundary.
 - Checked JavaScript syntax and shoreline geometry with four generated seeds, including two-bank crossings and dry islands. Device rendering was not tested.
+
+## 0.11.0
+- Open directly into one continuous side-on world based on the coastal and alpine concept sketch. A single rocky island sits in the western ocean. The mainland crosses dunes, reed marsh, broadleaf woodland, conifer slopes, the alpine ridge, and a dry steppe with a salt lake.
+- Generate nearby terrain, geological contacts, scenery, and wildlife as the player moves. Keep excavation edits and position in a new save while leaving prior save data in place. This release uses local play because the previous shared coordinates belong to different geography.
+- Verified seeded terrain over three seeds. Mobile-viewport Chromium with Matter.js completed the entire mainland crossing in about 59 simulated minutes and verified streaming, excavation persistence, reload position, and island and lake terrain. Safari was not tested.
