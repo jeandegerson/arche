@@ -279,8 +279,15 @@
       const wet=u<1&&surface>p.level;
       return {...q,surface,wet,water:wet?p.level:null,waterKind:wet?'river':undefined,cover:wet?0:q.cover};
     }
-    function sample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;const d=Math.max(0,q.surface-q.water);if(q.waterKind==='river'){const p=rivers.find(p=>Math.abs(x-p.x)<p.radius);const u=p?Math.abs(x-p.x)/p.radius:1;const shape=Math.max(0,1-Math.pow(u,5));return {...q,surface:q.water+Math.max(d*2.8,(p?p.depth*4.8:150)*shape*Math.min(1,d/12))};}return {...q,surface:q.water+d*2.65};}
-    return {sample,rivers,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
+    function oldSample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;const d=Math.max(0,q.surface-q.water);if(q.waterKind==='river'){const p=rivers.find(p=>Math.abs(x-p.x)<p.radius);const u=p?Math.abs(x-p.x)/p.radius:1;const shape=Math.max(0,1-Math.pow(u,5));return {...q,surface:q.water+Math.max(d*2.8,(p?p.depth*4.8:150)*shape*Math.min(1,d/12))};}return {...q,surface:q.water+d*2.65};}
+    const islandStart=6012,islandEnd=7848,islandExtra=1836,beachStart=14232,beachEnd=16824,beachExtra=2592;
+    function toOld(x){if(x<islandStart)return x;if(x<islandEnd+islandExtra)return islandStart+(x-islandStart)/2;x-=islandExtra;if(x<beachStart)return x;if(x<beachEnd+beachExtra)return beachStart+(x-beachStart)/2;return x-beachExtra;}
+    function toNew(x){if(x<islandStart)return x;if(x<islandEnd)return islandStart+(x-islandStart)*2;if(x<beachStart)return x+islandExtra;if(x<beachEnd)return beachStart+islandExtra+(x-beachStart)*2;return x+islandExtra+beachExtra;}
+    function sample(x){const oldX=toOld(x),q=oldSample(oldX);if(oldX>islandStart+24&&oldX<islandEnd-24&&q.wet)return {...q,surface:q.water-12,water:null,wet:false,frozen:false,biome:'island',cover:.42,color:colors.island};return q;}
+    function moveBasin(p){return {...p,x:toNew(p.x),radius:(toNew(p.x+p.radius)-toNew(p.x-p.radius))/2};}
+    const newShore=toNew(shore),newBeachEnd=toNew(beachEnd);
+    return {sample,rivers:rivers.map(moveBasin),width:width+extension+4428,originalWidth:toNew(originalWidth+extension),coastalWidth:newShore+(newBeachEnd-newShore)/.045,shore:newShore,lakes:lakes.map(l=>moveBasin({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:toNew(shore+264)};
+
   }
 
   if(typeof module!=='undefined')module.exports=createArcheWorld;
