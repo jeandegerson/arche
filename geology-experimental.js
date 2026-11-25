@@ -1,10 +1,10 @@
 // Deterministic experimental geological field; independent of live world.
 (function(root){
-function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2}={}){
+function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone',maturity=2,environment=()=>({recharge:1,vertical:1,solubility:1})}={}){
  const profiles={limestone:{bed:.45,fracture:.65,down:.48,erosion:1},sandstone:{bed:.85,fracture:.25,down:.18,erosion:.75},fractured:{bed:.18,fracture:.95,down:.72,erosion:.85}};const p=profiles[regime]||profiles.limestone;
  const n=width*height,resistance=new Float32Array(n),solid=new Uint8Array(n),weak=new Float32Array(n),flow=new Float32Array(n);
  const hash=(x,y)=>{let v=Math.sin(x*127.1+y*311.7+seed*74.7)*43758.5453;return v-Math.floor(v)};
- const idx=(x,y)=>y*width+x;
+ const idx=(x,y)=>y*width+x;const env=Array.from({length:width},(_,x)=>environment(x));
  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
  const i=idx(x,y);solid[i]=+(y>=surface(x));
  const bed=Math.abs(Math.sin((y+5*Math.sin(x/25))/6));
@@ -15,14 +15,15 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  }
  // Recharge traces compete for permeable routes; accumulated flow enlarges rock.
  for(let k=0;k<width*12;k++){
- let x=1+Math.floor(hash(k,1)*(width-2)),y=Math.ceil(surface(x)),heading=hash(k,2)<.5?-1:1;
+ let x=1+Math.floor(hash(k,1)*(width-2)),y=Math.max(0,Math.ceil(surface(x))),heading=hash(k,2)<.5?-1:1;
+ if(y>=height-3||env[x].recharge<=0)continue;
  for(let t=0;t<height*2&&y<height-3&&x>1&&x<width-2;t++){
- flow[idx(x,y)]+=1;
+ flow[idx(x,y)]+=env[x].recharge;
  let best=null;
  for(const [dx,dy] of [[-1,0],[1,0],[-1,1],[0,1],[1,1]]){
  const a=x+dx,b=y+dy,i=idx(a,b);
  if(!solid[i])continue;
- const score=weak[i]*2+Math.log1p(flow[i])*.10+dy*p.down+dx*heading*.10+hash(k+t*7,a+b*width)*.55;
+ const score=weak[i]*2+Math.log1p(flow[i])*.10+dy*p.down*env[x].vertical+dx*heading*.10+hash(k+t*7,a+b*width)*.55;
  if(!best||score>best.score)best={a,b,score};
  }
  if(!best)break;x=best.a;y=best.b;
@@ -32,7 +33,7 @@ function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),r
  for(let y=1;y<height-2;y++)for(let x=1;x<width-1;x++){
  const f=flow[idx(x,y)];if(f<Math.max(9,peak*.045))continue;
  const chamber=.55+.9*hash(Math.floor(x/24),Math.floor(y/18));
- const radius=Math.min(15,1+Math.floor(Math.sqrt(f)*.30*p.erosion*chamber*(.75+.25*maturity)));
+ const radius=Math.min(15,1+Math.floor(Math.sqrt(f)*.30*p.erosion*env[x].solubility*chamber*(.75+.25*maturity)));
  for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++){
  const a=x+dx,b=y+dy;if(a<1||a>=width-1||b<1||b>=height-2)continue;
  const j=idx(a,b),strength=resistance[j],pressure=Math.min(1,Math.log1p(f)/Math.log1p(peak));
