@@ -729,3 +729,7 @@
 
 ## 0.11.55
 - Depth-dependent crest asymmetry and ripple attenuation, deterministic recent-wave wet sand shading, shoreline foam and stronger shallow crest highlights. Approximate shoaling, not fluid simulation or variable propagation speed. Syntax and numerical checks passed; live rendering pending.
+
+
+## 0.11.56
+- Coordinated breaststroke cycle and stroke-driven propulsion, drag, relaxed floating posture, damped vertical buoyancy and averaged wave surface. All swimmable waters. Syntax and numerical propulsion tests passed; live animation, remote pose and shore transitions unverified.
