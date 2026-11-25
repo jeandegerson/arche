@@ -837,3 +837,8 @@
 ## 0.11.81
 - Keep solid rock above the small cave beyond its entrance ramp and blend the chamber roof into a longer curved back wall.
 - Geometry checks passed for roof cover, wall curvature, standing clearance, turnaround and left exit.
+
+## 0.11.82
+- Extend the Small and Woodland caves. Give Conifer and Desert distinct lower passage grades and asymmetric connectors, drawing on bedding-plane and fracture-controlled passages described by the Kentucky Geological Survey and USGS.
+- Anchor cave geometry and floor strokes to fixed world samples. Keep rock over the interior of all five main passages.
+- Syntax, simulated traversal of seven routes, interior cover and clearance, rock separation and overlapping Eastern roof samples passed. Live visual playtesting pending.
