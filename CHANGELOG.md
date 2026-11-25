@@ -797,3 +797,7 @@
 
 ## 0.11.72
 - Remove independent natural-rock geology overlay and use solid walking surface for exterior geology and grass throughout the world. Preserve collision geometry and cave routes. Syntax and duplicate overlay checks passed; device visuals pending.
+
+
+## 0.11.73
+- Vary cave depth profiles and chamber heights. Add lower loop routes in conifer and desert caves with diagonal entry and automatic return to parent route. Geometry samples and syntax passed; live movement and rendering unverified.
