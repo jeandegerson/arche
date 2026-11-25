@@ -769,3 +769,7 @@
 
 ## 0.11.65
 - Deterministic shared regional weather from UTC epoch, world position and terrain elevation. Rain, clouds, wind and estimated recent rainfall soil wetness no longer depend on session duration. Preserve underwater wind muffling. Syntax and 3000 deterministic weather checks passed; device clocks and live testing limitations remain.
+
+
+## 0.11.66
+- Introduce walkable route graph with validated junctions, route-specific support and intentional branch selection. Existing gait uses exterior route only; no caves or collision carving yet. Syntax and isolated route tests passed.
