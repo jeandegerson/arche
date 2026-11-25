@@ -605,3 +605,7 @@
 
 ## 0.11.24
 - Expand eastern conifer habitat across descending foothills toward the salt lake, with scattered eastern groves tapering into steppe. Sampled conifer extent 3624 to 4992 units. Preserve existing elevations, water, world width and desert coordinates. 3966 physical sample comparisons and inline syntax checks passed; live rendering and tree persistence unverified.
+
+
+## 0.11.25
+- Insert 5,000 units of new conifer terrain at x=59,000, shifting eastern geography by 5,000 without replacing existing terrain. Total width 100,160. Original sample equivalence and syntax checks passed. Existing persisted entity coordinates east of insertion are not migrated; live deployment unverified.

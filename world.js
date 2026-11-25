@@ -136,7 +136,7 @@
       }
       if(best)lakes.push(best);
     }
-    function sample(x){
+    function legacySample(x){
       let {surface,biome,water}=baseSample(x);
       let frozen=false;
       const lake=lakes.find(basin=>Math.abs(x-basin.x)<basin.radius);
@@ -164,7 +164,16 @@
       }[biome]??0);
       return {surface,water,wet,frozen,biome,cover,color:colors[biome]};
     }
-    return {sample,width,originalWidth,shore,lakes,spawn:shore+264};
+    const insertion=59000, extension=5000;
+    function sample(x){
+      if(x<=insertion)return legacySample(x);
+      if(x>=insertion+extension)return legacySample(x-extension);
+      const d=x-insertion,u=d/extension,edge=legacySample(insertion).surface;
+      const envelope=Math.sin(Math.PI*u)**2;
+      const surface=edge+envelope*(-35+noise(d,1100,81)*48+noise(d,290,82)*13);
+      return {surface,water:null,wet:false,frozen:false,biome:'conifer',cover:.69+noise(x,980,6)*.22,color:colors.conifer};
+    }
+    return {sample,width:width+extension,originalWidth:originalWidth+extension,coastalWidth:originalWidth,shore,lakes:lakes.map(l=>({...l,x:l.x>insertion?l.x+extension:l.x})),spawn:shore+264};
   }
 
   if(typeof module!=='undefined')module.exports=createArcheWorld;
