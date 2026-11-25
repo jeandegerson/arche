@@ -673,3 +673,7 @@
 
 ## 0.11.41
 - Render near-background inland water using cached analytical basin boundaries and quadratic curves, preserving depth ordering and mesh resolution. Playable geography unchanged. Syntax and mock curve rendering passed; live occlusion and FPS unverified.
+
+
+## 0.11.42
+- Share one continuous gradient per background water body and overlap internal curved strip edges to hide antialiasing seams while retaining terrain occlusion. Playable terrain and swimmer rendering unchanged. Syntax and mock gradient/curve tests passed; live visuals and FPS unverified.
