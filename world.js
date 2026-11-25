@@ -138,7 +138,7 @@
     }
     function legacySample(x){
       let {surface,biome,water}=baseSample(x);
-      let frozen=false;
+      let frozen=false,iceBed=null;
       const lake=lakes.find(basin=>Math.abs(x-basin.x)<basin.radius);
       if(lake){
         const u=Math.abs(x-lake.x)/lake.radius;
@@ -148,6 +148,7 @@
         water=surface>lake.level?lake.level:null;
         if(biome==='alpine'&&water!==null){
           frozen=true;
+          iceBed=water+(surface-water)*2.65;
           surface=water;
           water=null;
         }
@@ -162,7 +163,7 @@
         coast:.14,island:.42,marsh:.57,meadow:.54,woodland:.68+canopy*.24,
         conifer:.69+canopy*.22,alpine:.08,steppe:.16,salt:.05,arid:.035,dunes:0,sandstone:.015,oasis:.48
       }[biome]??0);
-      return {surface,water,wet,frozen,biome,cover,color:colors[biome]};
+      return {surface,water,wet,frozen,iceBed,biome,cover,color:colors[biome]};
     }
     const insertion=59000, extension=5000;
     function expandedSample(x){
