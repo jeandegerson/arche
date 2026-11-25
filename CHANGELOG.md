@@ -701,3 +701,7 @@
 
 ## 0.11.48
 - Swimming follows ocean wave height with bounded drift and tilt; wading responds to moving surface. Lakes unchanged. Syntax and numerical tests passed; live physics and floating objects not yet verified/implemented.
+
+
+## 0.11.49
+- Animated perspective-scaled ocean crests in near scenic geography, clipped to sea strips; distant sea glints move. Syntax and mock rendering passed; device visuals unverified.
