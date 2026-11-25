@@ -753,3 +753,7 @@
 
 ## 0.11.61
 - Route surf and environmental action sounds through the underwater acoustic filter as well. Syntax checked.
+
+
+## 0.11.62
+- Render scenic standing and falling trees before local player, preserving water overlay and tool effects. Syntax and layer order checks passed.
