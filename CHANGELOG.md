@@ -741,3 +741,7 @@
 
 ## 0.11.58
 - Allow descending backflips to enter deep water, retain entry orientation and translational momentum, and recover swimming posture along shortest angular arc. Syntax checked; live animation pending.
+
+
+## 0.11.59
+- Underwater swimming with vertical joystick input, stroke-driven vertical thrust, drag, passive resurfacing, directional posture and seabed bounds. No oxygen limit. Syntax and simplified vertical dynamics checks passed; live controls and remote rendering unverified.
