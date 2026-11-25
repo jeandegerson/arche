@@ -661,3 +661,7 @@
 
 ## 0.11.38
 - Finer near mesh, reduced facet contrast and seam coverage, conifer silhouettes, finite lake basins with raised far banks. Playable terrain unchanged. Syntax and mock geography/render checks passed; live visuals and mobile performance unverified.
+
+
+## 0.11.39
+- Cache near geography on a fixed world grid, reduce sampling resolution, batch same-colour terrain into continuous strips and remove per-facet shading. Syntax and mock rendering passed. Riverbank clipping and curved shorelines still pending; mobile FPS unverified.
