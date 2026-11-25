@@ -1,4 +1,4 @@
-<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archē geological laboratory</title><style>body{background:#202624;color:#e5dfd2;font:16px system-ui;margin:16px}canvas{width:100%;min-height:160px;height:auto;image-rendering:auto;background:#a9b9bd}input,button{font:inherit;padding:8px}pre{white-space:pre-wrap}</style><h1>Geological laboratory</h1><p>Experimental field — not the shared world.</p><label>Seed <input id="seed" type="number" value="42"></label> <label>Rock <select id="regime"><option value="limestone">Limestone</option><option value="sandstone">Sandstone</option><option value="fractured">Fractured rock</option></select></label> <button id="run">Generate</button> <label><input type="checkbox" id="edges" checked> Boundaries</label><canvas id="view" width="960" height="400"></canvas><pre id="stats"></pre><script>// Deterministic experimental geological field; independent of live world.
+<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archē geological laboratory</title><style>body{background:#202624;color:#e5dfd2;font:16px system-ui;margin:16px}canvas{width:100%;min-height:160px;height:auto;image-rendering:auto;background:#a9b9bd}input,button{font:inherit;padding:8px}pre{white-space:pre-wrap}</style><h1>Geological laboratory</h1><p>Experimental field — not the shared world.</p><label>Seed <input id="seed" type="number" value="42"></label> <label>Rock <select id="regime"><option value="limestone">Limestone</option><option value="sandstone">Sandstone</option><option value="fractured">Fractured rock</option></select></label> <button id="run">Generate</button> <label><input type="checkbox" id="edges" checked> Boundaries</label><label><input type="checkbox" id="sections"> Vertical sections</label><canvas id="view" width="960" height="400"></canvas><pre id="stats"></pre><script>// Deterministic experimental geological field; independent of live world.
 (function(root){
 function generate({width=240,height=100,seed=42,surface=x=>20+8*Math.sin(x/30),regime='limestone'}={}){
  const profiles={limestone:{bed:.45,fracture:.65,down:.48,erosion:1},sandstone:{bed:.85,fracture:.25,down:.18,erosion:.75},fractured:{bed:.18,fracture:.95,down:.72,erosion:.85}};const p=profiles[regime]||profiles.limestone;
@@ -79,11 +79,30 @@ function contours(field){
  }
  return segments;
 }
-root.ArcheGeology={generate,contours};
+// Assemble boundary segments into continuous paths without inventing new geometry.
+function boundaryPaths(field){
+ const edges=contours(field),adj=new Map(),used=new Set(),paths=[];
+ const key=p=>p.join(',');
+ edges.forEach((e,i)=>e.forEach(p=>{const k=key(p);if(!adj.has(k))adj.set(k,[]);adj.get(k).push(i)}));
+ function trace(i,start){const points=[start];let p=start;
+ while(i!==undefined&&!used.has(i)){used.add(i);const e=edges[i];p=key(e[0])===key(p)?e[1]:e[0];points.push(p);i=adj.get(key(p)).find(j=>!used.has(j));}
+ return {points,closed:key(points[0])===key(points.at(-1))};}
+ for(const [k,ids] of adj)if(ids.length===1&&!used.has(ids[0]))paths.push(trace(ids[0],k.split(',').map(Number)));
+ edges.forEach((e,i)=>{if(!used.has(i))paths.push(trace(i,e[0]))});
+ return paths;
+}
+function physicalField(field){
+ const paths=boundaryPaths(field);
+ const isSolid=(x,y)=>{const a=Math.round(x),b=Math.round(y);return a<0||a>=field.width||b>=field.height?true:b<0?false:!!field.solid[b*field.width+a]};
+ const column=x=>{const a=Math.round(x),out=[];if(a<0||a>=field.width)return out;let start=null;
+ for(let y=0;y<=field.height;y++){if(y<field.height&&!isSolid(a,y)){if(start===null)start=y-.5;}else if(start!==null){out.push({top:start,bottom:y-.5});start=null;}}return out;};
+ return {paths,isSolid,column};
+}
+root.ArcheGeology={generate,contours,boundaryPaths,physicalField};
 })(typeof globalThis!=='undefined'?globalThis:this);
 </script><script>
-const canvas=document.getElementById('view'),ctx=canvas.getContext('2d'),seed=document.getElementById('seed'),edges=document.getElementById('edges');let f;
-function draw(){const scale=4;ctx.fillStyle='#a9b9bd';ctx.fillRect(0,0,960,400);for(let y=0;y<f.height;y++)for(let x=0;x<f.width;x++){let i=y*f.width+x;if(f.solid[i]){let v=Math.round(105+35*f.weak[i]);ctx.fillStyle=f.debris[i]?'#c39d73':'rgb('+ (v+18)+','+v+','+(v-17)+')';ctx.fillRect(x*scale,y*scale,scale,scale)}else if(y>=20+8*Math.sin(x/30)){ctx.fillStyle='#292f30';ctx.fillRect(x*scale,y*scale,scale,scale)}}if(edges.checked){ctx.strokeStyle='#d0bda0';ctx.lineWidth=1;ctx.beginPath();for(const [a,b] of ArcheGeology.contours(f)){ctx.moveTo(a[0]*scale+2,a[1]*scale+2);ctx.lineTo(b[0]*scale+2,b[1]*scale+2)}ctx.stroke()}}
+const canvas=document.getElementById('view'),ctx=canvas.getContext('2d'),seed=document.getElementById('seed'),edges=document.getElementById('edges');let f;const sections=document.getElementById('sections');
+function draw(){const scale=4;ctx.fillStyle='#a9b9bd';ctx.fillRect(0,0,960,400);for(let y=0;y<f.height;y++)for(let x=0;x<f.width;x++){let i=y*f.width+x;if(f.solid[i]){let v=Math.round(105+35*f.weak[i]);ctx.fillStyle=f.debris[i]?'#c39d73':'rgb('+ (v+18)+','+v+','+(v-17)+')';ctx.fillRect(x*scale,y*scale,scale,scale)}else if(y>=20+8*Math.sin(x/30)){ctx.fillStyle='#292f30';ctx.fillRect(x*scale,y*scale,scale,scale)}}if(edges.checked){ctx.strokeStyle='#d0bda0';ctx.lineWidth=1;ctx.beginPath();for(const path of ArcheGeology.boundaryPaths(f)){path.points.forEach((p,i)=>i?ctx.lineTo(p[0]*scale+2,p[1]*scale+2):ctx.moveTo(p[0]*scale+2,p[1]*scale+2));if(path.closed)ctx.closePath()}ctx.stroke()}if(sections.checked){const physical=ArcheGeology.physicalField(f);ctx.strokeStyle='#73d9dd';ctx.lineWidth=1;for(let x=8;x<f.width;x+=8)for(const q of physical.column(x).slice(1)){ctx.beginPath();ctx.moveTo(x*scale+2,q.top*scale+2);ctx.lineTo(x*scale+2,q.bottom*scale+2);ctx.stroke()}}}
 function run(){try{f=ArcheGeology.generate({seed:Number(seed.value),regime:document.getElementById('regime').value});draw();document.getElementById('stats').textContent=('Rock: '+f.regime+' | Debris cells: '+f.debris.reduce((a,b)=>a+b,0)+'\n')+f.components.map((c,i)=>'Formation '+(i+1)+': '+c.area+' cells; span '+(c.maxX-c.minX+1)+' × '+(c.maxY-c.minY+1)+'; '+(c.openingColumns.length?'surface-connected':'enclosed')).join('\n')}catch(e){document.getElementById('stats').textContent='Generation error: '+e.message;console.error(e)}}
-document.getElementById('run').onclick=run;edges.onchange=draw;run();
+document.getElementById('run').onclick=run;edges.onchange=draw;sections.onchange=draw;run();
 </script></html>
