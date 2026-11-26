@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.60
+- Float felled trunks in lakes and the sea when the hull-length footprint clears the basin. A trunk shifts off the bank only as far as needed to float. Grounded trunks keep their terrain contact.
+- Require a dry trunk for canoe work. Chromium verified floating, dry resting, wet-trunk rejection and the existing canoe workflow. All 49 cave opening checks and watershed tests passed.
+
 ## 0.12.59
 - Use Drag canoe for towing on land and for hauling an empty canoe out of the water from within reach of the bank. Board canoe works from land, shallow water and while swimming. Exit canoe works wherever the canoe is, placing the player beside it to walk, wade or swim.
 - Chromium verified dragging, open-water exit and reboarding, shallow-water exit, and boarding and exiting on land with a simulated shared save. All 49 cave opening checks and watershed tests passed.
