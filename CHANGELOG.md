@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.58
+- Pull an unoccupied canoe onto the bank from within reach. The haul stops automatically when the canoe reaches its resting point on land and saves that position in the shared world.
+- Chromium verified disembarking, hauling and restoring the beached canoe with a simulated shared save. All 49 cave mouth checks and watershed tests passed.
+
 ## 0.12.57
 - Add single-seat dugout canoes made from felled trunks at least 125 units long and 18 units thick. Three short work sessions visibly hollow the trunk and save its progress. Drag the canoe to the water, board it, paddle with the joystick, and step ashore at a bank.
 - Use the existing shared wood save for unfinished hulls, boats, and their positions. Chromium tested the full workflow with a simulated shared save and passed all 49 cave openings at normal and 15× travel speed. Watershed tests passed.
