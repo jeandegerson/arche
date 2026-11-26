@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.72
+- Resolve loose branches, planks and logs against terrain and water with one support rule. Match pickup reach to the visible object and settle unsupported positions from older saves. Disperse planks released as a bundle in water.
+- Check dry support, saved airborne wood, and released wood reaching the waterline in Chromium.
+
 ## 0.12.71
 - Allow compatible pickups while carrying a bundle, up to three planks or five branches. Apply the same limits to loose pickups and items retrieved from prepared fires.
 

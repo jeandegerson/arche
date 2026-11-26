@@ -54,15 +54,23 @@ const assert=require('node:assert/strict');
     'A submerged trunk should float close to level at the water surface');
    check(Math.abs(floating.y-later.y)>.1&&Math.abs(floating.angle-later.angle)>.001,
     'A floating trunk should bob and roll on inland water');
-   const stick=floatingBranchPose({x:dry,y:q.y-3},1);
-   check(stick&&Math.abs(stick.y-physicalWaterLevel(basin,stick.x))<3,
-    'A submerged branch should float in a lake');
-   check(!floatingBranchPose({x:dry,y:basin.level-12},1),'A branch above water should not snap down');
+   for(const kind of ['branch','plank','log']){
+    const releaseY=basin.level-60,restY=solidGaitSurface(dry)-5;
+    const legacy=looseObjectPose({x:dry,y:releaseY},kind,1);
+    check(legacy.water&&Math.abs(legacy.y-physicalWaterLevel(basin,legacy.x))<3,
+     'A saved unsupported '+kind+' should settle onto water');
+    const released={x:dry,y:restY,fall:{height:restY-releaseY,start:1000}};
+    const airborne=looseObjectPose(released,kind,1.2),landed=looseObjectPose(released,kind,1.5);
+    check(!airborne.water&&airborne.y>releaseY&&airborne.y<basin.level-10&&landed.water,
+     'A released '+kind+' should fall before water catches it');
+   }
    check(!canoeTrunk(),'A trunk in water should be ineligible for canoe work');
    workCanoe();check(!canoeWork,'Work must reject a wet trunk even when called directly');
    basin.left=edge-80;basin.right=edge+80;
    basin.level+=200;basin.spill+=200;
    check(!floatingTrunkPose(trunk),'A dry trunk should remain on the terrain');
+   const dryStick=looseObjectPose({x:dry,y:q.y-90},'branch');
+   check(!dryStick.water&&Math.abs(dryStick.y-q.y+3)<.01,'An unsupported branch should settle onto dry ground');
 
    for(let stage=1;stage<=3;stage++){
     workCanoe();check(canoeWork,'Suitable trunk should support work');
