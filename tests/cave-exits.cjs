@@ -179,8 +179,11 @@ const assert=require('node:assert/strict');
    check(travel.trunkSupport===trunk&&!travel.air&&!swimming,'A falling character should land on the trunk');
    const startOnTrunk=human.position.x;
    walk=rawPadX=facing=1;padY=0;
-   let dip=0;
-   for(let i=0;i<30;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
+   travel.vx=0;travel.land=0;travel.compress=0;
+   tick();
+   check(Math.abs(travel.vx-.26)<.01,'Starting to walk on a trunk should use full dry-footing acceleration');
+   let dip=trunk.plugin.deckDip||0;
+   for(let i=0;i<29;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
    check(travel.trunkSupport===trunk&&human.position.x>startOnTrunk+12,'The player should walk along the trunk');
    check(dip>1&&dip<=6,'The weighted trunk should dip slightly');
    rawPadX=walk=0;padY=1;crouchInput=1;

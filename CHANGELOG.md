@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.64
+- Use normal walking pace when supported by a floating trunk. Apply the water-depth slowdown when the player is wading.
+
 ## 0.12.63
 - Large floating trunks support walking and swept jump landings. Weight and landing impact push the trunk down slightly before it rebounds. Walking off returns the player to the normal water and terrain mechanics.
 - Chromium verified landing, walking, jumping again, the trunk dip and swimming off the end. Existing canoe, mining, cave movement and watershed checks passed.
