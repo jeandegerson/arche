@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.71
+- Allow compatible pickups while carrying a bundle, up to three planks or five branches. Apply the same limits to loose pickups and items retrieved from prepared fires.
+
 ## 0.12.70
 - Hide pickup actions while both hands are occupied, including when carrying planks. Keep put-down, stacking and fire-use actions available.
 - Double the top running speed with a progressive increase at the outer end of the joystick. Preserve ordinary walking and crouch pace.
