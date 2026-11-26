@@ -36,6 +36,17 @@ const assert=require('node:assert/strict');
    const basin={kind:'lake',left:edge-80,right:edge+80,level:poolLevel,spill:poolLevel-1};
    ponds.splice(0,ponds.length,basin);
    const dry=edge+27,wet=edge-23;
+   const waterline=physicalWaterLevel(basin,wet);
+   waterParticles.length=0;
+   emitWadingStep({x:wet,y:waterline+5},{},30);
+   check(waterParticles.length>=3&&waterParticles.every(p=>p.y===waterline),
+    'A shallow footfall should splash at the waterline');
+   const drops=waterParticles.length;
+   emitWadingStep({x:wet,y:waterline-3},{},30);
+   emitWadingStep({x:wet,y:waterline+5},{trunkSupport:true},30);
+   check(waterParticles.length===drops,'Airborne and supported deck steps should not splash');
+   waterParticles.length=0;
+
    check(canoeWater(wet)?.depth>=10&&!canoePose({x:dry,length:95}).water,'Shore fixture must cross the float threshold');
    const q={x:dry,y:solidGaitSurface(dry)},size=142;
    createHuman(q.x,q.y-37);
@@ -296,8 +307,9 @@ const assert=require('node:assert/strict');
    for(let i=0;i<15;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
    check(travel.trunkSupport===trunk&&human.position.x>startOnTrunk+12,'The player should walk along the trunk');
    check(dip>1&&dip<=6,'The weighted trunk should dip slightly');
-   rawPadX=walk=0;padY=1;crouchInput=1;
-   for(let i=0;i<8;i++)tick();
+   rawPadX=.42;walk=0;padY=.40;crouchInput=0;
+   check(!crouchGesture(rawPadX,padY),'A jump dip can fall outside the crouch angle');
+   for(let i=0;i<3;i++)tick();
    padY=-1;crouchInput=0;
    for(let i=0;i<14;i++)tick();
    check(travel.air&&human.position.y<floatingTrunkSupport(human.position.x).bottom-38,'The player should jump from the trunk');
