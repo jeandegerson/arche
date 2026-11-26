@@ -148,7 +148,17 @@ const assert=require('node:assert/strict');
    heldPlanks.push({x:human.position.x,y:human.position.y+8,species:'oak'});
    check(bothHandsOccupied()&&!nearBranch()&&!nearbyStone('small')&&!canoeNearby(),
     'A plank carried in both hands should block other pickups');
-   heldPlanks.pop();
+   check(canAddToBundle('plank')&&!canAddToBundle('branch'),
+    'A carried plank should accept more planks and block branches');
+   heldPlanks.push(heldPlanks[0],heldPlanks[0]);
+   check(!canAddToBundle('plank'),'The plank bundle should stop at three');
+   heldPlanks.length=0;
+   heldBranches.push({});
+   check(canAddToBundle('branch')&&!canAddToBundle('plank'),
+    'A branch bundle should accept branches and block planks');
+   heldBranches.push({},{},{},{});
+   check(!canAddToBundle('branch'),'The branch bundle should stop at five');
+   heldBranches.length=0;
    check(!bothHandsOccupied(),'Putting down the plank should free both hands');
    const deposits=[...stoneDeposits.values()];
    check(deposits.filter(q=>q.route!=='surface').length>deposits.filter(q=>q.route==='surface').length,
