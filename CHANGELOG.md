@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.53
+- Bring the arms forward gradually from the start of the crouch-walk gesture, avoiding the backward swing during the hold delay.
+
 ## 0.12.52
 - Let the elbows bend and keep the hands low and slightly ahead while crouch-walking, with a small alternating balance motion.
 - Checked arm symmetry and regular gait fallback, and ran the Chromium cave regression at normal and 15× travel speeds.
