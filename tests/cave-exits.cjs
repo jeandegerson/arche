@@ -148,6 +148,52 @@ const assert=require('node:assert/strict');
    applyWoodSnapshot(saved.state);
    const pile=stoneChanges.get(piled)?.pile;
    check(pile&&[...placedStones()].filter(([,q])=>q.pile===pile).length===2,'Both stones should reload in the same pile');
+   delete human.plugin.route;
+   const floatX=Array.from({length:300},(_,i)=>400+i*40).find(x=>
+    [...Array(33)].every((_,i)=>Math.abs(solidGaitSurface(x-160+i*10)-solidGaitSurface(x))<18));
+   check(floatX,'Expected a level basin fixture');
+   const floor=solidGaitSurface(floatX);
+   const rest={x:floatX,y:floor-10,angle:-Math.PI/2};
+   trunk.plugin.woodRest=rest;
+   const floatId=Number(id)+1;
+   trunk.plugin.wood.tree_x=floatId/1000;
+   woodTrunks.set(floatId,trunk);
+   woodTrunks.delete(Number(id));
+   basin.left=floatX-180;basin.right=floatX+180;
+   basin.level=floor-100;basin.spill=basin.level-1;
+   streamTerrain(floatX);
+   pondGroundCount=ground.length;
+   ponds.splice(0,ponds.length,basin);
+   const float=floatingTrunkPose(trunk);
+   check(float,'Expected enough water to float the trunk');
+   trunk.plugin.floatingTrunk=float;
+   const deck=floatingTrunkSupport(float.x);
+   check(deck?.trunk===trunk,'Floating trunk should have a walkable top');
+   Body.setPosition(human,{x:float.x-32,y:deck.bottom-37-22});
+   human.plugin.groundTravel={vx:0,vy:0};
+   delete human.plugin.coordinatedGait;coordinatedGroundGait(1);
+   human.plugin.groundTravel={air:true,vx:1.4,vy:3};
+   const tick=()=>Engine.update(e,1000/60);
+   for(let i=0;i<24&&human.plugin.groundTravel.trunkSupport!==trunk;i++)tick();
+   const travel=human.plugin.groundTravel;
+   check(travel.trunkSupport===trunk&&!travel.air&&!swimming,'A falling character should land on the trunk');
+   const startOnTrunk=human.position.x;
+   walk=rawPadX=facing=1;padY=0;
+   let dip=0;
+   for(let i=0;i<30;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
+   check(travel.trunkSupport===trunk&&human.position.x>startOnTrunk+12,'The player should walk along the trunk');
+   check(dip>1&&dip<=6,'The weighted trunk should dip slightly');
+   rawPadX=walk=0;padY=1;crouchInput=1;
+   for(let i=0;i<8;i++)tick();
+   padY=-1;crouchInput=0;
+   for(let i=0;i<14;i++)tick();
+   check(travel.air&&human.position.y<floatingTrunkSupport(human.position.x).bottom-38,'The player should jump from the trunk');
+   for(let i=0;i<80&&travel.trunkSupport!==trunk;i++)tick();
+   check(travel.trunkSupport===trunk,'The player should land back on the trunk');
+   walk=rawPadX=1;padY=0;
+   for(let i=0;i<150&&!swimming;i++)tick();
+   check(swimming&&!travel.trunkSupport,'Walking beyond the trunk should lead to swimming '+JSON.stringify({x:human.position.x,y:human.position.y,support:!!travel.trunkSupport,air:travel.air,vx:travel.vx,pond:ponds.length}));
+
 
   });
   for(const speed of [1,15]){
