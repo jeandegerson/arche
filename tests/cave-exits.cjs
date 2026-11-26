@@ -130,7 +130,13 @@ const assert=require('node:assert/strict');
      const end=chamber.left+(dir>0?325:175);
      position(start,-dir,chamber);
      joystick(dir,1);
-     for(let i=0;i<12;i++)tick();
+     for(let i=0;i<12;i++){
+      tick();
+      for(let arm=0;arm<2;arm++){
+       const upper=anatomy[1+arm],shoulderX=upper.position.x+Math.sin(upper.angle)*7;
+       if((hands[arm].position.x-shoulderX)*facing<-.25)throw Error('Arm swung back before crouch-walking');
+      }
+     }
      if(Math.abs(human.position.x-start)>1||crouchPose<.5)
       throw Error('Brief diagonal should crouch before stepping');
      let tookStep=false,groundedFrames=0,lowStepFrames=0;
