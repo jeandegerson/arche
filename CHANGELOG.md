@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.62
+- Scatter mineable and loose stones in caves and across the surface at biome-dependent densities. Break large stones into small pieces using Mine stone. Carry one small stone at a time, drop it, or add it to a pile.
+- Save broken deposits, carried stones, drops and piles through the existing shared-world save. Chromium verified the mining and pile lifecycle with a simulated shared save, plus the canoe and cave movement checks. Watershed tests passed.
+
 ## 0.12.61
 - Remove the solo watershed link from the game’s entry screen. Join shared world is the only entry option shown.
 
