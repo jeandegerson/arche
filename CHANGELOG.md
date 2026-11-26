@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.79
+- Splash at footfall while walking in shallow water.
+- Accept a smaller downward dip before an upward jump flick while retaining the steeper crouch angle and cave entry gesture.
+
 ## 0.12.78
 - Use palm silhouettes for coastal, island and oasis trees in the near background and on distant ridges.
 
