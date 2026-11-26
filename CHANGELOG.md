@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.70
+- Hide pickup actions while both hands are occupied, including when carrying planks. Keep put-down, stacking and fire-use actions available.
+- Double the top running speed with a progressive increase at the outer end of the joystick. Preserve ordinary walking and crouch pace.
+- Lengthen sawing from 5 to 9 seconds, mining from 1.6 to 4 seconds, and canoe work from 2.4 to 6 seconds per stage. Chopping and cutting trunks into logs take more swings.
+
 ## 0.12.69
 - Aim axe and pick swings at the material and time sounds and chips to contact. Limit the raised pick by the cave ceiling. Keep the saw moving through one groove with a bracing hand and shorter finishing strokes. Share tool placement with nearby players.
 - Added Chromium checks for axe contact, saw travel through the groove, and mining clearance and impact chips.

@@ -67,6 +67,8 @@ const assert=require('node:assert/strict');
    for(let stage=1;stage<=3;stage++){
     workCanoe();check(canoeWork,'Suitable trunk should support work');
     for(let i=0;i<49;i++)advanceCanoeWork(.05);
+    check(canoeWork,'Canoe work should continue past the old stage duration');
+    for(let i=49;i<=Math.ceil(workDuration.canoeStage/.05);i++)advanceCanoeWork(.05);
     while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
     check(saved.state.canoes[id].stage===stage,'Each work session should save one stage');
     applyWoodSnapshot(saved.state);
@@ -142,6 +144,12 @@ const assert=require('node:assert/strict');
    walk=0;stopCanoe();
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(!canoeControl&&!swimming,'Exit on land should leave the player standing');
+   check(sprintBoost(.65)===1&&sprintBoost(1)===2,'Full input should double top speed without changing ordinary walking');
+   heldPlanks.push({x:human.position.x,y:human.position.y+8,species:'oak'});
+   check(bothHandsOccupied()&&!nearBranch()&&!nearbyStone('small')&&!canoeNearby(),
+    'A plank carried in both hands should block other pickups');
+   heldPlanks.pop();
+   check(!bothHandsOccupied(),'Putting down the plank should free both hands');
    const deposits=[...stoneDeposits.values()];
    check(deposits.filter(q=>q.route!=='surface').length>deposits.filter(q=>q.route==='surface').length,
     'Stones should be more common underground');
@@ -171,8 +179,10 @@ const assert=require('node:assert/strict');
     'The raised pick should clear the cave ceiling');
    const chipCount=woodChips.length;
    for(let i=1;i<34;i++)updateMining(.05);
-   check(woodChips.slice(chipCount).filter(chip=>chip.stone).length===10,
-    'Mining should shed chips on each of its two strikes');
+   check(miningStone,'Mining should continue past the old completion time');
+   for(let i=34;i<=Math.ceil(workDuration.mine/.05);i++)updateMining(.05);
+   check(woodChips.slice(chipCount).filter(chip=>chip.stone).length===25,
+    'Mining should shed chips on each of its five strikes');
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    const fragments=Object.keys(saved.state.stones).filter(id=>id.startsWith(stoneId+'-piece-'));
    check(saved.state.stones[stoneId].removed&&fragments.length>=3,'Mining should replace the large stone with small fragments');
@@ -234,9 +244,9 @@ const assert=require('node:assert/strict');
    walk=rawPadX=facing=1;padY=0;
    travel.vx=0;travel.land=0;travel.compress=0;
    tick();
-   check(Math.abs(travel.vx-.26)<.01,'Starting to walk on a trunk should use full dry-footing acceleration');
+   check(Math.abs(travel.vx-.52)<.01,'Starting to walk on a trunk should use full dry-footing acceleration');
    let dip=trunk.plugin.deckDip||0;
-   for(let i=0;i<29;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
+   for(let i=0;i<15;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
    check(travel.trunkSupport===trunk&&human.position.x>startOnTrunk+12,'The player should walk along the trunk');
    check(dip>1&&dip<=6,'The weighted trunk should dip slightly');
    rawPadX=walk=0;padY=1;crouchInput=1;
