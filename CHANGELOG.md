@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.73
+- Treat canoe controls as occupying both hands, including while paddling.
+- Require a steeper downward joystick angle for crouching and ground jump preparation. Keep diagonal cave entry available.
+- Cap movement speed while towing a canoe or dragging another heavy object.
+
 ## 0.12.72
 - Resolve loose branches, planks and logs against terrain and water with one support rule. Match pickup reach to the visible object and settle unsupported positions from older saves. Disperse planks released as a bundle in water.
 - Check dry support, saved airborne wood, and released wood reaching the waterline in Chromium.
