@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.61
+- Remove the solo watershed link from the game’s entry screen. Join shared world is the only entry option shown.
+
 ## 0.12.60
 - Float felled trunks in lakes and the sea when the hull-length footprint clears the basin. A trunk shifts off the bank only as far as needed to float. Grounded trunks keep their terrain contact.
 - Require a dry trunk for canoe work. Chromium verified floating, dry resting, wet-trunk rejection and the existing canoe workflow. All 49 cave opening checks and watershed tests passed.
