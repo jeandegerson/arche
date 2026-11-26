@@ -117,6 +117,38 @@ const assert=require('node:assert/strict');
    walk=0;stopCanoe();
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(!canoeControl&&!swimming,'Exit on land should leave the player standing');
+   const deposits=[...stoneDeposits.values()];
+   check(deposits.filter(q=>q.route!=='surface').length>deposits.filter(q=>q.route==='surface').length,
+    'Stones should be more common underground');
+   const [stoneId,stone]=[...stoneDeposits].find(([,q])=>q.route!=='surface'&&q.size==='large');
+   const cave=caveById(stone.route);
+   Body.setPosition(human,{x:stone.x,y:caveFloor(stone.x,cave)-37});
+   human.plugin.route=stone.route;human.plugin.groundTravel={vx:0,vy:0};
+   check(nearbyStone('large')?.id===stoneId,'Expected mineable stone at cave floor');
+   mineStone();
+   for(let i=0;i<34;i++)updateMining(.05);
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   const fragments=Object.keys(saved.state.stones).filter(id=>id.startsWith(stoneId+'-piece-'));
+   check(saved.state.stones[stoneId].removed&&fragments.length>=3,'Mining should replace the large stone with small fragments');
+   applyWoodSnapshot(saved.state);
+   check(!nearbyStone('large'),'Mined stone should stay broken after reload');
+   takeStone();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   const carried=heldStone;
+   check(fragments.includes(carried),'A fragment should be carryable');
+   putStone(false);
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   check(!heldStone&&!saved.state.stones[carried].owner,'A dropped stone should persist on the ground');
+   takeStone();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   const piled=heldStone;
+   check(piled&&nearbyStone('small',true),'Expected a nearby small stone to start a pile');
+   putStone(true);
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   applyWoodSnapshot(saved.state);
+   const pile=stoneChanges.get(piled)?.pile;
+   check(pile&&[...placedStones()].filter(([,q])=>q.pile===pile).length===2,'Both stones should reload in the same pile');
+
   });
   for(const speed of [1,15]){
    await page.goto('http://127.0.0.1:8080/?speed='+speed);
