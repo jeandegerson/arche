@@ -10,3 +10,9 @@ A mobile-first, self-evolving physics sandbox.
 - Avoid overlapping work: if an earlier autonomous pull request is pending, review its status rather than duplicating it.
 - Record changes, rationale, test results and version in CHANGELOG.md.
 - Skip a cycle if no safe meaningful improvement is possible.
+
+## Development journal
+
+- When a user-provided screenshot shows a bug and the fix has shipped, publish one short field note in the [Archē website journal](https://arche-website-arkhe19.vercel.app/journal.html). Add it above the development archive, newest first.
+- Include a title, local date and time in Europe/Zurich, the game version, a small crop of the original screenshot with alt text, and one or two short paragraphs explaining the visible problem and what players will see after the fix. Crop out names and browser chrome wherever feasible.
+- Update the existing production Vercel project `arkhe19/arche-website`. Preserve the landing page, archive, images, access settings and previous entries. Check whether an entry already exists for the same report, and verify the published entry and image before reporting completion.
