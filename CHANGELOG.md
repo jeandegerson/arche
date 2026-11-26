@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.63
+- Large floating trunks support walking and swept jump landings. Weight and landing impact push the trunk down slightly before it rebounds. Walking off returns the player to the normal water and terrain mechanics.
+- Chromium verified landing, walking, jumping again, the trunk dip and swimming off the end. Existing canoe, mining, cave movement and watershed checks passed.
+
 ## 0.12.62
 - Scatter mineable and loose stones in caves and across the surface at biome-dependent densities. Break large stones into small pieces using Mine stone. Carry one small stone at a time, drop it, or add it to a pile.
 - Save broken deposits, carried stones, drops and piles through the existing shared-world save. Chromium verified the mining and pile lifecycle with a simulated shared save, plus the canoe and cave movement checks. Watershed tests passed.
