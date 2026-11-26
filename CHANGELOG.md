@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.68
+- Show the paddle on occupied remote canoes, animating it with the rider’s stroke and direction. Older clients show a resting paddle.
+
 ## 0.12.67
 - Draw occupied remote canoes from the same buffered movement frames as their riders. The shared save still stores canoe positions for unoccupied hulls.
 - Chromium verified remote hull alignment with a delayed save and release on exit. Cave and watershed tests passed.
