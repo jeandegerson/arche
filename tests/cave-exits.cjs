@@ -46,6 +46,18 @@ const assert=require('node:assert/strict');
    woodTrunks.set(Number(id),trunk);
    check(!canoeTrunk(),'Thin trunk should be ineligible');
    trunk.plugin.wood.width=20;
+   basin.left=dry-180;basin.right=dry+180;
+   basin.level-=200;basin.spill-=200;
+   const floating=floatingTrunkPose(trunk);
+   check(floating&&Math.abs(floating.angle+Math.PI/2)<.001&&
+    Math.abs(floating.y-physicalWaterLevel(basin,floating.x))<4,
+    'A submerged trunk should float horizontally at the water surface');
+   check(!canoeTrunk(),'A trunk in water should be ineligible for canoe work');
+   workCanoe();check(!canoeWork,'Work must reject a wet trunk even when called directly');
+   basin.left=edge-80;basin.right=edge+80;
+   basin.level+=200;basin.spill+=200;
+   check(!floatingTrunkPose(trunk),'A dry trunk should remain on the terrain');
+
    for(let stage=1;stage<=3;stage++){
     workCanoe();check(canoeWork,'Suitable trunk should support work');
     for(let i=0;i<49;i++)advanceCanoeWork(.05);
