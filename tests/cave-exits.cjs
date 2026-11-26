@@ -20,6 +20,16 @@ const assert=require('node:assert/strict');
    await page.waitForFunction(()=>typeof physicalGeometry!=='undefined'&&typeof runner!=='undefined');
    const results=await page.evaluate(()=>{
     Runner.stop(runner);Render.stop(r);
+    const cave=caves.find(c=>c.chamber),worldX=cave.left+460;
+    const canvas=document.createElement('canvas');
+    canvas.width=160;canvas.height=180;
+    const rainCtx=canvas.getContext('2d');
+    const surface=exteriorVisualSurface(worldX);
+    const bounds={min:{x:worldX-160,y:surface-110},max:{x:worldX+160,y:surface+250}};
+    clipRainToSky(rainCtx,160,180,bounds);
+    rainCtx.fillRect(0,0,160,180);
+    const alpha=y=>rainCtx.getImageData(80,y,1,1).data[3];
+    if(alpha(40)!==255||alpha(75)!==0)throw Error('Rain must stop at the exterior terrain');
     let branches=0;
     for(const cave of caves){
      const points=cave.fieldPoints;
