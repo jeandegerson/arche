@@ -31,12 +31,39 @@
     <section class="feature" aria-labelledby="latest-title">
       <div>
         <p class="kicker">Latest from the journal · 26 November 2026</p>
-        <h2 id="latest-title"><a href="journal.html#where-the-lake-forgot">Where the lake forgot to catch them</a></h2>
-        <p>Two twigs briefly took up residence in the sky.</p>
-        <a class="read" href="journal.html#where-the-lake-forgot">Read the field note</a>
+        <h2 id="latest-title"><a href="journal.html#a-tree-is-never-just-a-tree">A tree is never just a tree</a></h2>
+        <p>A fallen tree can now be a bridge, a canoe, or a rather questionable place to stand in the middle of a lake.</p>
+        <a class="read" href="journal.html#a-tree-is-never-just-a-tree">Read the field note</a>
       </div>
-      <a href="journal.html#where-the-lake-forgot" aria-label="Read Where the lake forgot to catch them"><img src="assets/branches-above-water.jpg" width="300" height="155" alt="Two branches above the waterline"></a>
+      <a hidden href="journal.html#a-tree-is-never-just-a-tree" aria-label="Read A tree is never just a tree"><img src="assets/branches-above-water.jpg" width="300" height="155" alt="Two branches above the waterline"></a>
     </section>
+    <script>
+    (async()=>{
+      try {
+        const response=await fetch('journal.html',{cache:'no-cache'});
+        if(!response.ok)return;
+        const doc=new DOMParser().parseFromString(await response.text(),'text/html');
+        const note=doc.querySelector('article.field-note[id]');
+        const feature=document.querySelector('section.feature');
+        const heading=note?.querySelector('h2');
+        if(!note||!feature||!heading)return;
+        const href='journal.html#'+encodeURIComponent(note.id);
+        const date=note.querySelector('time')?.textContent.split('·')[0].trim();
+        feature.querySelector('.kicker').textContent='Latest from the journal'+(date?' · '+date:'');
+        const title=feature.querySelector('h2 a');
+        title.textContent=heading.textContent;title.href=href;
+        feature.querySelector('div > p:not(.kicker)').textContent=note.querySelector('figcaption, p')?.textContent||'';
+        feature.querySelector('.read').href=href;
+        const imageLink=feature.querySelector(':scope > a');
+        const img=note.querySelector('img');
+        if(imageLink){
+          imageLink.href=href;imageLink.setAttribute('aria-label','Read '+heading.textContent);
+          if(img){imageLink.replaceChildren(img.cloneNode(true));imageLink.hidden=false;}
+          else imageLink.hidden=true;
+        }
+      } catch(error){console.warn('Journal preview unavailable',error);}
+    })();
+    </script>
   </main>
   <footer><div class="shell footer-inner"><span>Archē · Official game site</span><a href="https://github.com/jeandegerson/arche">Source on GitHub</a></div></footer>
 </body>
