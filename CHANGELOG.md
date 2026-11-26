@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.59
+- Use Drag canoe for towing on land and for hauling an empty canoe out of the water from within reach of the bank. Board canoe works from land, shallow water and while swimming. Exit canoe works wherever the canoe is, placing the player beside it to walk, wade or swim.
+- Chromium verified dragging, open-water exit and reboarding, shallow-water exit, and boarding and exiting on land with a simulated shared save. All 49 cave opening checks and watershed tests passed.
+
 ## 0.12.58
 - Pull an unoccupied canoe onto the bank from within reach. The haul stops automatically when the canoe reaches its resting point on land and saves that position in the shared world.
 - Chromium verified disembarking, hauling and restoring the beached canoe with a simulated shared save. All 49 cave mouth checks and watershed tests passed.
