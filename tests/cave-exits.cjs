@@ -85,6 +85,8 @@ const assert=require('node:assert/strict');
    grabCanoe("drag");
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(canoeControl?.mode==='drag','Dry hull should be draggable');
+   check(limitTowingSpeed(2.6)===1.15&&limitTowingSpeed(-2.6)===-1.15,
+    'Towing a canoe should cap top speed in both directions');
    Body.setPosition(human,{x:wet-32,y:solidGaitSurface(wet-32)-37});
    for(let i=0;i<60&&canoeControl;i++){
     updateCanoe({air:false},1);
@@ -95,6 +97,8 @@ const assert=require('node:assert/strict');
    grabCanoe("ride");
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(canoeControl?.mode==='ride','Afloat canoe should be boardable');
+   check(bothHandsOccupied()&&!canAddToBundle('branch')&&!canAddToBundle('plank')&&
+    !nearBranch()&&!nearbyStone('small'),'Paddling should block object pickups');
    const peerId='canoe-observer-test', hull=canoes.get(id);
    const peerFrame=(at,x,y,angle)=>({at,pose:Array.from({length:12},()=>[x,y,0]),
     meta:{face:-1,canoe:angle===null?null:readPeerCanoe({id,angle,stroke:angle*4})}});
@@ -168,6 +172,11 @@ const assert=require('node:assert/strict');
    check(!canAddToBundle('branch'),'The branch bundle should stop at five');
    heldBranches.length=0;
    check(!bothHandsOccupied(),'Putting down the plank should free both hands');
+   check(!crouchGesture(.8,.65)&&!crouchGesture(1,1)&&crouchGesture(.7,1)&&crouchGesture(0,1),
+    'Crouching should require a more vertical joystick angle');
+   held={plugin:{dragHeavy:true}};
+   check(limitTowingSpeed(2.6)===.9,'Heavy objects should cap movement speed');
+   held=null;
    const deposits=[...stoneDeposits.values()];
    check(deposits.filter(q=>q.route!=='surface').length>deposits.filter(q=>q.route==='surface').length,
     'Stones should be more common underground');
@@ -404,7 +413,7 @@ const assert=require('node:assert/strict');
      const start=chamber.left+(dir>0?175:325);
      const end=chamber.left+(dir>0?325:175);
      position(start,-dir,chamber);
-     joystick(dir,1);
+     joystick(dir*.78,1);
      for(let i=0;i<12;i++){
       tick();
       for(let arm=0;arm<2;arm++){
