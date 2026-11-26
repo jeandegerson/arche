@@ -15,6 +15,65 @@ const assert=require('node:assert/strict');
     contentType:asset==='/'?'text/html':'application/javascript'
    });
   });
+  await page.goto('http://127.0.0.1:8080/');
+  await page.evaluate(async()=>{
+   Runner.stop(runner);Render.stop(r);
+   const check=(value,message)=>{if(!value)throw Error(message);};
+   let saved={revision:0,state:{}};
+   woodClient={from:()=>({
+    select:()=>({eq:()=>({single:async()=>({data:saved})})}),
+    update:row=>({eq:()=>({eq:(_,revision)=>({select:async()=>{
+     if(revision!==saved.revision)return {data:[]};
+     saved=JSON.parse(JSON.stringify(row));return {data:[{revision:saved.revision}]};
+    }})})})
+   })};
+   woodReady=true;
+   // A shoreline fixture using the real terrain and a controlled water level.
+   const edge=Array.from({length:Math.floor(worldWidth/10)-10},(_,i)=>50+i*10).find(x=>
+    solidGaitSurface(x-23)-solidGaitSurface(x+27)>25);
+   check(Number.isFinite(edge),'Expected a shore fixture');
+   const poolLevel=solidGaitSurface(edge-23)-13;
+   const basin={kind:'lake',left:edge-80,right:edge+80,level:poolLevel,spill:poolLevel-1};
+   ponds.splice(0,ponds.length,basin);
+   const dry=edge+27,wet=edge-23;
+   check(canoeWater(wet)?.depth>=10&&!canoePose({x:dry,length:95}).water,'Shore fixture must cross the float threshold');
+   const q={x:dry,y:solidGaitSurface(dry)},size=142;
+   createHuman(q.x,q.y-37);
+   Body.setPosition(human,{x:q.x,y:q.y-37});
+   const trunk=Bodies.rectangle(q.x,q.y-10,17,size,{isStatic:true});
+   trunk.plugin.wood={tree_x:dry,length:size,width:17};
+   const id=String(Math.round(dry*1000));
+   woodTrunks.set(Number(id),trunk);
+   check(!canoeTrunk(),'Thin trunk should be ineligible');
+   trunk.plugin.wood.width=20;
+   for(let stage=1;stage<=3;stage++){
+    workCanoe();check(canoeWork,'Suitable trunk should support work');
+    for(let i=0;i<49;i++)advanceCanoeWork(.05);
+    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+    check(saved.state.canoes[id].stage===stage,'Each work session should save one stage');
+    applyWoodSnapshot(saved.state);
+   }
+   check(!nearbyTrunk()&&!canoeTrunk(),'Finished hull should replace its source trunk');
+   grabCanoe();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   check(canoeControl?.mode==='drag','Dry hull should be draggable');
+   Body.setPosition(human,{x:wet-32,y:solidGaitSurface(wet-32)-37});
+   for(let i=0;i<60&&canoeControl;i++){
+    updateCanoe({air:false},1);
+    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   }
+   check(!canoeControl&&canoePose(canoes.get(id)).water,'Towing into water should launch the canoe');
+   Body.setPosition(human,{x:canoes.get(id).x,y:poolLevel-20});
+   grabCanoe();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   check(canoeControl?.mode==='ride','Afloat canoe should be boardable');
+   const start=canoeControl.x;walk=-1;
+   for(let i=0;i<12;i++)updateCanoe({},1);
+   check(canoeControl.x<start,'Joystick should paddle');
+   walk=0;stopCanoe();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   check(!canoeControl&&!saved.state.canoes[id].owner,'Stepping ashore should release and save the canoe');
+  });
   for(const speed of [1,15]){
    await page.goto('http://127.0.0.1:8080/?speed='+speed);
    await page.waitForFunction(()=>typeof physicalGeometry!=='undefined'&&typeof runner!=='undefined');

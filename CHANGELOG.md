@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.57
+- Add single-seat dugout canoes made from felled trunks at least 125 units long and 18 units thick. Three short work sessions visibly hollow the trunk and save its progress. Drag the canoe to the water, board it, paddle with the joystick, and step ashore at a bank.
+- Use the existing shared wood save for unfinished hulls, boats, and their positions. Chromium tested the full workflow with a simulated shared save and passed all 49 cave openings at normal and 15× travel speed. Watershed tests passed.
+
 ## 0.12.56
 - Extend standing trunk bases across the slope and align loose logs and stacks with the terrain, including existing shared wood near the surface.
 - Syntax and log contact checks passed on flat ground and on slopes in both directions.
