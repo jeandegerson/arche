@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.55
+- Settle felled trunks using contact between their rotated footprint and the terrain contour. Apply the same correction when restoring shared trunks.
+
 ## 0.12.54
 - Clip rain to the exterior terrain profile so streaks stop at the ground and stay out of cave cutaways.
 
