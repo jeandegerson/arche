@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.65
+- Predict floating-trunk contact before starting the dive pose. Jumps that will land on a trunk keep the normal landing animation. Jumps that miss it still prepare for water.
+- Chromium verified the trunk and open-water forecasts and passed the existing movement checks. Watershed tests passed.
+
 ## 0.12.64
 - Use normal walking pace when supported by a floating trunk. Apply the water-depth slowdown when the player is wading.
 
