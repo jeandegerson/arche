@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.66
+- Float loose branches on inland water as well as the sea. Pick-up reach follows their visible position. Give large floating trunks a gentle bob, roll and sway, with the same moving pose used for support.
+- Chromium verified inland branch buoyancy, trunk motion, and existing trunk movement. Watershed tests passed.
+
 ## 0.12.65
 - Predict floating-trunk contact before starting the dive pose. Jumps that will land on a trunk keep the normal landing animation. Jumps that miss it still prepare for water.
 - Chromium verified the trunk and open-water forecasts and passed the existing movement checks. Watershed tests passed.
