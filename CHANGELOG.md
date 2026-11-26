@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.52
+- Let the elbows bend and keep the hands low and slightly ahead while crouch-walking, with a small alternating balance motion.
+- Checked arm symmetry and regular gait fallback, and ran the Chromium cave regression at normal and 15× travel speeds.
+
 ## 0.12.51
 - Keep crouch-walking hips higher, lean the torso forward and alternate shorter footfalls closer to the floor. Limit fast-travel crouch speed so the feet can keep up with the body.
 - Chromium verified foot support and knee clearance through the conifer throat in both directions, plus all 49 cave openings at 1× and 15×. Watershed tests passed.
