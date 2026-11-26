@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.56
+- Extend standing trunk bases across the slope and align loose logs and stacks with the terrain, including existing shared wood near the surface.
+- Syntax and log contact checks passed on flat ground and on slopes in both directions.
+
 ## 0.12.55
 - Settle felled trunks using contact between their rotated footprint and the terrain contour. Apply the same correction when restoring shared trunks.
 
