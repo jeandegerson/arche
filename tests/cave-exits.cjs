@@ -48,10 +48,16 @@ const assert=require('node:assert/strict');
    trunk.plugin.wood.width=20;
    basin.left=dry-180;basin.right=dry+180;
    basin.level-=200;basin.spill-=200;
-   const floating=floatingTrunkPose(trunk);
-   check(floating&&Math.abs(floating.angle+Math.PI/2)<.001&&
-    Math.abs(floating.y-physicalWaterLevel(basin,floating.x))<4,
-    'A submerged trunk should float horizontally at the water surface');
+   const floating=floatingTrunkPose(trunk,basin,1),later=floatingTrunkPose(trunk,basin,2);
+   check(floating&&later&&Math.abs(floating.angle+Math.PI/2)<.03&&
+    Math.abs(floating.y-physicalWaterLevel(basin,floating.x))<5,
+    'A submerged trunk should float close to level at the water surface');
+   check(Math.abs(floating.y-later.y)>.1&&Math.abs(floating.angle-later.angle)>.001,
+    'A floating trunk should bob and roll on inland water');
+   const stick=floatingBranchPose({x:dry,y:q.y-3},1);
+   check(stick&&Math.abs(stick.y-physicalWaterLevel(basin,stick.x))<3,
+    'A submerged branch should float in a lake');
+   check(!floatingBranchPose({x:dry,y:basin.level-12},1),'A branch above water should not snap down');
    check(!canoeTrunk(),'A trunk in water should be ineligible for canoe work');
    workCanoe();check(!canoeWork,'Work must reject a wet trunk even when called directly');
    basin.left=edge-80;basin.right=edge+80;
