@@ -87,7 +87,7 @@ const assert=require('node:assert/strict');
    check(canoeControl?.mode==='ride','Afloat canoe should be boardable');
    const peerId='canoe-observer-test', hull=canoes.get(id);
    const peerFrame=(at,x,y,angle)=>({at,pose:Array.from({length:12},()=>[x,y,0]),
-    meta:{canoe:angle===null?null:readPeerCanoe({id,angle})}});
+    meta:{face:-1,canoe:angle===null?null:readPeerCanoe({id,angle,stroke:angle*4})}});
    const peer={seen:1200,frames:[
     peerFrame(1000,hull.x,100,.1),peerFrame(1100,hull.x+20,106,.2),
     peerFrame(1200,hull.x+20,132,null)
@@ -97,6 +97,9 @@ const assert=require('node:assert/strict');
    check(remoteHull?.x===hull.x+10&&remoteHull.x===peer.pose[0][0]&&
     remoteHull.y===peer.pose[0][1]+canoeSeatOffset&&Math.abs(remoteHull.angle-.15)<.001,
     'The remote hull and rider should use the same interpolated pose even with an older save');
+   check(remoteHull.face===-1&&Math.abs(remoteHull.stroke-.6)<.001,
+    'The visible paddle should use the remote rider’s facing and interpolated stroke');
+   check(readPeerCanoe({id,angle:0})?.stroke===0,'Older riders should show a resting paddle');
    check(samplePeerRenderPoses(1275).get(id)?.y===106+canoeSeatOffset,
     'The hull should hold its last riding pose until the exit frame');
    check(!samplePeerRenderPoses(1325).has(id),'An exited rider should release the remote hull');
