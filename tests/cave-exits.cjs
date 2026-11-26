@@ -184,6 +184,26 @@ const assert=require('node:assert/strict');
    const cave=caveById(stone.route);
    Body.setPosition(human,{x:stone.x,y:caveFloor(stone.x,cave)-37});
    human.plugin.route=stone.route;human.plugin.groundTravel={vx:0,vy:0};
+   const fireSite=Array.from({length:Math.floor((cave.right-cave.left)/10)},(_,i)=>cave.left+i*10).find(x=>{
+    Body.setPosition(human,{x,y:caveFloor(x,cave)-37});
+    return fireGround(x+24);
+   });
+   check(Number.isFinite(fireSite),'Expected a buildable cave floor');
+   Body.setPosition(human,{x:fireSite,y:caveFloor(fireSite,cave)-37});facing=1;
+   const fuel={id:'cave-fire-fuel',owner:woodOwner,until:Date.now()+45000,x:fireSite,y:human.position.y};
+   branches.set(fuel.id,fuel);heldBranches.push(fuel);
+   // Seed the mocked shared save through the same snapshot format used by the client.
+   saved.state=woodSnapshot();
+   fireAction();
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   applyWoodSnapshot(saved.state);
+   const underground=nearFire();
+   check(underground?.route===cave.id&&underground.twigs===1&&
+    Math.abs(underground.y-caveFloor(underground.x,cave))<.01,'Prepared fire should save and reload on the cave floor');
+   delete human.plugin.route;
+   check(!nearFire(),'A player on the surface should not target a cave fire');
+   human.plugin.route=cave.id;
+   Body.setPosition(human,{x:stone.x,y:caveFloor(stone.x,cave)-37});
    check(nearbyStone('large')?.id===stoneId,'Expected mineable stone at cave floor');
    const toolTip=job=>({x:hands[0].position.x+job.tool.dx,y:hands[0].position.y+job.tool.dy});
    check(workHit(.50,.54)&&!workHit(.54,.57),'Each swing should produce one impact');
