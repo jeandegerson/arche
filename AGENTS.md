@@ -13,6 +13,6 @@ A mobile-first, self-evolving physics sandbox.
 
 ## Development journal
 
-- When a user-provided screenshot shows a bug and the fix has shipped, publish one short field note in the [Archē website journal](https://arche-website-arkhe19.vercel.app/journal.html). Add it above the development archive, newest first.
+- When a user-provided screenshot shows a bug and the fix has shipped, publish one short field note in the [Archē website journal](https://jeandegerson.github.io/arche/website/journal.html). Add it to the field notes, newest first. Give each note a playful, strange, or poetic title while explaining the fix plainly.
 - Include a title, local date and time in Europe/Zurich, the game version, a small crop of the original screenshot with alt text, and one or two short paragraphs explaining the visible problem and what players will see after the fix. Crop out names and browser chrome wherever feasible.
-- Update the existing production Vercel project `arkhe19/arche-website`. Preserve the landing page, archive, images, access settings and previous entries. Check whether an entry already exists for the same report, and verify the published entry and image before reporting completion.
+- Update the official website in `website/` in this repository. Keep its latest entry linked from the home page. Preserve the landing page, archive, images, access settings and previous entries. Check whether an entry already exists for the same report, and verify the published entry and image before reporting completion.
