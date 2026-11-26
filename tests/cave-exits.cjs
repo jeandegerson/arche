@@ -169,6 +169,13 @@ const assert=require('node:assert/strict');
    trunk.plugin.floatingTrunk=float;
    const deck=floatingTrunkSupport(float.x);
    check(deck?.trunk===trunk,'Floating trunk should have a walkable top');
+   const landingFlight={air:true,vx:2,vy:2,diveBlend:.6};
+   anticipateDive(landingFlight,{x:float.x-trunk.plugin.wood.length/2-5,y:deck.bottom-68},1);
+   check(landingFlight.diveBlend===0,'A jump crossing a trunk edge should keep the landing pose');
+   const waterFlight={air:true,vx:1,vy:2,diveBlend:0};
+   anticipateDive(waterFlight,{x:float.x+trunk.plugin.wood.length/2+15,y:deck.bottom-68},1);
+   check(waterFlight.diveBlend>0,'A jump missing the trunk should still prepare to dive');
+
    Body.setPosition(human,{x:float.x-32,y:deck.bottom-37-22});
    human.plugin.groundTravel={vx:0,vy:0};
    delete human.plugin.coordinatedGait;coordinatedGroundGait(1);
