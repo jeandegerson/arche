@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.69
+- Aim axe and pick swings at the material and time sounds and chips to contact. Limit the raised pick by the cave ceiling. Keep the saw moving through one groove with a bracing hand and shorter finishing strokes. Share tool placement with nearby players.
+- Added Chromium checks for axe contact, saw travel through the groove, and mining clearance and impact chips.
+
 ## 0.12.68
 - Show the paddle on occupied remote canoes, animating it with the rider’s stroke and direction. Older clients show a resting paddle.
 

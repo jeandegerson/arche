@@ -150,8 +150,29 @@ const assert=require('node:assert/strict');
    Body.setPosition(human,{x:stone.x,y:caveFloor(stone.x,cave)-37});
    human.plugin.route=stone.route;human.plugin.groundTravel={vx:0,vy:0};
    check(nearbyStone('large')?.id===stoneId,'Expected mineable stone at cave floor');
+   const toolTip=job=>({x:hands[0].position.x+job.tool.dx,y:hands[0].position.y+job.tool.dy});
+   check(workHit(.50,.54)&&!workHit(.54,.57),'Each swing should produce one impact');
+   const axe={t:workImpact},axeTarget={x:stone.x+14,y:human.position.y+12};
+   swingWorkTool(axe,'axe',1,axeTarget);
+   check(Math.hypot(toolTip(axe).x-axeTarget.x,toolTip(axe).y-axeTarget.y)<.01,
+    'The axe should reach the strike point on the impact frame');
+   const saw={t:0},groove={x:stone.x+18,y:human.position.y+29};
+   sawWorkTool(saw,1,groove);
+   const strokeStart=hands[0].position.x;
+   saw.t=.2;sawWorkTool(saw,1,groove);
+   const grip=hands[0].position,blade=saw.tool;
+   check(Math.abs(grip.x-strokeStart)>4&&
+    Math.abs((groove.x-grip.x)*blade.dy-(groove.y-grip.y)*blade.dx)<.01,
+    'The saw should travel back and forth through one groove');
    mineStone();
-   for(let i=0;i<34;i++)updateMining(.05);
+   updateMining(.05);
+   const raisedPick=toolTip(miningStone);
+   check(miningStone.tool.kind==='pick'&&raisedPick.y>=caveCeiling(raisedPick.x,cave)+5-.01,
+    'The raised pick should clear the cave ceiling');
+   const chipCount=woodChips.length;
+   for(let i=1;i<34;i++)updateMining(.05);
+   check(woodChips.slice(chipCount).filter(chip=>chip.stone).length===10,
+    'Mining should shed chips on each of its two strikes');
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    const fragments=Object.keys(saved.state.stones).filter(id=>id.startsWith(stoneId+'-piece-'));
    check(saved.state.stones[stoneId].removed&&fragments.length>=3,'Mining should replace the large stone with small fragments');
