@@ -61,3 +61,5 @@ footer { border-top: 1px solid var(--line); }
 .philosophy { border-top: 1px solid var(--line); padding-block: 26px 30px; }
 .philosophy h2 { font-size: 30px; font-weight: 400; margin: 0 0 10px; }
 .philosophy p { font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 61ch; margin: 0; }
+
+.hero .subtitle { margin: 14px 0 0; color: var(--accent); font-size: clamp(24px, 3vw, 38px); line-height: 1.2; }
