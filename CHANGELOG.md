@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.51
+- Keep crouch-walking hips higher, lean the torso forward and alternate shorter footfalls closer to the floor. Limit fast-travel crouch speed so the feet can keep up with the body.
+- Chromium verified foot support and knee clearance through the conifer throat in both directions, plus all 49 cave openings at 1× and 15×. Watershed tests passed.
+
 ## 0.12.50
 - Extend the chamber prototype to all generated caves. Biome profiles vary chamber width, height and spacing, wall color, fracture scale, bedding and sediment. Render overlapping openings over the same rock cutaway so passages no longer cancel one another visually.
 - Chromium rendered all 35 passages across 10 biomes and verified all 49 openings at 1× and 15×. Watershed tests passed.

@@ -133,15 +133,29 @@ const assert=require('node:assert/strict');
      for(let i=0;i<12;i++)tick();
      if(Math.abs(human.position.x-start)>1||crouchPose<.5)
       throw Error('Brief diagonal should crouch before stepping');
-     let tookStep=false;
+     let tookStep=false,groundedFrames=0,lowStepFrames=0;
      for(let i=0;i<480&&dir*(end-human.position.x)>0;i++){
       tick();
       if(human.plugin.coordinatedGait?.feet.some(foot=>foot.t<1))tookStep=true;
+      if(human.plugin.groundTravel.crouchWalk&&crouchPose>.8){
+       lowStepFrames++;
+       const feet=[anatomy[4],anatomy[6]].map(shin=>{
+        const dx=Math.sin(shin.angle)*6,dy=Math.cos(shin.angle)*6;
+        const ankle={x:shin.position.x-dx,y:shin.position.y+dy};
+        const knee={x:shin.position.x+dx,y:shin.position.y-dy};
+        return {soleGap:caveFloor(ankle.x,chamber)-ankle.y,
+         kneeGap:caveFloor(knee.x,chamber)-knee.y};
+       });
+       if(feet.every(foot=>foot.kneeGap>5)&&feet.some(foot=>foot.soleGap>=-2&&foot.soleGap<=6))
+        groundedFrames++;
+      }
       if(human.plugin.route!==chamber.id||human.position.y-(37-14*crouchPose)<caveCeiling(human.position.x,chamber)-.5)
        throw Error('Crouch-walk left the passage clearance');
      }
      if(dir*(end-human.position.x)>0||!tookStep||facing!==dir||crouchPose<.8)
       throw Error('Held diagonal failed to crouch-walk through the pilot throat');
+     if(lowStepFrames<20||groundedFrames/lowStepFrames<.85)
+      throw Error('Crouch gait lost foot support '+JSON.stringify({groundedFrames,lowStepFrames,dir}));
      joystick(0,1);
      for(let i=0;i<30;i++)tick();
      const stopped=human.position.x;
