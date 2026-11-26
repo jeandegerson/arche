@@ -73,6 +73,17 @@ const assert=require('node:assert/strict');
    walk=0;stopCanoe();
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(!canoeControl&&!saved.state.canoes[id].owner,'Stepping ashore should release and save the canoe');
+   check(canoeHaulTarget(canoeNearby())!==null,'A bank within reach should offer haul');
+   grabCanoe(true);
+   while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   check(canoeControl?.mode==='haul','Haul should claim the floating canoe');
+   for(let i=0;i<120&&canoeControl;i++){
+    updateCanoe({air:false},1);
+    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
+   }
+   applyWoodSnapshot(saved.state);
+   check(!canoeControl&&!saved.state.canoes[id].owner&&!canoePose(canoes.get(id)).water,
+    'Hauled canoe should be dry, unclaimed and saved ashore');
   });
   for(const speed of [1,15]){
    await page.goto('http://127.0.0.1:8080/?speed='+speed);
