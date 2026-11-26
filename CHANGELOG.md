@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.78
+- Use palm silhouettes for coastal, island and oasis trees in the near background and on distant ridges.
+
 ## 0.12.77
 - Place prepared cave fires on the current passage floor. Save the passage and keep fuel and ignition interactions on that level.
 
