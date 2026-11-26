@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.54
+- Clip rain to the exterior terrain profile so streaks stop at the ground and stay out of cave cutaways.
+
 ## 0.12.53
 - Bring the arms forward gradually from the start of the crouch-walk gesture, avoiding the backward swing during the hold delay.
 
