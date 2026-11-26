@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.77
+- Place prepared cave fires on the current passage floor. Save the passage and keep fuel and ignition interactions on that level.
+
 ## 0.12.73
 - Treat canoe controls as occupying both hands, including while paddling.
 - Require a steeper downward joystick angle for crouching and ground jump preparation. Keep diagonal cave entry available.
