@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.67
+- Draw occupied remote canoes from the same buffered movement frames as their riders. The shared save still stores canoe positions for unoccupied hulls.
+- Chromium verified remote hull alignment with a delayed save and release on exit. Cave and watershed tests passed.
+
 ## 0.12.66
 - Float loose branches on inland water as well as the sea. Pick-up reach follows their visible position. Give large floating trunks a gentle bob, roll and sway, with the same moving pose used for support.
 - Chromium verified inland branch buoyancy, trunk motion, and existing trunk movement. Watershed tests passed.

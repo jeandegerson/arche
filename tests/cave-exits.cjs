@@ -85,6 +85,22 @@ const assert=require('node:assert/strict');
    grabCanoe("ride");
    while(woodBusy)await new Promise(resolve=>setTimeout(resolve,0));
    check(canoeControl?.mode==='ride','Afloat canoe should be boardable');
+   const peerId='canoe-observer-test', hull=canoes.get(id);
+   const peerFrame=(at,x,y,angle)=>({at,pose:Array.from({length:12},()=>[x,y,0]),
+    meta:{canoe:angle===null?null:readPeerCanoe({id,angle})}});
+   const peer={seen:1200,frames:[
+    peerFrame(1000,hull.x,100,.1),peerFrame(1100,hull.x+20,106,.2),
+    peerFrame(1200,hull.x+20,132,null)
+   ]};
+   peers.set(peerId,peer);
+   const remoteHull=samplePeerRenderPoses(1175).get(id);
+   check(remoteHull?.x===hull.x+10&&remoteHull.x===peer.pose[0][0]&&
+    remoteHull.y===peer.pose[0][1]+canoeSeatOffset&&Math.abs(remoteHull.angle-.15)<.001,
+    'The remote hull and rider should use the same interpolated pose even with an older save');
+   check(samplePeerRenderPoses(1275).get(id)?.y===106+canoeSeatOffset,
+    'The hull should hold its last riding pose until the exit frame');
+   check(!samplePeerRenderPoses(1325).has(id),'An exited rider should release the remote hull');
+   peers.delete(peerId);
    const start=canoeControl.x;walk=-1;
    for(let i=0;i<12;i++)updateCanoe({},1);
    check(canoeControl.x<start,'Joystick should paddle');
