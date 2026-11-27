@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.82
+- Shade foreground trunks, foliage and snow with directional light and softer undersides. Give trunks a flared base so they meet the ground more naturally.
+
 ## 0.12.81
 - Give foreground pines uneven individual boughs, a narrow leader and bare lower branches. Alpine snow follows the boughs.
 
