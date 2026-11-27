@@ -51,7 +51,7 @@
  #extraActions .world-action{padding:2px 4px 2px 19px;font:11px/1.02 system-ui}
  #extraActions .world-action::before{width:12px;height:12px;left:4px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.126</span><header><h1>Archē</h1><small>v0.12.126 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.127</span><header><h1>Archē</h1><small>v0.12.127 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -2849,7 +2849,7 @@ function putStone(pile){
   heldStone=null;
  },true);
 }
-const cabaneWidth=116,footingHeight=6,cabanePadIndices=[0,2];
+const cabaneWidth=116,cabaneWallLength=cabaneWidth-16,footingHeight=6,cabanePadIndices=[0,2];
 function cabanePadX(left,pad){return left+(pad>=2?cabaneWidth:0);}
 function cabaneFootings(){
  const sites=new Map();
@@ -3384,7 +3384,7 @@ function cabaneTimberTarget(b){
   const d=Math.abs(b.position.x-left-cabaneWidth/2);
   if(d>=distance)continue;
   const plan=cabaneFootingPlan(left);
-  if(!plan||!cabaneFootingsReady(pads,plan)||b.plugin.wood.length<cabaneWidth-16)continue;
+  if(!plan||!cabaneFootingsReady(pads,plan)||b.plugin.wood.length<cabaneWallLength)continue;
   for(let course=0;course<cabaneWallCourses;course++){
    if(projectedCabaneTimber(left,course))continue;
    target={left,side:0,course};distance=d;break;
@@ -3522,7 +3522,7 @@ Events.on(e,'afterUpdate',()=>{
  releaseTrunkButton.style.display=trunkDrag?'block':'none';
  const target=trunkDrag&&!control.haul&&dragHandsFree()&&cabaneTimberTarget(b);
  fitTimberButton.style.display=target?'block':'none';
- if(target)updateWorldAction(fitTimberButton,target.course===cabaneWallCourses-1?'Fit doorway lintel':'Fit wall timber');
+
 });
 worldOverlay(()=>{
  const b=trunkDrag&&woodTrunks.get(Number(trunkDrag.key));
@@ -3584,16 +3584,9 @@ function drawFelledTrunk(ctx,w,lit=color=>color){
 }
 worldOverlay(()=>{const ctx=r.context;ctx.save();for(const b of woodTrunks.values()){const key=trunkKey(b),fit=trunkMoves.get(key)?.fitted;
 if(canoes.has(key)||fit&&projectedCabaneTimber(fit.left,fit.course??0)!==key)continue;
-const w=fit?{...b.plugin.wood,length:Math.min(b.plugin.wood.length,cabaneWidth+12)}:b.plugin.wood;if(b.position.x+w.length*2<r.bounds.min.x||b.position.x-w.length*2>r.bounds.max.x)continue;const float=b.plugin.floatingTrunk,p=float||b.position,L=w.length,W=w.width;ctx.save();ctx.translate(p.x,p.y);ctx.rotate((float?.angle??b.angle)+Math.PI/2);if(!float&&!fit){ctx.fillStyle='#24251d44';ctx.beginPath();ctx.ellipse(0,W*.45,L*.51,Math.max(2,W*.35),0,0,Math.PI*2);ctx.fill();}if(fit){
- const course=fit.course??0;
- if(course>0&&course<cabaneWallCourses-1){
-  // Leave a doorway in the side elevation, between the sill and the lintel.
-  ctx.beginPath();ctx.rect(-L/2-W,-W, L/2+9+W,W*2);
-  ctx.rect(41,-W,L/2+W-41,W*2);ctx.clip();
- }
- if(human&&!activeCave()&&human.position.x>fit.left+5&&human.position.x<fit.left+cabaneWidth-4&&
-  Math.abs(human.position.y+35-solidGaitSurface(human.position.x))<30)ctx.globalAlpha=.35;
-}
+const w=fit?{...b.plugin.wood,length:cabaneWallLength}:b.plugin.wood;if(b.position.x+w.length*2<r.bounds.min.x||b.position.x-w.length*2>r.bounds.max.x)continue;const float=b.plugin.floatingTrunk,p=float||b.position,L=w.length,W=w.width;ctx.save();ctx.translate(p.x,p.y);ctx.rotate((float?.angle??b.angle)+Math.PI/2);if(!float&&!fit){ctx.fillStyle='#24251d44';ctx.beginPath();ctx.ellipse(0,W*.45,L*.51,Math.max(2,W*.35),0,0,Math.PI*2);ctx.fill();}// The entrance is on the right gable, edge-on to the side view.
+if(fit&&human&&!activeCave()&&human.position.x>fit.left+5&&human.position.x<fit.left+cabaneWidth-4&&
+ Math.abs(human.position.y+35-solidGaitSurface(human.position.x))<30)ctx.globalAlpha=.35;
 drawFelledTrunk(ctx,w);ctx.restore()}ctx.restore()});function nearbyTrunk(){if(!human||swimming||human.plugin.groundTravel?.air)return null;let best=null,d=55;for(const b of woodTrunks.values()){if(trunkDrag||trunkReserved(b)||canoes.has(trunkKey(b)))continue;const pose=b.position;const v=Math.hypot(human.position.x-pose.x,human.position.y+35-pose.y);if(v<d){best=b;d=v}}return best}function makeTrunk(q,dir,pose,restore=false){spawnBranches(q,dir,restore);const p=pose?{...pose,width:timberDiameter}:trunkPose(q,dir);
  if(pose)p.y=trunkRestHeight(p);
  const b=Bodies.rectangle(p.x,p.y,p.width,p.length,{angle:p.angle,isStatic:onlineMode,density:.0007,friction:.7,restitution:.05,render:{fillStyle:'#80674b'}});const key=Math.round(q.x*1000);b.render.visible=false;b.plugin.trunkId='tree-'+key;b.plugin.wood={tree_x:key/1000,length:p.length,width:p.width,cutWidth:treeTraits(q).width,species:treeTraits(q).type};b.plugin.woodRest=p;b.plugin.felledPose=p;if(!cutRecords.has(key)){woodTrunks.set(key,b);Composite.add(e.world,b);applyTrunkMove(b,trunkMoves.get(String(key)))}return b}function finishChop(q,dir,remote=false,restore=false,pose=null){if(choppedTrees.has(q.x))return;if(!remote){const at=Date.now();rememberClearing(q.x,at);broadcastTree?.(q,dir,at);}const size=q.size||56;choppedTrees.add(q.x);try{if(!onlineMode)localStorage.setItem(choppedKey,JSON.stringify([...choppedTrees]))}catch{}if(q.parts){for(const b of q.parts)Composite.remove(e.world,b);plants.splice(plants.indexOf(q),1)}else scenicTrees.splice(scenicTrees.indexOf(q),1);if(restore){makeTrunk(q,dir,pose,true)}else{treeSound('crack',size);fallingTrees.push({x:q.x,y:q.y,size,type:treeTraits(q).type,dir,t:0,pose:pose||trunkPose(q,dir)})}saveWorld()}function poseWorkHands(dir,grips){
@@ -3819,7 +3812,7 @@ const actionGroups=[
  ['canoe','Drag canoe'],
  ['canoe','Board canoe'],
  ['canoe','Let go','Exit canoe'],
- ['stone','Set cabane footing','Take footing slab','Fit wall timber','Fit doorway lintel'],
+ ['stone','Set cabane footing','Take footing slab','Fit wall timber'],
  ['log','Drag trunk','Let go of trunk']
 ];
 const worldActionSlots=new Map(actionGroups.flatMap(([icon,...labels],slot)=>

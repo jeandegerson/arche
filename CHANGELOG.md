@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.127
+- Trim fitted cabane wall courses to one length. The doorway is on the right gable, edge-on to the game camera, so the side wall is continuous.
+- Verified that all six courses render at the same length and no opening is clipped out of the wall.
+
 ## 0.12.126
 - Narrow the phone action grid and anchor it closer to the lower-right edge. Compact spacing and icons keep action slots stable and leave the middle of the scene clear.
 - Verified inline script syntax and calculated layout bounds across five portrait phone sizes.
