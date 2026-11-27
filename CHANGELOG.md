@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.83
+- Texture foreground trees with bark grain, birch scars, palm rings, foliage clusters, pine needle strokes and palm veins. Marks stay fixed to the tree as it sways.
+
 ## 0.12.82
 - Shade foreground trunks, foliage and snow with directional light and softer undersides. Give trunks a flared base so they meet the ground more naturally.
 
