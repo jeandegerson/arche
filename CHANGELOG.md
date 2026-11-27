@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.117
+- Tow felled trunks while surface swimming and keep the rope attached across shorelines. Grab a floating trunk near either end. Towed trunks float at the rope position and return to ground support on shore.
+- Verified inline script syntax and exercised swim interaction, shoreline traversal, flotation, and land support in isolation.
+
 ## 0.12.116
 - Extend cabanes from the first wall timbers to six courses of stacked logs. Fit long side logs and short end timbers, then cap the open end with a doorway lintel. The near wall fades when the player is within the footprint.
 - Verified syntax, compatibility with existing first timbers, order of placement, the finished doorway, and persistence in isolated checks.
