@@ -278,7 +278,22 @@
       const wet=u<1&&surface>p.level;
       return {...q,surface,wet,water:wet?p.level:null,waterKind:wet?'river':undefined,cover:wet?0:q.cover};
     }
-    function oldSample(x){const q=shallowSample(x);if(!q.wet||q.biome==='sea')return q;const d=Math.max(0,q.surface-q.water);if(q.waterKind==='river'){const p=rivers.find(p=>Math.abs(x-p.x)<p.radius);const u=p?Math.abs(x-p.x)/p.radius:1;const shape=Math.max(0,1-Math.pow(u,5));return {...q,surface:q.water+Math.max(d*2.8,(p?p.depth*4.8:150)*shape*Math.min(1,d/12))};}return {...q,surface:q.water+d*2.65};}
+    function oldSample(x){
+      const q=shallowSample(x);
+      if(!q.wet||q.biome==='sea')return q;
+      const d=q.surface-q.water;
+      if(q.waterKind!=='river')return {...q,surface:q.water+d*2.65};
+      const river=rivers.find(p=>Math.abs(x-p.x)<p.radius);
+      const u=(x-river.x)/river.radius;
+      const bankFade=smooth(clamp(d/20,0,1));
+      const bedShape=1-Math.abs(u)**4;
+      // The channel wanders between a deeper pool and a shallower shelf.
+      const poolCenter=(random(river.x,701)-.5)*.7;
+      const pool=Math.exp(-((u-poolCenter)**2)/.11);
+      const relief=1+.12*Math.sin(u*10+river.x*.03);
+      const depth=(river.depth*5.65+18+river.depth*1.45*pool)*bedShape*relief;
+      return {...q,surface:q.water+Math.max(d*2.8,depth*bankFade)};
+    }
     const islandStart=6012,islandEnd=7848,islandExtra=1836,beachStart=14232,beachEnd=16824,beachExtra=2592;
     function toOld(x){if(x<islandStart)return x;if(x<islandEnd+islandExtra)return islandStart+(x-islandStart)/2;x-=islandExtra;if(x<beachStart)return x;if(x<beachEnd+beachExtra)return beachStart+(x-beachStart)/2;return x-beachExtra;}
     function toNew(x){if(x<islandStart)return x;if(x<islandEnd)return islandStart+(x-islandStart)*2;if(x<beachStart)return x+islandExtra;if(x<beachEnd)return beachStart+islandExtra+(x-beachStart)*2;return x+islandExtra+beachExtra;}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.112
+- Deepen river channels and vary their cross-sections with offset pools and shallower shelves. Keep water levels and shorelines in place and extend river color shading into deeper water.
+- Compared old and new map samples across all five rivers and verified that cave geometry and non-river terrain were unchanged.
+
 ## 0.12.111
 - Render precipitation as drifting snowflakes at 0°C or below using the same air temperature as the display. Rain streaks return above freezing.
 - Verified inline script syntax and draw behavior at −7°C, freezing, above freezing, and in dry conditions.
