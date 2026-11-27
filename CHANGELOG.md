@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.96
+- Give swimmers a leading foothold and a staggered rise when returning to a walk. Keep feet from visually sliding through the bank during the handoff.
+
 ## 0.12.95
 - Blend the torso and limbs between walking and swimming at the shoreline. Broadcast the blended pose to other players and retain the dive animation for airborne entries.
 
