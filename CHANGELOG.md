@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.88
+- Give loose stones shaded faces and mineral grain. Add related grain to cave rock and fractured faces beneath the soil, anchored to the terrain.
+
 ## 0.12.87
 - Carry the redesigned oak, birch, pine and palm silhouettes into near and distant scenery. Fog softens distant trees and small surface marks are reserved for the foreground.
 
