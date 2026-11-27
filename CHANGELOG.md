@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.92
+- Give woodland banks, shaded understory and open ground distinct plant communities. Grass and seasonal flowers return in woodland clearings over several game days, using the felling time already stored in the shared world.
+
 ## 0.12.91
 - Align the sun and moon with the scenic horizon and let ridges occlude their discs. Apply shared twilight and moonlight to the complete scene, keeping full night darker.
 
