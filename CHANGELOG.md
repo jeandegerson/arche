@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.110
+- Restore the standing-tree bark rendering path and use a compatible species lookup for harvested timber and branch sync.
+- Reproduced the v0.12.109 drawing failure with `Object.hasOwn` unavailable and verified all four standing-tree renderers and the timber fallback after the fix.
+
 ## 0.12.109
 - Carry the source tree’s bark and wood palette through felled trunks, logs, planks and branches. Logs share the trunk renderer, planks show exposed grain, and palm cut ends show fibers. Branch species persist and sync when carried.
 - Verified inline script syntax and rendering calls for oak, pine, birch, palm, and legacy species fallback.
