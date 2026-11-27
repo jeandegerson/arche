@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.94
+- Add wind-bent dune grasses with sand caught around their roots, moss near stones and fallen trunks in conifer woods, and marsh reeds that give way to sedges on higher ground.
+
 ## 0.12.93
 - Let wind move low cloud banks and high wisps at different speeds. Cloud cover thickens the banks, rain lowers and darkens them, and dawn and dusk still light their edges.
 
