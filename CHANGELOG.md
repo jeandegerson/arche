@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.85
+- Darken cave interiors and fade exterior light within a short distance of open mouths. Burning campfires and embers light their own passage.
+
 ## 0.12.84
 - Add world-anchored soil grain, moving near-surface water highlights, a deeper sky gradient and layered drifting cloud banks.
 
