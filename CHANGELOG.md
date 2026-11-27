@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.119
+- Add a stationary Haul ashore action. While standing on the bank with the rope attached, pull the full trunk onto dry ground where there is enough clearance.
+- Reproduced the ordinary drag stalling in a shoreline simulation and tested complete stationary hauls in both directions and steep-cliff rejection.
+
 ## 0.12.118
 - Allow a partly floating trunk to clear low banks while being pulled ashore. Retain the existing limits for dry ledges and steep cliffs.
 - Reproduced the prior bank block and verified both directions, dry ledges, steep cliffs, and world bounds in isolation.
