@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.124
+- Standardize trunk and log diameter at 13.875 world units, 25% below the previous trunk midpoint. Tree size still determines trunk length. Loose, stacked, carried, and campfire logs use the same diameter as trunks and cabane timbers.
+- Update the resting height and physics dimensions for logs. Verified syntax, diameter, tree-dependent length, resting height and campfire rendering.
+
 ## 0.12.123
 - Accept shorter whole trunks for cabane walls, ends, and doorway lintels. Side logs still reach both footing pads, and shorter logs retain their actual length when fitted.
 - Keep felled trunk widths within 16–21 world units while their length still follows tree size. Apply this on both newly felled and reloaded trunks while preserving sawed log yields.
