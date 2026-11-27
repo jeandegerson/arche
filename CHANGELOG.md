@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.87
+- Carry the redesigned oak, birch, pine and palm silhouettes into near and distant scenery. Fog softens distant trees and small surface marks are reserved for the foreground.
+
 ## 0.12.86
 - Reveal more wall texture in dark caves, strengthen the daylight gradient at entrances and light stone and loose wood with the same passage lighting.
 
