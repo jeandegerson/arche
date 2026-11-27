@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.93</span><header><h1>Archē</h1><small>v0.12.93 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.94</span><header><h1>Archē</h1><small>v0.12.94 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
 function jumpDipGesture(x,y){return y>=.32&&y>=Math.abs(x)*.5;}
 function crouchGesture(x,y){return y>.10&&y>=Math.abs(x)*1.2;}
 function limitTowingSpeed(speed){
@@ -1309,10 +1309,76 @@ function woodlandPlantAt(x,y,seed,now){
  const flowering=seed>.51&&growth>.54&&seasonalWarmth()>-.4;
  return {plant:flowering?woodlandPlants.flowers:woodlandPlants.grass,growth:.28+.72*growth};
 }
+const habitatPlants={
+ shoreGrass:{density:.84,type:'sandGrass',height:17,color:'#9b9a60',accent:'#d9bd83'},
+ duneGrass:{density:.60,type:'sandGrass',height:13,color:'#858b53',accent:'#cbb284'},
+ shoreCreeper:{density:.57,type:'shrub',height:8,color:'#68724e',accent:'#949867'},
+ reeds:{density:.88,type:'reeds',height:36,color:'#6b8253',accent:'#806343'},
+ marshSedge:{density:.83,type:'blades',height:20,color:'#8f9654'},
+ moss:{density:.89,type:'moss',height:10,color:'#536647',accent:'#829568'},
+ pineFern:{density:.54,type:'fern',height:17,color:'#5f7650',accent:'#839a66'}
+};
+function regionalPlantAt(biome,x,y,seed,mossAnchors=[]){
+ const patch=landscapeNoise(Math.floor(x/92)+1014);
+ if(biome==='coast'||biome==='dunes'){
+  const sea=ponds.find(p=>p.kind==='sea'&&x>=p.left&&x<=p.right);
+  if(sea&&y>physicalWaterLevel(sea,x)+2)return null;
+  const plant=biome==='dunes'?habitatPlants.duneGrass:
+   patch>.62&&seed>.55?habitatPlants.shoreCreeper:habitatPlants.shoreGrass;
+  return {plant,y,growth:.7+patch*.3};
+ }
+ if(biome==='conifer'){
+  const sheltered=mossAnchors.some(anchor=>Math.abs(x-anchor)<30);
+  const plant=sheltered?habitatPlants.moss:patch>.49?habitatPlants.pineFern:biomePlants.conifer;
+  return {plant,y,growth:sheltered?.72+seed*.28:1};
+ }
+ let bank=Infinity;
+ for(const pond of ponds){
+  if(pond.kind==='ice'||pond.kind==='sea'||x<pond.left-64||x>pond.right+64)continue;
+  if(x>=pond.left&&x<=pond.right){
+   const depth=y-physicalWaterLevel(pond,x);
+   if(depth>7)return null;
+   bank=Math.min(bank,Math.max(0,-depth)*2.5);
+  }else if(y>=pond.level-30){
+   bank=Math.min(bank,Math.min(Math.abs(x-pond.left),Math.abs(x-pond.right)));
+  }
+ }
+ const plant=bank<22&&patch>.22?habitatPlants.reeds:habitatPlants.marshSedge;
+ return {plant,y,growth:.72+patch*.28};
+}
+function nearbyMossAnchors(lo,hi){
+ const within=x=>x>=lo-30&&x<=hi+30;
+ const anchors=[];
+ for(const [,stone] of placedStones())if(stone.route==='surface'&&within(stone.x))anchors.push(stone.x);
+ for(const trunk of woodTrunks.values()){
+  if(!trunk.plugin.floatingTrunk&&within(trunk.position.x))anchors.push(trunk.position.x);
+ }
+ return anchors;
+}
 function drawBiomePlant(ctx,plant,x,y,variation,sway,growth=1){
   const {type,height,color,accent}=plant;
   const size=height*(.62+variation*.61)*growth;
-  const width=type==='blades'?size*.59:size*.34;
+  const width=type==='blades'||type==='sandGrass'?size*.59:size*.34;
+  if(type==='moss'){
+    ctx.fillStyle=color;ctx.beginPath();
+    for(let i=-2;i<=2;i++){
+      const cx=x+i*size*.57,cy=solidGaitSurface(cx),rx=size*.65,ry=size*(.18+.08*landscapeNoise(x+i));
+      ctx.moveTo(cx+rx,cy-ry*.63);ctx.ellipse(cx,cy-ry*.63,rx,ry,0,0,Math.PI*2);
+    }
+    ctx.fill();
+    ctx.strokeStyle=accent;ctx.lineWidth=.75;ctx.beginPath();
+    for(let i=-2;i<=2;i++){
+      const cx=x+i*size*.50,cy=solidGaitSurface(cx)-size*.13;
+      ctx.moveTo(cx,cy);ctx.lineTo(cx+1.7,cy-1.4);
+    }
+    ctx.stroke();return;
+  }
+  if(type==='sandGrass'){
+    ctx.fillStyle=accent;ctx.beginPath();
+    ctx.moveTo(x-size*.67,solidGaitSurface(x-size*.67));
+    ctx.quadraticCurveTo(x,y-size*.32,x+size*.82,solidGaitSurface(x+size*.82));
+    ctx.closePath();ctx.fill();
+  }
   if(type==='shrub'){
     for(let i=-2;i<=2;i++){
       ctx.fillStyle=i%2?color:accent;
@@ -1353,6 +1419,7 @@ function drawBiomePlant(ctx,plant,x,y,variation,sway,growth=1){
 }
 worldOverlay(()=>{
   const ctx=r.context,t=e.timing.timestamp/1000,now=Date.now(),lo=r.bounds.min.x-50,hi=r.bounds.max.x+50;
+  let mossAnchors;
   for(const b of ground){
     if(b.plugin.geology.k!==0||b.position.x<lo||b.position.x>hi)continue;
     for(let x=b.bounds.min.x+8;x<b.bounds.max.x;x+=16){
@@ -1363,6 +1430,11 @@ worldOverlay(()=>{
         const site=woodlandPlantAt(x,y,landscapeNoise(x+918),now);
         if(!site)continue;
         ({plant,growth}=site);
+      }else if(['coast','dunes','conifer','marsh'].includes(habitat.biome)){
+        if(habitat.biome==='conifer'&&!mossAnchors)mossAnchors=nearbyMossAnchors(lo,hi);
+        const site=regionalPlantAt(habitat.biome,x,y,landscapeNoise(x+919),mossAnchors);
+        if(!site)continue;
+        ({plant,y,growth}=site);
       }else if(habitat.wet){
         const water=ponds.find(p=>p.left<=x&&p.right>=x);
         if(!water)continue;
@@ -1371,7 +1443,7 @@ worldOverlay(()=>{
       }
       if(!plant||seed>plant.density*(.64+.36*growth))continue;
       const sway=Math.sin(t*(.9+weatherWind)+x*.06)*(1.4+weatherWind*3);
-      drawBiomePlant(ctx,plant,x,y,landscapeNoise(x+71),sway*growth,growth);
+      drawBiomePlant(ctx,plant,x,y,landscapeNoise(x+71),sway*growth+(plant.type==='sandGrass'?2.5+weatherWind*3:0),growth);
     }
   }
 });
