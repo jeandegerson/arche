@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.106</span><header><h1>Archē</h1><small>v0.12.106 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.107</span><header><h1>Archē</h1><small>v0.12.107 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -704,6 +704,17 @@ function paintBedrockTexture(ctx,pts,top,bottom,day){
 }
 function paintCaveRock(ctx,c,material,start,end,top,bottom){
  const rowHeight=material.bedding,columnWidth=76;
+ const lights=[];
+ const now=Date.now(),time=performance.now()/1000;
+ for(const fire of logfires){
+  if(fire.route!==c.id||fire.x<start-168||fire.x>end+168)continue;
+  const stage=fireStage(fire,now);
+  if(stage!=='burning'&&stage!=='embers')continue;
+  const frame=campfireFrame(fire,stage,now,time);
+  const {radius,intensity,height}=campfireLightProfile(frame);
+  if(intensity>0)lights.push({x:fire.x,y:fire.y-height,radius,intensity});
+ }
+ const litFace=ecoMix(material.light,'#f3bf81',.72);
  for(let y=Math.floor(top/rowHeight)*rowHeight;y<bottom+rowHeight;y+=rowHeight){
   const offset=(y/rowHeight%2)*38;
   for(let x=Math.floor((start-offset)/columnWidth)*columnWidth+offset;x<end+columnWidth;x+=columnWidth){
@@ -717,11 +728,34 @@ function paintCaveRock(ctx,c,material,start,end,top,bottom){
    ctx.lineTo(x+55+lean,y+41);
    ctx.lineTo(x+9+lean,y+47);
    ctx.closePath();
+   // Shade individual rock facets so the light reveals the wall's relief.
+   let light=0,direction=0;
+   for(const fire of lights){
+    const dx=fire.x-(x+28),dy=fire.y-(y+22);
+    const t=Math.hypot(dx,dy/.72)/fire.radius;
+    const strength=fire.intensity*Math.max(0,1-t*t)**2;
+    if(strength>light){light=strength;direction=dx;}
+   }
+   const exposed=direction*(lean||1)>=0;
    ctx.globalAlpha=.07+n*.12;
    ctx.fillStyle=n>.54?material.light:material.dark;
    ctx.fill();
+   if(light>.015){
+    ctx.globalAlpha=light*(exposed?.72:.48);
+    ctx.fillStyle=exposed?litFace:material.dark;
+    ctx.fill();
+    if(exposed){
+     ctx.strokeStyle=litFace;
+     ctx.lineWidth=1.5;
+     ctx.beginPath();
+     ctx.moveTo(x-12,y+5);
+     ctx.lineTo(x+41,y-7+n*12);
+     ctx.lineTo(x+70,y+11);
+     ctx.stroke();
+    }
+   }
    if(n<.36){
-    ctx.globalAlpha=.31;
+    ctx.globalAlpha=.31+light*.60;
     ctx.strokeStyle=material.dark;
     ctx.lineWidth=1.5;
     ctx.beginPath();
@@ -2886,12 +2920,18 @@ function paintCampfireFlames(ctx,fire,stage,time,frame){
  }
  ctx.restore();
 }
+function campfireLightProfile(frame){
+ return {
+  radius:frame.heat?168:58,
+  intensity:Math.min(.70,frame.light*(frame.heat?1.48:1.15)),
+  height:frame.heat?24:8
+ };
+}
 function paintCampfireLighting(ctx,fire,frame){
  if(!frame.light)return;
  const {x,y}=fire;
- const radius=frame.heat?168:58;
+ const {radius,intensity,height}=campfireLightProfile(frame);
  const cave=caveById(fire.route);
- const intensity=Math.min(.70,frame.light*(frame.heat?1.48:1.15));
  const left=Math.max(x-radius,cave?cave.left:-Infinity);
  const right=Math.min(x+radius,cave?cave.right:Infinity);
  if(left>=right)return;
@@ -2909,7 +2949,7 @@ function paintCampfireLighting(ctx,fire,frame){
   if(px===left)break;
  }
  ctx.closePath();ctx.clip();
- ctx.translate(x,y-(frame.heat?24:8));
+ ctx.translate(x,y-height);
  ctx.scale(1,.72);
 
  // Keep contrast in the material detail while lifting pixels already in deep shade.
