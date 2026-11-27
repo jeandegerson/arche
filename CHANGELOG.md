@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.107
+- Use nearby firelight to reveal cave wall relief. Rock faces catch warm highlights based on their position and orientation, while fractures retain contrast. Embers illuminate a smaller area.
+- Verified inline script syntax and isolated rock-rendering checks for flames, embers, unlit fuel, distance, and passage isolation.
+
 ## 0.12.106
 - Increase the amount of firelight visible on dark rock, characters, and objects while retaining material contrast. The shared light still falls off with distance and is clipped at cave boundaries.
 - Verified script syntax and sampled the blend on shaded rock and lighter material, including falloff, embers, unlit fuel, and cave clipping.
