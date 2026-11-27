@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.118
+- Allow a partly floating trunk to clear low banks while being pulled ashore. Retain the existing limits for dry ledges and steep cliffs.
+- Reproduced the prior bank block and verified both directions, dry ledges, steep cliffs, and world bounds in isolation.
+
 ## 0.12.117
 - Tow felled trunks while surface swimming and keep the rope attached across shorelines. Grab a floating trunk near either end. Towed trunks float at the rope position and return to ground support on shore.
 - Verified inline script syntax and exercised swim interaction, shoreline traversal, flotation, and land support in isolation.
