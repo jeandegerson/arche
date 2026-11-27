@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.128
+- Fit a transverse timber at each end of each wall course. Their cut faces overlap the corners half a course above the long logs.
+- Tested placement order for fresh builds and retrofits of six-course walls, and checked inline script syntax.
+
 ## 0.12.127
 - Trim fitted cabane wall courses to one length. The doorway is on the right gable, edge-on to the game camera, so the side wall is continuous.
 - Verified that all six courses render at the same length and no opening is clipped out of the wall.
