@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.114
+- Add the first stage of cabane construction. Collect flat slabs near rock outcrops and set four footing pads on dry, fairly level ground. On a mild slope, stack a second slab on each lower pad. Installed slabs persist in the shared stone state and can be recovered by hand.
+- Verified inline script syntax and exercised placement, completion, slope and water rejection, and slab recovery in isolation.
+
 ## 0.12.113
 - Draw firewood logs with the same dimensions, species-specific bark, and cut ends as loose logs. Burning logs keep these details beneath a charred tint, and new fuel retains its species.
 - Verified script syntax and prepared, burning, and legacy log rendering.

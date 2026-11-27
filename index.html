@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.113</span><header><h1>Archē</h1><small>v0.12.113 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.114</span><header><h1>Archē</h1><small>v0.12.114 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -2670,7 +2670,16 @@ function generateStones(){
   const sample=archeWorld.sample(x);
   if(sample.wet||sample.frozen||landscapeNoise(x+2419)>=(density[sample.biome]||0))continue;
   const id='surface-'+x;
-  stoneDeposits.set(id,{x,route:'surface',size:landscapeNoise(x+2420)<.48?'large':'small',shape:landscapeNoise(x+2421)});
+  const size=landscapeNoise(x+2420)<.48?'large':'small';
+  stoneDeposits.set(id,{x,route:'surface',size,shape:landscapeNoise(x+2421)});
+  if(size==='large'){
+   for(const offset of [-34,34,58]){
+    const at=x+offset,ground=archeWorld.sample(at);
+    if(!ground.wet&&!ground.frozen)stoneDeposits.set('slab-'+at,{
+     x:at,route:'surface',size:'small',flat:true,shape:landscapeNoise(at+2480)
+    });
+   }
+  }
  }
  for(const cave of caves){
   for(let x=cave.left+190;x<cave.right-80;x+=124){
@@ -2702,10 +2711,10 @@ if(!onlineMode)try{loadStones(JSON.parse(localStorage.getItem('arche-stones')||'
 function* placedStones(){
  for(const [id,q] of stoneDeposits){
   const stone=stoneChanges.get(id)||q;
-  if(!stone.removed&&!(stone.owner&&stone.until>Date.now()))yield [id,stone];
+  if(!stone.removed&&!stone.footing&&!(stone.owner&&stone.until>Date.now()))yield [id,stone];
  }
  for(const [id,stone] of stoneChanges){
-  if(!stoneDeposits.has(id)&&!stone.removed&&!(stone.owner&&stone.until>Date.now()))yield [id,stone];
+  if(!stoneDeposits.has(id)&&!stone.removed&&!stone.footing&&!(stone.owner&&stone.until>Date.now()))yield [id,stone];
  }
 }
 function stoneHandsFree(){
@@ -2792,8 +2801,111 @@ function putStone(pile){
   heldStone=null;
  },true);
 }
+const cabaneWidth=116,footingHeight=6;
+function cabanePadX(left,pad){return left+(pad>=2?cabaneWidth:0);}
+function cabaneFootings(){
+ const sites=new Map();
+ for(const [id,stone] of stoneChanges){
+  const f=stone.footing;
+  if(!stone.flat||stone.owner||!f||!Number.isFinite(f.left)||f.left<24||
+   f.left+cabaneWidth>worldWidth-24||!Number.isInteger(f.pad)||f.pad<0||f.pad>3||
+   !Number.isInteger(f.layer)||f.layer<0||f.layer>1||
+   stone.x!==cabanePadX(f.left,f.pad))continue;
+  if(!sites.has(f.left))sites.set(f.left,Array.from({length:4},()=>[]));
+  const pad=sites.get(f.left)[f.pad];
+  if(!pad[f.layer])pad[f.layer]={id,stone};
+ }
+ return sites;
+}
+function cabaneFootingPlan(left){
+ const right=left+cabaneWidth;
+ if(left<24||right>worldWidth-24)return null;
+ const a=stoneFloor(left,'surface'),b=stoneFloor(right,'surface');
+ if(!Number.isFinite(a)||!Number.isFinite(b)||Math.abs(a-b)>footingHeight+3)return null;
+ for(let x=left-12;x<=right+12;x+=4){
+  const ground=archeWorld.sample(x);
+  if(ground.wet||ground.frozen||Math.abs(stoneFloor(x,'surface')-(a+(b-a)*(x-left)/cabaneWidth))>10)return null;
+ }
+ return [a-b>3?2:1,a-b>3?2:1,b-a>3?2:1,b-a>3?2:1];
+}
+function cabaneFootingTarget(sites){
+ if(!stoneHandsFree()||stoneRoute()!=='surface')return null;
+ const x=human.position.x;
+ let nearest=null,distance=Infinity;
+ for(const [left,pads] of sites){
+  if(x<left-50||x>left+cabaneWidth+50)continue;
+  const d=Math.abs(x-left-cabaneWidth/2);
+  if(d<distance){nearest={left,pads};distance=d;}
+ }
+ if(nearest){
+  const {left,pads}=nearest,plan=cabaneFootingPlan(left);
+  if(!plan)return null;
+  let best=null,reach=46;
+  for(let pad=0;pad<4;pad++){
+   const at=cabanePadX(left,pad),d=Math.abs(at-x);
+   const layer=pads[pad][0]?1:0;
+   if(d<reach&&layer<plan[pad]&&!pads[pad][layer]){
+    best={left,pad,layer};reach=d;
+   }
+  }
+  return best;
+ }
+ const mark=Math.round(x+facing*22),left=facing===1?mark:mark-cabaneWidth;
+ if([...sites.keys()].some(at=>Math.abs(at-left)<cabaneWidth+28))return null;
+ return cabaneFootingPlan(left)?{left,pad:facing===1?0:2,layer:0}:null;
+}
+function setCabaneFooting(){
+ woodAction(()=>{
+  const stone=stoneChanges.get(heldStone);
+  if(!stone?.flat||stone.owner!==woodOwner)return;
+  const sites=cabaneFootings(),footing=cabaneFootingTarget(sites);
+  if(!footing)return;
+  const {left,pad}=footing;
+  stoneChanges.set(heldStone,{...stone,x:cabanePadX(left,pad),route:'surface',
+   footing,pile:null,fall:null,owner:null,until:0});
+  heldStone=null;
+  const plan=cabaneFootingPlan(left),pads=cabaneFootings().get(left);
+  hint(pads.every((p,i)=>p.filter(Boolean).length>=plan[i])?'Cabane footings complete':'Footing slab set');
+ },true);
+}
+function nearbyCabaneSlab(){
+ if(!stoneHandsFree()||stoneRoute()!=='surface'||heldStone||miningStone)return null;
+ let closest=null,distance=34;
+ for(const [left,pads] of cabaneFootings()){
+  for(let pad=0;pad<pads.length;pad++){
+   const x=cabanePadX(left,pad),d=Math.abs(x-human.position.x);
+   const top=pads[pad].at(-1);
+   if(top&&d<distance&&Math.abs(stoneFloor(x,'surface')-human.position.y-30)<25){
+    closest=top;distance=d;
+   }
+  }
+ }
+ return closest;
+}
+function removeCabaneSlab(){
+ woodAction(()=>{
+  const target=nearbyCabaneSlab();
+  if(!target)return;
+  const {footing,...stone}=target.stone;
+  stoneChanges.set(target.id,{...stone,owner:woodOwner,until:Date.now()+45000});
+  heldStone=target.id;stoneRenewIn=18;
+ },true);
+}
+function drawFootingSlab(ctx,stone,x,y,lit,back=false){
+ const half=10+stone.shape*3,color=back?'#74766d':'#8d9084';
+ ctx.fillStyle=lit('#565953');ctx.beginPath();
+ ctx.moveTo(x-half,y-3);ctx.lineTo(x-half+3,y-footingHeight);
+ ctx.lineTo(x+half-2,y-footingHeight);ctx.lineTo(x+half,y-3);
+ ctx.lineTo(x+half-2,y);ctx.lineTo(x-half+1,y);ctx.closePath();ctx.fill();
+ ctx.fillStyle=lit(color);ctx.beginPath();
+ ctx.moveTo(x-half,y-3);ctx.lineTo(x-half+3,y-footingHeight);
+ ctx.lineTo(x+half-2,y-footingHeight);ctx.lineTo(x+half,y-3);
+ ctx.lineTo(x+3,y-2);ctx.closePath();ctx.fill();
+}
 function drawStone(ctx,stone,x,y,grounded=false,route=stone.route){
  const lit=caveAmbientPalette(caveById(route),x);
+ if(stone.footing)return;
+ if(stone.flat){drawFootingSlab(ctx,stone,x,y,lit);return;}
  const radius=stoneRadius(stone),shape=stone.shape;
  const cave=caveById(stone.route);
  const rock=cave?caveBiomeFinishes[cave.biome]?.rock:visualGeology(x).rock;
@@ -2847,6 +2959,29 @@ worldOverlay(()=>{
  const carrying=heldStone&&stoneChanges.get(heldStone);
  if(carrying&&human&&hands.length)drawStone(ctx,carrying,hands[0].position.x,hands[0].position.y+4,false,activeCave()?.id||'surface');
 });
+worldOverlay(()=>{
+ const ctx=r.context,sites=cabaneFootings();
+ for(const [left,pads] of sites){
+  if(left+cabaneWidth+20<r.bounds.min.x||left-20>r.bounds.max.x)continue;
+  for(const pad of [1,3,0,2]){
+   const x=cabanePadX(left,pad),back=pad%2===1;
+   const floor=stoneFloor(x,'surface');
+   for(const entry of pads[pad]){
+    if(entry)drawFootingSlab(ctx,entry.stone,x+(back?7:0),floor-(back?3:0)-entry.stone.footing.layer*footingHeight,color=>color,back);
+   }
+  }
+ }
+ const carrying=stoneChanges.get(heldStone);
+ const target=carrying?.flat&&cabaneFootingTarget(sites);
+ if(target){
+  const x=cabanePadX(target.left,target.pad),back=target.pad%2===1;
+  ctx.save();ctx.globalAlpha=.38;
+  drawFootingSlab(ctx,carrying,x+(back?7:0),stoneFloor(x,'surface')-(back?3:0)-target.layer*footingHeight,color=>color,back);
+  ctx.restore();
+ }
+});
+const footingButton=extraAction('Set cabane footing',setCabaneFooting);
+const removeFootingButton=extraAction('Take footing slab',removeCabaneSlab);
 const mineStoneButton=extraAction('Mine stone',mineStone);
 const takeStoneButton=extraAction('Take stone',takeStone);
 const dropStoneButton=extraAction('Drop stone',()=>putStone(false));
@@ -2864,6 +2999,8 @@ Events.on(e,'afterUpdate',()=>{
   },true);
   if(!swimming)woodArmPose(facing,human.position.x+facing*16,human.position.y+8);
  }
+ footingButton.style.display=carrying?.flat&&cabaneFootingTarget(cabaneFootings())?'block':'none';
+ removeFootingButton.style.display=nearbyCabaneSlab()?'block':'none';
  mineStoneButton.style.display=!heldStone&&!miningStone&&nearbyStone('large')?'block':'none';
  takeStoneButton.style.display=!heldStone&&!miningStone&&nearbyStone('small')?'block':'none';
  dropStoneButton.style.display=carrying&&human&&!swimming?'block':'none';
@@ -3341,7 +3478,8 @@ const actionGroups=[
  ['branch','Put down branches'],
  ['canoe','Drag canoe'],
  ['canoe','Board canoe'],
- ['canoe','Let go','Exit canoe']
+ ['canoe','Let go','Exit canoe'],
+ ['stone','Set cabane footing','Take footing slab']
 ];
 const worldActionSlots=new Map(actionGroups.flatMap(([icon,...labels],slot)=>
  labels.map(label=>[label,{icon,slot}])));
