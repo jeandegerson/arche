@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.116</span><header><h1>Archē</h1><small>v0.12.116 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.117</span><header><h1>Archē</h1><small>v0.12.117 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -273,7 +273,9 @@ function updateSurfaceSwim(st,dt){const p=human.position,t=Date.now()/1000,water
  if(diving)delete st.shorePose;
  else beginShorePose(st,true);
 }
-if(diving&&!st.swim){st.swimVy=Math.min(4,Math.max(0,st.vy*.65));st.swimAngle=st.flip?st.flip.angle+Math.atan2(Math.sin(facing*1.43-st.flip.angle),Math.cos(facing*1.43-st.flip.angle))*.12:facing*(.78+1.27*(st.diveBlend||0));st.swimEffort=1;st.swimPhase=.9;st.diveEntry=1;}st.swim=true;swimming=true;st.air=false;st.flip=null;st.push=null;st.impact=null;st.recover=null;st.compress=0;st.prep=0;st.charge=0;const intent=Math.abs(walk)>.12?walk:0,vertical=Math.abs(padY)>.22?Math.sign(padY)*(Math.abs(padY)-.22)/.78:0;st.verticalIntent=vertical;if(vertical>.15&&w.depth>48)st.underwater=true;if(p.y>w.y+24)st.underwater=true;if(vertical<=0&&p.y<=w.y+8&&!(st.diveEntry>0))st.underwater=false;jumpRequest=0;jumpPrep=0;jumpCharge=0;const motion=w.sea?oceanMotion(p.x,w.depth,t):{drift:0,tilt:0};if(st.diveEntry>0){st.diveEntry=Math.max(0,st.diveEntry-dt/24);st.vx*=Math.exp(-dt*.045);}else {swimDynamics(st,intent,Math.min(2,dt),w.y,motion.drift*(st.underwater?.35:1));if(st.underwater)st.swimEffort=Math.max(st.swimEffort,Math.abs(vertical)*.85);}if(Math.abs(intent)>.15)facing=Math.sign(intent);const nx=Math.max(10,Math.min(worldWidth-10,p.x+st.vx*dt)),nw=water(nx),level=nw?.y??w.y,avg=(level+(water(nx-12)?.y??level)+(water(nx+12)?.y??level))/3,angle=BodyAngleForSwim(st,dt)+motion.tilt*.45,target=Math.min(avg+5+18*(st.diveEntry||0),solidGaitSurface(nx)-20),step=Math.min(2,dt);st.swimVy=((st.swimVy||0)+(target-p.y)*.028*step)*Math.exp(-.24*step);if(st.underwater&&!(st.diveEntry>0)){const c=swimCycle(st.swimPhase),thrust=vertical*(.045+.13*c.pull+.19*c.kick)*travelMultiplier;st.swimVy=(st.underwaterVy||0)+(thrust-.025-(st.underwaterVy||0)*.075)*step;st.underwaterVy=Math.max(-2.4*travelMultiplier,Math.min(2.4*travelMultiplier,st.swimVy));st.swimVy=st.underwaterVy;}else st.underwaterVy=st.swimVy;const bottom=solidGaitSurface(nx)-18,ny=Math.min(bottom,Math.max(avg-10,p.y+Math.max(-4,Math.min(4,st.swimVy))*step));if(ny>=bottom&&st.swimVy>0){st.swimVy=0;st.underwaterVy=0;}human.collisionFilter.mask=0;Body.setPosition(human,{x:nx,y:ny});Body.setAngle(human,angle);Body.setVelocity(human,{x:0,y:0});Body.setAngularVelocity(human,0);Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});for(const b of [...anatomy,...forearms,...hands])b.collisionFilter.mask=0;driveSwimPose();return true}function BodyAngleForSwim(st,dt){const a=st.swimAngle||0,target=st.underwater?facing*(1.43+Math.atan2((st.verticalIntent||0)*1.3,Math.max(.18,Math.abs(walk)))):facing*(.78+(st.swimEffort||0)*.65);st.swimAngle=a+Math.atan2(Math.sin(target-a),Math.cos(target-a))*Math.min(1,dt*.09);return st.swimAngle}
+if(diving&&!st.swim){st.swimVy=Math.min(4,Math.max(0,st.vy*.65));st.swimAngle=st.flip?st.flip.angle+Math.atan2(Math.sin(facing*1.43-st.flip.angle),Math.cos(facing*1.43-st.flip.angle))*.12:facing*(.78+1.27*(st.diveBlend||0));st.swimEffort=1;st.swimPhase=.9;st.diveEntry=1;}st.swim=true;swimming=true;st.air=false;st.flip=null;st.push=null;st.impact=null;st.recover=null;st.compress=0;st.prep=0;st.charge=0;const intent=Math.abs(walk)>.12?walk:0,vertical=!trunkDrag&&Math.abs(padY)>.22?Math.sign(padY)*(Math.abs(padY)-.22)/.78:0;st.verticalIntent=vertical;if(vertical>.15&&w.depth>48)st.underwater=true;if(p.y>w.y+24)st.underwater=true;if(vertical<=0&&p.y<=w.y+8&&!(st.diveEntry>0))st.underwater=false;jumpRequest=0;jumpPrep=0;jumpCharge=0;const motion=w.sea?oceanMotion(p.x,w.depth,t):{drift:0,tilt:0};if(trunkDrag){st.underwater=false;st.diveEntry=0;}
+if(st.diveEntry>0){st.diveEntry=Math.max(0,st.diveEntry-dt/24);st.vx*=Math.exp(-dt*.045);}else {swimDynamics(st,intent,Math.min(2,dt),w.y,motion.drift*(st.underwater?.35:1));if(st.underwater)st.swimEffort=Math.max(st.swimEffort,Math.abs(vertical)*.85);}if(trunkDrag)st.vx=limitTowingSpeed(st.vx);
+if(Math.abs(intent)>.15)facing=Math.sign(intent);const nx=Math.max(10,Math.min(worldWidth-10,p.x+st.vx*dt)),nw=water(nx),level=nw?.y??w.y,avg=(level+(water(nx-12)?.y??level)+(water(nx+12)?.y??level))/3,angle=BodyAngleForSwim(st,dt)+motion.tilt*.45,target=Math.min(avg+5+18*(st.diveEntry||0),solidGaitSurface(nx)-20),step=Math.min(2,dt);st.swimVy=((st.swimVy||0)+(target-p.y)*.028*step)*Math.exp(-.24*step);if(st.underwater&&!(st.diveEntry>0)){const c=swimCycle(st.swimPhase),thrust=vertical*(.045+.13*c.pull+.19*c.kick)*travelMultiplier;st.swimVy=(st.underwaterVy||0)+(thrust-.025-(st.underwaterVy||0)*.075)*step;st.underwaterVy=Math.max(-2.4*travelMultiplier,Math.min(2.4*travelMultiplier,st.swimVy));st.swimVy=st.underwaterVy;}else st.underwaterVy=st.swimVy;const bottom=solidGaitSurface(nx)-18,ny=Math.min(bottom,Math.max(avg-10,p.y+Math.max(-4,Math.min(4,st.swimVy))*step));if(ny>=bottom&&st.swimVy>0){st.swimVy=0;st.underwaterVy=0;}human.collisionFilter.mask=0;Body.setPosition(human,{x:nx,y:ny});Body.setAngle(human,angle);Body.setVelocity(human,{x:0,y:0});Body.setAngularVelocity(human,0);Body.applyForce(human,human.position,{x:0,y:-human.mass*e.gravity.y*e.gravity.scale});for(const b of [...anatomy,...forearms,...hands])b.collisionFilter.mask=0;driveSwimPose();return true}function BodyAngleForSwim(st,dt){const a=st.swimAngle||0,target=st.underwater?facing*(1.43+Math.atan2((st.verticalIntent||0)*1.3,Math.max(.18,Math.abs(walk)))):facing*(.78+(st.swimEffort||0)*.65);st.swimAngle=a+Math.atan2(Math.sin(target-a),Math.cos(target-a))*Math.min(1,dt*.09);return st.swimAngle}
 function solidGaitSurface(x){return caveSurface(x);}
 function createWalkableRoutes(exterior){
  const routes=new Map([['surface',{id:'surface',left:-Infinity,right:Infinity,height:exterior}]]),junctions=[];
@@ -2360,6 +2362,18 @@ worldOverlay(()=>{
 function floatingTrunkPose(b,basin=trunkWaterContact(b),t=Date.now()/1000){
  if(!basin)return null;
  const {length,width}=b.plugin.wood,half=length/2;
+ if(b.plugin.trunkMoved){
+  // A towed trunk stays at its rope position, including while one end grounds.
+  const x=b.plugin.woodRest.x,water=canoeWater(x,basin);
+  if(!water||water.depth<width*.35)return null;
+  const motion=inlandWoodMotion(x,t),ocean=basin.kind==='sea';
+  const tilt=ocean?oceanMotion(x,water.depth,t).tilt:motion.tilt;
+  const angle=tilt-Math.PI/2;
+  const waterY=water.y-width*.12+(ocean?0:motion.bob);
+  const clearsBank=[-half,-half/2,half/2,half].every(offset=>(canoeWater(x+offset,basin)?.depth??0)>width+3);
+  const y=clearsBank?waterY:Math.min(waterY,trunkRestHeight({x,angle,length,width}));
+  return {x,y,angle};
+ }
  // Move toward deeper water only as far as needed for both ends to clear the bank.
  const clearance=x=>[-half,-half/2,0,half/2,half].every(offset=>
   (canoeWater(x+offset,basin)?.depth??0)>=width*.45+2);
@@ -3251,8 +3265,10 @@ function applyTrunkMove(b,move){
  if(!fit&&b.plugin.cabaneFitted)Composite.add(e.world,b);
  b.plugin.cabaneFitted=!!fit;
  b.plugin.woodRest=pose;
- b.plugin.floatingTrunk=null;
- Body.setPosition(b,pose);Body.setAngle(b,pose.angle);
+ b.plugin.trunkMoved=!!move&&!fit;
+ b.plugin.floatingTrunk=b.plugin.trunkMoved?floatingTrunkPose(b):null;
+ const visible=b.plugin.floatingTrunk||pose;
+ Body.setPosition(b,visible);Body.setAngle(b,visible.angle);
  Body.setVelocity(b,{x:0,y:0});Body.setAngularVelocity(b,0);
 }
 function loadTrunkMoves(records){
@@ -3275,14 +3291,29 @@ function loadTrunkMoves(records){
 if(!onlineMode)try{loadTrunkMoves(JSON.parse(localStorage.getItem('arche-trunk-moves')||'{}'));}catch{}
 function dragHandsFree(){
  return human&&!heldStone&&!miningStone&&!held&&!heldLog&&!heldPlanks.length&&!heldBranches.length&&
-  !activeCave()&&!canoeControl&&!canoeWork&&!swimming&&!ignition&&!chopAction&&!cutAction&&!sawAction&&
-  !climbing&&!human.plugin.groundTravel?.air;
+  !activeCave()&&!canoeControl&&!canoeWork&&!ignition&&!chopAction&&!cutAction&&!sawAction&&
+  !climbing&&(swimming?!human.plugin.groundTravel?.underwater:!human.plugin.groundTravel?.air);
+}
+function nearbyTowableTrunk(){
+ if(!dragHandsFree()||trunkDrag)return null;
+ const p=human.position;
+ let best=null,distance=44;
+ for(const b of woodTrunks.values()){
+  if(trunkReserved(b)||canoes.has(trunkKey(b)))continue;
+  const alongX=-Math.sin(b.angle),alongY=Math.cos(b.angle),half=b.plugin.wood.length/2;
+  const y=p.y+(swimming?0:30);
+  const dot=(p.x-b.position.x)*alongX+(y-b.position.y)*alongY;
+  const at=Math.max(-half,Math.min(half,dot));
+  const d=Math.hypot(p.x-b.position.x-alongX*at,y-b.position.y-alongY*at);
+  if(d<distance){best=b;distance=d;}
+ }
+ return best;
 }
 function startTrunkDrag(){
  woodAction(()=>{
   if(trunkDrag||!dragHandsFree())return;
-  const b=nearbyTrunk();
-  if(!b||trunkWaterContact(b))return;
+  const b=nearbyTowableTrunk();
+  if(!b)return;
   const key=trunkKey(b),x=b.position.x;
   trunkMoves.set(key,{x,owner:woodOwner,until:Date.now()+12000});
   applyTrunkMove(b,trunkMoves.get(key));
@@ -3292,7 +3323,7 @@ function startTrunkDrag(){
 function checkpointTrunkDrag(release){
  const control=trunkDrag,b=control&&woodTrunks.get(Number(control.key));
  if(!b||woodBusy)return;
- const x=b.position.x;
+ const x=b.plugin.woodRest.x;
  control.saveIn=1;
  woodAction(()=>{
   const move=trunkMoves.get(control.key);
@@ -3303,7 +3334,7 @@ function checkpointTrunkDrag(release){
  });
 }
 function cabaneTimberTarget(b){
- if(!b)return null;
+ if(!b||swimming||b.plugin.floatingTrunk)return null;
  let target=null,distance=37;
  for(const [left,pads] of cabaneFootings()){
   const d=Math.abs(b.position.x-left-cabaneWidth/2);
@@ -3339,6 +3370,12 @@ function fitCabaneTimber(){
   hint(current.side===3?'Cabane walls complete':current.side===2?'Wall course complete':'Wall timber fitted');
  });
 }
+function trunkTowPathClear(x,edge,direction,reach){
+ if(x<=reach||x>=worldWidth-reach)return false;
+ const previous=edge-direction*12;
+ const support=at=>Math.min(solidGaitSurface(at),canoeWater(at)?.y??Infinity);
+ return Math.abs(support(edge)-support(previous))<13;
+}
 const dragTrunkButton=extraAction('Drag trunk',startTrunkDrag);
 const releaseTrunkButton=extraAction('Let go of trunk',()=>checkpointTrunkDrag(true));
 const fitTimberButton=extraAction('Fit wall timber',fitCabaneTimber);
@@ -3351,13 +3388,12 @@ Events.on(e,'afterUpdate',()=>{
   if(!dragHandsFree()||Math.abs(dx)>reach+52)checkpointTrunkDrag(true);
   else{
    const dt=Math.min(.05,e.timing.lastDelta/1000);
-   woodArmPose(facing,human.position.x-(Math.sign(dx)||facing)*11,human.position.y+10);
-   const step=Math.min(66*dt,Math.abs(dx)-reach);
+   if(!swimming)woodArmPose(facing,human.position.x-(Math.sign(dx)||facing)*11,human.position.y+10);
+   const step=Math.min((swimming?58:66)*dt,Math.abs(dx)-reach);
    if(step>0&&!woodBusy){
-    const x=b.position.x+Math.sign(dx)*step;
-    const edge=x+Math.sign(dx)*(reach-18);
-    if(x>reach&&x<worldWidth-reach&&!archeWorld.sample(edge).wet&&
-     Math.abs(solidGaitSurface(edge)-solidGaitSurface(edge-Math.sign(dx)*12))<13){
+    const direction=Math.sign(dx),x=b.plugin.woodRest.x+direction*step;
+    const edge=x+direction*(reach-18);
+    if(trunkTowPathClear(x,edge,direction,reach)){
      applyTrunkMove(b,{x});
     }
    }
@@ -3365,7 +3401,8 @@ Events.on(e,'afterUpdate',()=>{
    if(control.saveIn<=0)checkpointTrunkDrag(false);
   }
  }
- dragTrunkButton.style.display=!trunkDrag&&dragHandsFree()&&nearbyTrunk()?'block':'none';
+ dragTrunkButton.style.display=nearbyTowableTrunk()?'block':'none';
+ if(dragTrunkButton.style.display==='block')updateWorldAction(dragTrunkButton,swimming?'Tow trunk':'Drag trunk');
  releaseTrunkButton.style.display=trunkDrag?'block':'none';
  const target=trunkDrag&&dragHandsFree()&&cabaneTimberTarget(b);
  fitTimberButton.style.display=target?'block':'none';
@@ -3654,7 +3691,7 @@ const actionGroups=[
  ['canoe','Board canoe'],
  ['canoe','Let go','Exit canoe'],
  ['stone','Set cabane footing','Take footing slab','Fit wall timber','Fit end timber','Fit doorway lintel'],
- ['log','Drag trunk','Let go of trunk']
+ ['log','Drag trunk','Tow trunk','Let go of trunk']
 ];
 const worldActionSlots=new Map(actionGroups.flatMap(([icon,...labels],slot)=>
  labels.map(label=>[label,{icon,slot}])));
