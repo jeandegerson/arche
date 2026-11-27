@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.126
+- Narrow the phone action grid and anchor it closer to the lower-right edge. Compact spacing and icons keep action slots stable and leave the middle of the scene clear.
+- Verified inline script syntax and calculated layout bounds across five portrait phone sizes.
+
 ## 0.12.125
 - Rebuild the cabane as a side elevation. Place one main slab at each end, add a leveling slab if necessary, then stack one horizontal timber per course. The final timber forms the lintel over the doorway.
 - Count old front and rear footings toward the same support, and old side timbers toward their existing courses. Verified placement, legacy compatibility, and completion in isolated checks.
