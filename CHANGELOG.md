@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.125
+- Rebuild the cabane as a side elevation. Place one main slab at each end, add a leveling slab if necessary, then stack one horizontal timber per course. The final timber forms the lintel over the doorway.
+- Count old front and rear footings toward the same support, and old side timbers toward their existing courses. Verified placement, legacy compatibility, and completion in isolated checks.
+
 ## 0.12.124
 - Standardize trunk and log diameter at 13.875 world units, 25% below the previous trunk midpoint. Tree size still determines trunk length. Loose, stacked, carried, and campfire logs use the same diameter as trunks and cabane timbers.
 - Update the resting height and physics dimensions for logs. Verified syntax, diameter, tree-dependent length, resting height and campfire rendering.
