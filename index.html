@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.86</span><header><h1>Archē</h1><small>v0.12.86 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Archē</title><style>*{box-sizing:border-box}body{margin:0;background:#161b20;color:#eee;font:15px system-ui;overflow:hidden}canvas{display:block;touch-action:none;width:100vw;height:100dvh}header{position:fixed;top:env(safe-area-inset-top);left:16px;pointer-events:none}h1{font:32px Georgia;margin:12px 0 0}small{color:#aab5bf}nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:0;width:100%;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}button{background:#29343d;color:white;border:1px solid #596873;border-radius:9px;padding:12px 7px;font:14px system-ui}nav{flex-direction:column;align-items:center;gap:6px;padding:0 8px}.tabs,.tools{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}.tabs button{padding:7px 16px;font-size:12px}.tabs button[aria-pressed=true]{background:#627c78;color:#fff}.tools button{padding:10px 9px}.tools button[hidden]{display:none}html,body,canvas,button,nav,#humanControls,#walkPad,#walkPad *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}html,body{overscroll-behavior:none;touch-action:none}button,nav,.tabs,.tools,#humanControls{touch-action:none}#walkPad,#walkPad *{touch-action:none} header{pointer-events:none;opacity:.65}header small{display:none}#labToggle{opacity:.55;font-size:11px;padding:7px 10px}#walkPad{opacity:.58}#walkPad:active{opacity:.9}#releaseHuman{opacity:.7}#releaseHuman:not(.holding){visibility:hidden}#soundToggle{position:fixed;top:calc(12px + env(safe-area-inset-top));right:65px;z-index:5;font-size:11px;opacity:.65;padding:7px 10px}#versionLabel{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;color:#fff;opacity:.65;font:11px system-ui,sans-serif;pointer-events:none;z-index:6;text-shadow:0 1px 3px #000}#humanControls{left:calc(48px + env(safe-area-inset-left)) !important;bottom:calc(36px + env(safe-area-inset-bottom)) !important}</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.87</span><header><h1>Archē</h1><small>v0.12.87 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:Math.min(devicePixelRatio,2)}});function worldOverlay(fn){Events.on(r,'afterRender',()=>{const ctx=r.context;ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(-r.bounds.min.x,-r.bounds.min.y);try{fn()}catch(err){console.error('World overlay',err)}finally{ctx.restore()}})}let walls=[],cameraX=0;const requestedSpeed=new URLSearchParams(location.search).get('speed');
 function jumpDipGesture(x,y){return y>=.32&&y>=Math.abs(x)*.5;}
 function crouchGesture(x,y){return y>.10&&y>=Math.abs(x)*1.2;}
 function limitTowingSpeed(speed){
@@ -959,20 +959,21 @@ function nearGeography(world,x,z){
 }
 const nearSampleCache=new Map();
 const nearShoreCache=new Map();
-function hasScenicPalms(biome){
- return biome==='island'||biome==='coast'||biome==='oasis';
-}
-function drawScenicPalm(ctx,x,y,height,width,trunk,fronds){
- const crown=x+height*.12,top=y-height,stem=Math.max(.9,height*.05);
- ctx.fillStyle=trunk;ctx.beginPath();ctx.moveTo(x-stem/2,y+1);
- ctx.quadraticCurveTo(x-height*.10,y-height*.5,crown-stem/2,top);
- ctx.lineTo(crown+stem/2,top);ctx.quadraticCurveTo(x,y-height*.5,x+stem/2,y+1);ctx.fill();
- ctx.fillStyle=fronds;
- for(let k=-2;k<=2;k++){
-  ctx.beginPath();ctx.moveTo(crown,top);
-  ctx.quadraticCurveTo(crown+k*width*.7,top-height*.24,crown+k*width,top+Math.abs(k)*height*.12);
-  ctx.quadraticCurveTo(crown+k*width*.5,top-height*.03,crown,top+stem);ctx.fill();
- }
+function drawScenicTree(ctx,x,y,seed,biome,height,tint,detail){
+ const type=['island','coast','oasis'].includes(biome)?'palm':
+  ['conifer','alpine','steppe'].includes(biome)?'pine':
+  biome==='marsh'||landscapeNoise(seed+711)<.43?'birch':'oak';
+ const color=(r,g,b)=>tint([r,g,b]);
+ const autumn=seasonalWarmth()<-.35;
+ const colors=type==='pine'?[color(52,77,62),color(65,94,70),color(80,108,75)]:
+  type==='palm'?[color(49,104,65),color(67,121,72)]:
+  autumn?[color(146,112,68),color(174,136,74),color(179,155,91)]:
+  type==='birch'?[color(102,131,74),color(129,155,87),color(145,169,97)]:
+  [color(64,91,53),color(82,110,62),color(108,134,74)];
+ const bark=type==='birch'?color(170,166,144):color(94,77,58);
+ ctx.save();ctx.translate(x,y);
+ drawTreeSpecies(ctx,{x:seed,type,size:height},0,{bark,colors,detail,snow:biome==='alpine'?.65:0});
+ ctx.restore();
 }
 function drawNearLandscape(ctx,world,w,h,ox,oy,day){
  const center=ox+w/2,horizon=h*.47,step=24;
@@ -1017,12 +1018,7 @@ function drawNearLandscape(ctx,world,w,h,ox,oy,day){
  }
  function poly(pts,color){ctx.fillStyle=color;ctx.strokeStyle=color;ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(...pts[0]);for(let i=1;i<pts.length;i++)ctx.lineTo(...pts[i]);ctx.closePath();ctx.fill();ctx.stroke();}
  for(let j=0;j<rows.length-1;j++){const row=rows[j],next=rows[j+1],z=row[0].z;
- for(let i=0;i<row.length-1;i++){const a=row[i]; if(j>0&&a.water===null&&Math.round(a.x/step)%3===0&&j%2===0&&scenicGeography.hash(Math.round(a.x/step),z,19)<a.cover*.32){const [x,y]=a.p,k=1/(1+z/850),ht=(36+scenicGeography.hash(Math.round(a.x/step),z,8)*32)*k;const trunk=tint([87,75,56],z),canopy=tint([65,100,65],z);
- if(hasScenicPalms(a.biome)){
-  drawScenicPalm(ctx,x,y,ht,ht*.32,trunk,canopy);
-  continue;
- }
- ctx.fillStyle=trunk;ctx.fillRect(x-1,y-ht*.7,2,ht*.7);ctx.fillStyle=canopy;ctx.beginPath();if(['conifer','alpine'].includes(a.biome)){for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(x,y-ht+k*ht*.20);ctx.lineTo(x-ht*(.15+k*.05),y-ht*.45+k*ht*.20);ctx.lineTo(x+ht*(.15+k*.05),y-ht*.45+k*ht*.20);ctx.closePath();ctx.fill();}}else{ctx.ellipse(x,y-ht*.72,ht*.25,ht*.35,0,0,Math.PI*2);ctx.fill();}}}
+ for(let i=0;i<row.length-1;i++){const a=row[i]; if(j>0&&a.water===null&&Math.round(a.x/step)%3===0&&j%2===0&&scenicGeography.hash(Math.round(a.x/step),z,19)<a.cover*.32){const [x,y]=a.p,k=1/(1+z/850),ht=(36+scenicGeography.hash(Math.round(a.x/step),z,8)*32)*k;drawScenicTree(ctx,x,y,a.x+z*17,a.biome,ht,rgb=>tint(rgb,z),true);}}
  for(const p of bodies)waterStrip(p,z);
  let painted=-1;for(let i=0;i<row.length-1;i++){const a=row[i],b=row[i+1],c=next[i+1],d=next[i];
 
@@ -1083,17 +1079,11 @@ function drawRegionalBackground(ctx,world,w,h,ox,oy,day){
     if(v>.35&&snow>.3)poly([[x,y+12],[b.x,b.y+22],[x+step*.2,y+75*depth]],color(a.s,.65));
    }
    if(a.q===b.q||v>a.s.cover||!['island','coast','woodland','conifer','meadow','oasis'].includes(a.s.biome))continue;
-   const ht=(20+j*48)*depth,tw=ht*(.25+v*.16),fill=color(a.s,.68);
-   ctx.fillStyle=fill;
-   if(hasScenicPalms(a.s.biome)){
-    drawScenicPalm(ctx,x,y,ht,tw,fill,fill);
-   }else if(a.s.biome==='conifer'){
-    for(let k=0;k<3;k++){const top=y-ht+k*ht*.23,wide=tw*(.55+k*.25);poly([[x,top],[x-wide,top+ht*.48],[x+wide,top+ht*.48]],fill)}
-    ctx.fillRect(x-.7,y-ht*.35,1.4,ht*.35+2);
-   }else{
-    ctx.fillRect(x-1,y-ht*.65,2,ht*.65+2);
-    for(let k=-1;k<=1;k++){ctx.beginPath();ctx.ellipse(x+k*tw*.48,y-ht*(.62+(1-Math.abs(k))*.12),tw*.73,ht*.27,0,0,Math.PI*2);ctx.fill()}
-   }
+   const ht=(20+j*48)*depth;
+   drawScenicTree(ctx,x,y,key*37+z,a.s.biome,ht,rgb=>{
+    const fog=[153,179,190];
+    return 'rgb('+rgb.map((v,k)=>Math.round((v*depth+fog[k]*(1-depth))*(.23+.77*day))).join(',')+')';
+   },false);
   }
   for(let i=0;i<n;i++){const a=pts[i],b=pts[i+1];const g=ctx.createLinearGradient(0,Math.min(a.y,b.y),0,Math.min(a.y,b.y)+Math.max(20,h*.32));g.addColorStop(0,color(a.s,1));g.addColorStop(1,color(a.s,a.s.wet?1.12:.76));poly([[a.x,a.y],[b.x+.6,b.y],[b.x+.6,h+1],[a.x,h+1]],g)}
  }
@@ -1199,12 +1189,13 @@ worldOverlay(()=>{
     }
   }
 });
-Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,ox=r.bounds.min.x,day=sunlight();ctx.save();ctx.globalCompositeOperation='destination-over';ctx.fillStyle='rgba(35,57,42,'+(.35+day*.3)+')';for(let i=-2;i<Math.ceil(w/13)+2;i++){const q=Math.floor(ox*.32/13)+i,x=i*13-(ox*.32%13),n=landscapeNoise(q+4000);if(archeWorld.sample(ox+x).biome!=='conifer'||n<.25)continue;const y=h*.62+Math.sin(q*.05)*25,ht=18+n*45;ctx.beginPath();ctx.moveTo(x-9,y);ctx.lineTo(x,y-ht);ctx.lineTo(x+9,y);ctx.fill()}ctx.restore()});let soundCtx=null,soundGain=null,windFilter=null,soundOn=false,nextBird=0,waterAudioFilter=null,waterAudioMaster=null,headWet=false;const soundToggle=document.querySelector('#soundToggle');async function startNatureSound(){try{if(!soundCtx){soundCtx=new (window.AudioContext||window.webkitAudioContext)();const buffer=soundCtx.createBuffer(1,soundCtx.sampleRate*3,soundCtx.sampleRate),data=buffer.getChannelData(0);let last=0;for(let i=0;i<data.length;i++){last=(last+Math.random()*.04-.02)/1.02;data[i]=last*3}const source=soundCtx.createBufferSource();source.buffer=buffer;source.loop=true;windFilter=soundCtx.createBiquadFilter();windFilter.type='lowpass';windFilter.frequency.value=450;soundGain=soundCtx.createGain();soundGain.gain.value=0;waterAudioFilter=soundCtx.createBiquadFilter();waterAudioFilter.type='lowpass';waterAudioFilter.frequency.value=18000;waterAudioMaster=soundCtx.createGain();waterAudioFilter.connect(waterAudioMaster).connect(soundCtx.destination);source.connect(windFilter).connect(soundGain).connect(waterAudioFilter);source.start()}soundOn=true;await soundCtx.resume();soundGain.gain.setTargetAtTime(soundOn?.18:0,soundCtx.currentTime,.2);soundToggle.textContent=soundOn?'Sound on':'Sound off';soundToggle.setAttribute('aria-pressed',String(soundOn))}catch(err){soundOn=false;soundToggle.textContent='Sound unavailable'}};function unlockNatureSound(){if(!soundCtx||soundCtx.state!=='running'||!soundOn)startNatureSound()}window.addEventListener('pointerdown',unlockNatureSound,{capture:true});window.addEventListener('keydown',unlockNatureSound,{capture:true});startNatureSound();function natureTone(freq,end,duration,volume){const now=soundCtx.currentTime,o=soundCtx.createOscillator(),g=soundCtx.createGain();o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(end,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.035);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g).connect(waterAudioFilter||soundCtx.destination);o.start();o.stop(now+duration+.02)}Events.on(e,'afterUpdate',()=>{document.querySelector('#releaseHuman').classList.toggle('holding',!!held);if(!soundOn||!soundCtx||soundCtx.state!=='running')return;const now=soundCtx.currentTime,day=sunlight();windFilter.frequency.setTargetAtTime(headWet?170:350+150*Math.sin(now*.13)+day*180,now,.5);waterAudioFilter?.frequency.setTargetAtTime(headWet?420:18000,now,.18);waterAudioMaster?.gain.setTargetAtTime(headWet?.65:1,now,.2);if(now>nextBird){nextBird=now+3+Math.random()*9;if(headWet)return;if(day>.15)natureTone(1300+Math.random()*900,2400+Math.random()*600,.18,.025);else natureTone(3900,3600,.09,.009)}});function sharedWeather(now,x,elevation){const t=(now-sharedEpoch)/1000,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const sample=age=>{const u=t-age,cycle=Math.sin(u*.009-1.8-x*.00012)+Math.sin(u*.003+1+x*.000045)*.45,cloud=clamp(.40+cycle*.48+elevation*.22,.08,1),rain=clamp((cloud-.62)*3.2,0,1);return {cloud,rain};};const q=sample(0);let wet=0,weight=0;for(let age=0;age<=1200;age+=60){const w=Math.exp(-age/330);wet+=sample(age).rain*w;weight+=w;}return {cloud:q.cloud,rain:q.rain,wind:.18+q.cloud*.48+q.rain*.25,wet:wet/weight};} let weatherClock=0,rainAmount=0,cloudCover=.18,weatherWind=.25,soilWetness=.25;const choppedTrees=new Set();try{for(const x of JSON.parse(onlineMode?'[]':localStorage.getItem(choppedKey)||'[]'))choppedTrees.add(x)}catch{}function treeTraits(q){const n=landscapeNoise(q.x+711),habitat=archeWorld.sample(q.x),biome=habitat.biome;
+Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,ox=r.bounds.min.x,day=sunlight();ctx.save();ctx.globalCompositeOperation='destination-over';ctx.fillStyle='rgba(35,57,42,'+(.35+day*.3)+')';for(let i=-2;i<Math.ceil(w/13)+2;i++){const q=Math.floor(ox*.32/13)+i,x=i*13-(ox*.32%13),n=landscapeNoise(q+4000);if(archeWorld.sample(ox+x).biome!=='conifer'||n<.25)continue;const y=h*.62+Math.sin(q*.05)*25,ht=18+n*45;drawScenicTree(ctx,x,y,q,'conifer',ht,()=> 'rgba(35,57,42,'+(.35+day*.3)+')',false)}ctx.restore()});let soundCtx=null,soundGain=null,windFilter=null,soundOn=false,nextBird=0,waterAudioFilter=null,waterAudioMaster=null,headWet=false;const soundToggle=document.querySelector('#soundToggle');async function startNatureSound(){try{if(!soundCtx){soundCtx=new (window.AudioContext||window.webkitAudioContext)();const buffer=soundCtx.createBuffer(1,soundCtx.sampleRate*3,soundCtx.sampleRate),data=buffer.getChannelData(0);let last=0;for(let i=0;i<data.length;i++){last=(last+Math.random()*.04-.02)/1.02;data[i]=last*3}const source=soundCtx.createBufferSource();source.buffer=buffer;source.loop=true;windFilter=soundCtx.createBiquadFilter();windFilter.type='lowpass';windFilter.frequency.value=450;soundGain=soundCtx.createGain();soundGain.gain.value=0;waterAudioFilter=soundCtx.createBiquadFilter();waterAudioFilter.type='lowpass';waterAudioFilter.frequency.value=18000;waterAudioMaster=soundCtx.createGain();waterAudioFilter.connect(waterAudioMaster).connect(soundCtx.destination);source.connect(windFilter).connect(soundGain).connect(waterAudioFilter);source.start()}soundOn=true;await soundCtx.resume();soundGain.gain.setTargetAtTime(soundOn?.18:0,soundCtx.currentTime,.2);soundToggle.textContent=soundOn?'Sound on':'Sound off';soundToggle.setAttribute('aria-pressed',String(soundOn))}catch(err){soundOn=false;soundToggle.textContent='Sound unavailable'}};function unlockNatureSound(){if(!soundCtx||soundCtx.state!=='running'||!soundOn)startNatureSound()}window.addEventListener('pointerdown',unlockNatureSound,{capture:true});window.addEventListener('keydown',unlockNatureSound,{capture:true});startNatureSound();function natureTone(freq,end,duration,volume){const now=soundCtx.currentTime,o=soundCtx.createOscillator(),g=soundCtx.createGain();o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(end,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.035);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g).connect(waterAudioFilter||soundCtx.destination);o.start();o.stop(now+duration+.02)}Events.on(e,'afterUpdate',()=>{document.querySelector('#releaseHuman').classList.toggle('holding',!!held);if(!soundOn||!soundCtx||soundCtx.state!=='running')return;const now=soundCtx.currentTime,day=sunlight();windFilter.frequency.setTargetAtTime(headWet?170:350+150*Math.sin(now*.13)+day*180,now,.5);waterAudioFilter?.frequency.setTargetAtTime(headWet?420:18000,now,.18);waterAudioMaster?.gain.setTargetAtTime(headWet?.65:1,now,.2);if(now>nextBird){nextBird=now+3+Math.random()*9;if(headWet)return;if(day>.15)natureTone(1300+Math.random()*900,2400+Math.random()*600,.18,.025);else natureTone(3900,3600,.09,.009)}});function sharedWeather(now,x,elevation){const t=(now-sharedEpoch)/1000,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const sample=age=>{const u=t-age,cycle=Math.sin(u*.009-1.8-x*.00012)+Math.sin(u*.003+1+x*.000045)*.45,cloud=clamp(.40+cycle*.48+elevation*.22,.08,1),rain=clamp((cloud-.62)*3.2,0,1);return {cloud,rain};};const q=sample(0);let wet=0,weight=0;for(let age=0;age<=1200;age+=60){const w=Math.exp(-age/330);wet+=sample(age).rain*w;weight+=w;}return {cloud:q.cloud,rain:q.rain,wind:.18+q.cloud*.48+q.rain*.25,wet:wet/weight};} let weatherClock=0,rainAmount=0,cloudCover=.18,weatherWind=.25,soilWetness=.25;const choppedTrees=new Set();try{for(const x of JSON.parse(onlineMode?'[]':localStorage.getItem(choppedKey)||'[]'))choppedTrees.add(x)}catch{}function treeTraits(q){const n=landscapeNoise(q.x+711),habitat=archeWorld.sample(q.x),biome=habitat.biome;
 const type=q.type||(biome==='island'&&n<(habitat.tropical||0)*.82?'oak':['island','coast','oasis'].includes(biome)?'palm':['conifer','alpine','steppe'].includes(biome)?'pine':biome==='marsh'||n<.43?'birch':'oak'),size=q.size||56;return {type,size,width:Math.max(3,size*(type==='oak'?.15:type==='pine'?.085:.065))}}function treeLight(){
  const daylight=sunlight();
  return {side:Math.sin((solarTime-12)*Math.PI/12),daylight};
 }
 function treeShade(ctx,color,x,y,wide,high,light,bark=false){
+ if(!light)return color;
  high=Math.max(high,wide*.15);
  const grad=ctx.createLinearGradient(x+wide*light.side,y-high,x-wide*light.side,y+high);
  grad.addColorStop(0,ecoMix(color,light.daylight>.35?'#ead7a5':'#b0c1ca',.10+light.daylight*.18));
@@ -1264,8 +1255,8 @@ function drawFoliageMarks(ctx,x,y,rx,ry,seed,needle=false){
  }
  ctx.restore();
 }
-function drawBroadleaf(ctx,q,type,size,width,sway,colors,light){
- const birch=type==='birch',bark=birch?'#c8c2aa':'#67503a';
+function drawBroadleaf(ctx,q,type,size,width,sway,colors,light,scenic){
+ const birch=type==='birch',bark=scenic?.bark||(birch?'#c8c2aa':'#67503a');
  const sample=i=>landscapeNoise(q.x*7+813+i*71);
  const spread=size*(birch?.24:.39)*(.83+sample(0)*.34);
  const lean=(sample(1)-.5)*size*.23;
@@ -1277,15 +1268,15 @@ function drawBroadleaf(ctx,q,type,size,width,sway,colors,light){
  ctx.lineTo(crown-width*.1,-size);
  ctx.lineTo(crown+width*.1,-size);
  ctx.quadraticCurveTo(lean+width*.32,fork,width*.5,0);ctx.closePath();ctx.fill();
- drawBarkGrain(ctx,type,size,width,t=>lean*t+sway*t*t,q.x+803);
+ if(!scenic)drawBarkGrain(ctx,type,size,width,t=>lean*t+sway*t*t,q.x+803);
  const limbs=[];
- const count=birch?6:4;
+ const count=scenic&&!scenic.detail?4:birch?6:4;
  for(let i=0;i<count;i++){
   const side=i%2?1:-1,rank=Math.floor(i/2),seed=10+i*5;
   const x=crown+side*spread*(.57+sample(seed)*.42);
   const y=-size*(.84+rank*(birch?.11:.15)+sample(seed+1)*.12);
   const join=fork-size*rank*.095;
-  ctx.strokeStyle=ecoMix(bark,'#29251e',.17);ctx.lineCap='round';ctx.lineWidth=width*(birch?.18:.35)*(1-rank*.18);
+  ctx.strokeStyle=scenic?bark:ecoMix(bark,'#29251e',.17);ctx.lineCap='round';ctx.lineWidth=width*(birch?.18:.35)*(1-rank*.18);
   ctx.beginPath();ctx.moveTo(lean*.5,join);
   ctx.quadraticCurveTo(x*.57,join-size*.06,x,y);ctx.stroke();
   const radius=spread*(birch?.44:.64)*(.78+sample(seed+2)*.36);
@@ -1306,25 +1297,27 @@ function drawBroadleaf(ctx,q,type,size,width,sway,colors,light){
    ctx.quadraticCurveTo(point.x,point.y,(point.x+next.x)/2,(point.y+next.y)/2);
   }
   ctx.closePath();ctx.fill();
-  drawFoliageMarks(ctx,x,y,radius,radius*(birch?1.18:.78),q.x+seed*71);
+  if(!scenic)drawFoliageMarks(ctx,x,y,radius,radius*(birch?1.18:.78),q.x+seed*71);
  }
 }
-function drawTreeSpecies(ctx,q,sway=0){const {type,size,width}=treeTraits(q),light=treeLight();
+function drawTreeSpecies(ctx,q,sway=0,scenic=null){
+ const {type,size,width}=scenic?{type:q.type,size:q.size,width:Math.max(.65,q.size*(q.type==='oak'?.15:q.type==='pine'?.085:.065))}:treeTraits(q);
+ const light=scenic?null:treeLight();
 if(type==='palm'){
-  const crown=size*.12;
-  drawTreeFoot(ctx,'#886843',width*.8,light);
-  ctx.strokeStyle=treeShade(ctx,'#886843',width*.1,0,width*.64,0,light,true);ctx.lineWidth=width;
+  const crown=size*.12,bark=scenic?.bark||'#886843';
+  drawTreeFoot(ctx,bark,width*.8,light);
+  ctx.strokeStyle=treeShade(ctx,bark,width*.1,0,width*.64,0,light,true);ctx.lineWidth=width;
   ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(0,-size*.6,crown,-size);ctx.stroke();
   ctx.beginPath();ctx.moveTo(-width/2,0);ctx.quadraticCurveTo(-width/2,-size*.6,crown-width/2,-size);
   ctx.lineTo(crown+width/2,-size);ctx.quadraticCurveTo(width/2,-size*.6,width/2,0);ctx.closePath();
-  drawBarkGrain(ctx,'palm',size,width,t=>crown*t*t,q.x+807);
+  if(!scenic)drawBarkGrain(ctx,'palm',size,width,t=>crown*t*t,q.x+807);
   for(let j=-3;j<=3;j++){
     const reach=j*size*.18+sway;
-    ctx.fillStyle=treeShade(ctx,j%2?'#437948':'#316841',crown+reach*.48,-size*1.06,size*.12,size*.19,light);
+    ctx.fillStyle=treeShade(ctx,scenic?scenic.colors[Math.abs(j)%2]:j%2?'#437948':'#316841',crown+reach*.48,-size*1.06,size*.12,size*.19,light);
     ctx.beginPath();ctx.moveTo(crown,-size);
     ctx.quadraticCurveTo(crown+reach*.55,-size*1.35,crown+reach,-size*(1.14-Math.abs(j)*.1));
     ctx.quadraticCurveTo(crown+reach*.55,-size*1.18,crown,-size);ctx.fill();
-    if(Math.abs(reach)>7){
+    if((!scenic||scenic.detail)&&Math.abs(reach)>7){
      ctx.save();ctx.clip();ctx.strokeStyle='rgba(207,220,151,.33)';ctx.lineWidth=.8;
      const tip=-size*(1.14-Math.abs(j)*.1),control=-size*1.27;
      ctx.beginPath();ctx.moveTo(crown,-size);ctx.quadraticCurveTo(crown+reach*.55,control,crown+reach,tip);
@@ -1335,36 +1328,36 @@ if(type==='palm'){
      ctx.stroke();ctx.restore();
     }
   }
-  ctx.fillStyle=treeShade(ctx,'#75512d',crown,-size+width,width*1.4,width,light,true);
+  ctx.fillStyle=treeShade(ctx,scenic?.bark||'#75512d',crown,-size+width,width*1.4,width,light,true);
   for(let j=-1;j<2;j++){ctx.beginPath();ctx.arc(crown+j*width*.64,-size+width*(1-Math.abs(j)*.45),width*.57,0,Math.PI*2);ctx.fill()}
   return;
 }
 if(type==='pine'){
- drawForegroundPine(ctx,q,size,width,sway,light);return;
+ drawForegroundPine(ctx,q,size,width,sway,light,scenic);return;
 }
 const autumn=seasonalWarmth()<-.35;
 const colors=autumn?['#927044','#ae884a','#b39b5b']:type==='birch'?['#66834a','#819b57','#91a961']:['#405b35','#526e3e','#6c864a'];
-drawBroadleaf(ctx,q,type,size,width,sway,colors,light);
+drawBroadleaf(ctx,q,type,size,width,sway,scenic?.colors||colors,light,scenic);
 }
-function drawForegroundPine(ctx,q,size,width,sway,light){
+function drawForegroundPine(ctx,q,size,width,sway,light,scenic){
  const sample=i=>landscapeNoise(q.x*7+271+i*59);
  const lean=(sample(0)-.5)*size*.13+sway;
- const greens=['#344d3e','#415e46','#506c4b'];
- const snow=snowAmount(q.x);
- drawTreeFoot(ctx,'#765b43',width,light);
- ctx.fillStyle=treeShade(ctx,'#765b43',0,0,width*.55,0,light,true);
+ const greens=scenic?.colors||['#344d3e','#415e46','#506c4b'];
+ const bark=scenic?.bark||'#765b43',snow=scenic?scenic.snow:snowAmount(q.x);
+ drawTreeFoot(ctx,bark,width,light);
+ ctx.fillStyle=treeShade(ctx,bark,0,0,width*.55,0,light,true);
  ctx.beginPath();ctx.moveTo(-width/2,0);
  ctx.quadraticCurveTo(-width*.38,-size*.55,lean,-size*1.13);
  ctx.quadraticCurveTo(width*.46,-size*.55,width/2,0);ctx.closePath();ctx.fill();
- drawBarkGrain(ctx,'pine',size,width,t=>lean*t*t,q.x+811);
- ctx.strokeStyle='#765b43';ctx.lineWidth=Math.max(.65,width*.18);
+ if(!scenic)drawBarkGrain(ctx,'pine',size,width,t=>lean*t*t,q.x+811);
+ ctx.strokeStyle=bark;ctx.lineWidth=Math.max(.65,width*.18);
  for(const side of [-1,1]){
   const height=size*(.18+sample(side+3)*.15);
   ctx.beginPath();ctx.moveTo(lean*.2,-height);
   ctx.quadraticCurveTo(side*size*.07,-height*.9,side*size*.13,-height*.83);
   ctx.stroke();
  }
- for(let tier=5;tier>=0;tier--){
+ for(let tier=5;tier>=0;tier-=scenic&&!scenic.detail?2:1){
   for(const side of [-1,1]){
    const seed=10+tier*7+side;
    const height=size*(1.02-tier*.117+(sample(seed)-.5)*.078);
@@ -1380,9 +1373,9 @@ function drawForegroundPine(ctx,q,size,width,sway,light){
    ctx.quadraticCurveTo(x+reach*.40,y+drop*1.38,x+reach*.30,y+drop*1.12);
    ctx.quadraticCurveTo(x+reach*.16,y+drop*1.35,x,y+drop*.92);
    ctx.closePath();ctx.fill();
-   drawFoliageMarks(ctx,x+reach*.49,y+drop*.76,Math.abs(reach)*.53,drop*.48,q.x+seed*83,true);
+   if(!scenic)drawFoliageMarks(ctx,x+reach*.49,y+drop*.76,Math.abs(reach)*.53,drop*.48,q.x+seed*83,true);
    if(snow>.04){
-    ctx.fillStyle=treeShade(ctx,ecoMix(color,'#dbe8e9',snow*(.7+sample(seed+3)*.30)),x+reach*.45,y+drop*.45,Math.abs(reach)*.34,drop*.26,light);
+    ctx.fillStyle=treeShade(ctx,scenic?'rgba(208,223,228,.55)':ecoMix(color,'#dbe8e9',snow*(.7+sample(seed+3)*.30)),x+reach*.45,y+drop*.45,Math.abs(reach)*.34,drop*.26,light);
     ctx.beginPath();ctx.moveTo(x+reach*.09,y+drop*.09);
     ctx.quadraticCurveTo(x+reach*.52,y+drop*.19,x+reach*.86,y+drop*.78);
     ctx.quadraticCurveTo(x+reach*.63,y+drop*.65,x+reach*.48,y+drop*.72);
