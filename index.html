@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.101</span><header><h1>Archē</h1><small>v0.12.101 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.102</span><header><h1>Archē</h1><small>v0.12.102 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -60,6 +60,40 @@ function sprintBoost(input){
 const travelMultiplier=requestedSpeed==='15'?15:requestedSpeed==='5'?5:requestedSpeed==='3'?3:1;
 if(travelMultiplier>1)document.querySelector('#versionLabel').textContent+=' · '+travelMultiplier+'× travel';
 const archeWorld=createArcheWorld(),worldWidth=archeWorld.width,baseY=620,worldFloor=1320,worldCeiling=-1500;
+const biomeBlendStep=96;
+const biomeBlendCache=new Map();
+function biomeBlendNode(x){
+ let node=biomeBlendCache.get(x);
+ if(node)return node;
+ const weights={},rgb=[0,0,0];
+ let cover=0;
+ for(let i=-3;i<=3;i++){
+  const q=archeWorld.sample(Math.max(0,Math.min(archeWorld.width,x+i*biomeBlendStep)));
+  const weight=(4-Math.abs(i))/16;
+  weights[q.biome]=(weights[q.biome]||0)+weight;
+  const color=parseInt(q.color.slice(1),16);
+  rgb[0]+=(color>>16)*weight;rgb[1]+=((color>>8)&255)*weight;rgb[2]+=(color&255)*weight;
+  cover+=(q.wet?0:q.cover)*weight;
+ }
+ node={weights,rgb,cover};biomeBlendCache.set(x,node);return node;
+}
+function biomeBlendAt(x){
+ const left=Math.floor(x/biomeBlendStep)*biomeBlendStep;
+ const a=biomeBlendNode(left),b=biomeBlendNode(left+biomeBlendStep);
+ const t=(x-left)/biomeBlendStep;
+ const weights={};
+ for(const name in a.weights)weights[name]=a.weights[name]*(1-t);
+ for(const name in b.weights)weights[name]=(weights[name]||0)+b.weights[name]*t;
+ return {weights,rgb:a.rgb.map((v,i)=>v+(b.rgb[i]-v)*t),cover:a.cover+(b.cover-a.cover)*t};
+}
+function blendedBiomeColor(weights,palette){
+ const rgb=[0,0,0];
+ for(const name in weights){
+  const color=palette[name]||palette.meadow,weight=weights[name];
+  for(let i=0;i<3;i++)rgb[i]+=color[i]*weight;
+ }
+ return rgb;
+}
 const spawnX=archeWorld.spawn,worldChunks=new Map(),removedGround=new Set();
 const chunkWidth=960,terrainStep=48,geoStep=10;
 function landscapeHeight(x){return Math.max(520,archeWorld.sample(x).surface)}
@@ -1043,7 +1077,7 @@ function exteriorProfile(left,right){
 function paintExteriorRim(ctx,profile){
  for(let i=1;i<profile.length;i++){
   const a=profile[i-1],b=profile[i];
-  ctx.fillStyle=archeWorld.sample((a.x+b.x)/2).color;
+  ctx.fillStyle='rgb('+biomeBlendAt((a.x+b.x)/2).rgb.map(Math.round).join(',')+')';
   ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
   ctx.lineTo(b.x,b.y+4);ctx.lineTo(a.x,a.y+4);ctx.closePath();ctx.fill();
  }
@@ -1103,8 +1137,9 @@ const landscapeNoise=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Mat
  // Only regional biome classifications enter the scenery; never the playable elevation.
  const spacing=240,regions=[];for(let x=0;x<=world.width+spacing;x+=spacing){const s=world.sample(clamp(x,0,world.width));regions.push(s.biome)}
  function region(x){return regions[clamp(Math.round(x/spacing),0,regions.length-1)]}
- function sample(x,z){x=clamp(x,0,world.width);const warp=(noise(x,z,2300,7)-.5)*900,at=clamp(x+warp,0,world.width);const biome=region(at);let base=0,amp=0,cover=0;const weights={};
- for(let i=-2;i<=2;i++){const name=region(at+i*spacing),p=profiles[name]||profiles.meadow,w=[1,2,3,2,1][i+2]/9;weights[name]=(weights[name]||0)+w;base+=p[0]*w;amp+=p[1]*w;cover+=p[2]*w}
+ function sample(x,z){x=clamp(x,0,world.width);const warp=(noise(x,z,2300,7)-.5)*900,at=clamp(x+warp,0,world.width);const biome=region(at);let base=0,amp=0,cover=0;
+ const {weights}=biomeBlendAt(at);
+ for(const name in weights){const p=profiles[name]||profiles.meadow,w=weights[name];base+=p[0]*w;amp+=p[1]*w;cover+=p[2]*w}
  const broad=noise(x,z,2400,1),ridge=1-Math.abs(2*noise(x,z,1100,2)-1),detail=noise(x,z,390,3);
  let elevation=base+amp*(.48*broad+.42*ridge**2+.10*detail);
  let wet=biome==='sea'||biome==='salt';
@@ -1170,7 +1205,7 @@ function drawNearLandscape(ctx,world,w,h,ox,oy,day){
  const tint=(rgb,z,shade=1)=>{const fog=Math.min(.48,z/1900);return 'rgb('+rgb.map((v,i)=>Math.round((v*shade*(1-fog)+[151,177,187][i]*fog)*(.28+.72*day))).join(',')+')'};
  const rows=[],left=Math.floor((center-w*1.15)/step)*step,right=center+w*1.15;
  const seaTime=Date.now()/1000;
- for(let z=0;z<=840;z+=60){const row=[];for(let x=left;x<=right;x+=step){const key=x+':'+z;let q=nearSampleCache.get(key);if(!q){q=nearGeography(world,x,z);if(nearSampleCache.size>24000)nearSampleCache.clear();nearSampleCache.set(key,q);}row.push({...q,x,z,p:project(x,q.water===null?q.y:q.water,z)});}rows.push(row);}
+ for(let z=0;z<=840;z+=60){const row=[];for(let x=left;x<=right;x+=step){const key=x+':'+z;let q=nearSampleCache.get(key);if(!q){q=nearGeography(world,x,z);const blend=biomeBlendAt(Math.max(0,Math.min(world.width,x+(landscapeNoise(Math.floor(z/60)+914)-.5)*z*.22)));q.rgb=blendedBiomeColor(blend.weights,palette);q.cover=blend.cover;if(nearSampleCache.size>24000)nearSampleCache.clear();nearSampleCache.set(key,q);}row.push({...q,x,z,p:project(x,q.water===null?q.y:q.water,z)});}rows.push(row);}
  // Extract continuous water boundaries from the same basin equations as nearGeography.
  const shore=(p,z)=>{
   const key=p.center+':'+p.kind+':'+z;
@@ -1210,8 +1245,8 @@ function drawNearLandscape(ctx,world,w,h,ox,oy,day){
  for(const p of bodies)waterStrip(p,z);
  let painted=-1;for(let i=0;i<row.length-1;i++){const a=row[i],b=row[i+1],c=next[i+1],d=next[i];
 
- if(i<=painted)continue;const wet=[a,b,c,d].filter(q=>q.water!==null);const rgb=wet.length>=3&&wet[0].kind==='sea'?[73,122,153]:palette[a.biome]||palette.meadow;
- const color=tint(rgb,z);let run=i;while(run+1<row.length-1){const aa=row[run+1],bb=row[run+2],cc=next[run+2],dd=next[run+1],ww=[aa,bb,cc,dd].filter(q=>q.water!==null);const rr=ww.length>=3&&ww[0].kind==='sea'?[73,122,153]:palette[aa.biome]||palette.meadow;if(tint(rr,z)!==color)break;run++;} const pts=[...row.slice(i,run+2).map(q=>q.p),...next.slice(i,run+2).reverse().map(q=>q.p)];if(wet.length===4&&wet.every(q=>q.kind==='sea')){
+ if(i<=painted)continue;const wet=[a,b,c,d].filter(q=>q.water!==null);const rgb=wet.length>=3&&wet[0].kind==='sea'?[73,122,153]:a.rgb;
+ const color=tint(rgb,z);let run=i;while(run+1<row.length-1){const aa=row[run+1],bb=row[run+2],cc=next[run+2],dd=next[run+1],ww=[aa,bb,cc,dd].filter(q=>q.water!==null);const rr=ww.length>=3&&ww[0].kind==='sea'?[73,122,153]:aa.rgb;if(tint(rr,z)!==color)break;run++;} const pts=[...row.slice(i,run+2).map(q=>q.p),...next.slice(i,run+2).reverse().map(q=>q.p)];if(wet.length===4&&wet.every(q=>q.kind==='sea')){
  // Draw crests before the opaque strip because the landscape is destination-over.
  ctx.save();ctx.beginPath();ctx.moveTo(...pts[0]);for(let k=1;k<pts.length;k++)ctx.lineTo(...pts[k]);ctx.closePath();ctx.clip();
  const depth=z+30,scale=1/(1+depth/850),stride=72;
@@ -1224,7 +1259,14 @@ function drawNearLandscape(ctx,world,w,h,ox,oy,day){
  const p0=project(xx-length,level+amp,zz),p1=project(xx,level+amp-2-seed*2,zz+7),p2=project(xx+length,level+amp,zz);
  ctx.beginPath();ctx.moveTo(...p0);ctx.quadraticCurveTo(...p1,...p2);ctx.stroke();
  }ctx.restore();
- }poly(pts,color);
+ }let fill=color;
+ if(wet.length<3||wet[0].kind!=='sea'){
+ const nextColor=tint(row[run+1].rgb,z);
+ if(nextColor!==color){
+  fill=ctx.createLinearGradient(a.p[0],0,row[run+1].p[0],0);
+  fill.addColorStop(0,color);fill.addColorStop(1,nextColor);
+ }
+ }poly(pts,fill);
  // At depth zero the scenic ocean must continue behind the moving foreground
  // surface, not terminate at mean sea level. Only extend actual sea cells.
  if(j===0){for(let k=i;k<=run;k++){const aa=row[k],bb=row[k+1];if(aa.kind!=='sea'||bb.kind!=='sea'||aa.water===null||bb.water===null)continue;
@@ -1570,7 +1612,7 @@ worldOverlay(()=>{
     }
   }
 });
-Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,ox=r.bounds.min.x,day=sunlight();ctx.save();ctx.globalCompositeOperation='destination-over';ctx.fillStyle='rgba(35,57,42,'+(.35+day*.3)+')';for(let i=-2;i<Math.ceil(w/13)+2;i++){const q=Math.floor(ox*.32/13)+i,x=i*13-(ox*.32%13),n=landscapeNoise(q+4000);if(archeWorld.sample(ox+x).biome!=='conifer'||n<.25)continue;const y=h*.62+Math.sin(q*.05)*25,ht=18+n*45;drawScenicTree(ctx,x,y,q,'conifer',ht,()=> 'rgba(35,57,42,'+(.35+day*.3)+')',false)}ctx.restore()});let soundCtx=null,soundGain=null,windFilter=null,soundOn=false,nextBird=0,waterAudioFilter=null,waterAudioMaster=null,headWet=false;const soundToggle=document.querySelector('#soundToggle');async function startNatureSound(){try{if(!soundCtx){soundCtx=new (window.AudioContext||window.webkitAudioContext)();const buffer=soundCtx.createBuffer(1,soundCtx.sampleRate*3,soundCtx.sampleRate),data=buffer.getChannelData(0);let last=0;for(let i=0;i<data.length;i++){last=(last+Math.random()*.04-.02)/1.02;data[i]=last*3}const source=soundCtx.createBufferSource();source.buffer=buffer;source.loop=true;windFilter=soundCtx.createBiquadFilter();windFilter.type='lowpass';windFilter.frequency.value=450;soundGain=soundCtx.createGain();soundGain.gain.value=0;waterAudioFilter=soundCtx.createBiquadFilter();waterAudioFilter.type='lowpass';waterAudioFilter.frequency.value=18000;waterAudioMaster=soundCtx.createGain();waterAudioFilter.connect(waterAudioMaster).connect(soundCtx.destination);source.connect(windFilter).connect(soundGain).connect(waterAudioFilter);source.start()}soundOn=true;await soundCtx.resume();soundGain.gain.setTargetAtTime(soundOn?.18:0,soundCtx.currentTime,.2);soundToggle.textContent=soundOn?'Sound on':'Sound off';soundToggle.setAttribute('aria-pressed',String(soundOn))}catch(err){soundOn=false;soundToggle.textContent='Sound unavailable'}};function unlockNatureSound(){if(!soundCtx||soundCtx.state!=='running'||!soundOn)startNatureSound()}window.addEventListener('pointerdown',unlockNatureSound,{capture:true});window.addEventListener('keydown',unlockNatureSound,{capture:true});startNatureSound();function natureTone(freq,end,duration,volume){const now=soundCtx.currentTime,o=soundCtx.createOscillator(),g=soundCtx.createGain();o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(end,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.035);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g).connect(waterAudioFilter||soundCtx.destination);o.start();o.stop(now+duration+.02)}Events.on(e,'afterUpdate',()=>{document.querySelector('#releaseHuman').classList.toggle('holding',!!held);if(!soundOn||!soundCtx||soundCtx.state!=='running')return;const now=soundCtx.currentTime,day=sunlight();windFilter.frequency.setTargetAtTime(headWet?170:350+150*Math.sin(now*.13)+day*180,now,.5);waterAudioFilter?.frequency.setTargetAtTime(headWet?420:18000,now,.18);waterAudioMaster?.gain.setTargetAtTime(headWet?.65:1,now,.2);if(now>nextBird){nextBird=now+3+Math.random()*9;if(headWet)return;if(day>.15)natureTone(1300+Math.random()*900,2400+Math.random()*600,.18,.025);else natureTone(3900,3600,.09,.009)}});function sharedWeather(now,x,elevation){const t=(now-sharedEpoch)/1000,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const sample=age=>{const u=t-age,cycle=Math.sin(u*.009-1.8-x*.00012)+Math.sin(u*.003+1+x*.000045)*.45,cloud=clamp(.40+cycle*.48+elevation*.22,.08,1),rain=clamp((cloud-.62)*3.2,0,1);return {cloud,rain};};const q=sample(0);let wet=0,weight=0;for(let age=0;age<=1200;age+=60){const w=Math.exp(-age/330);wet+=sample(age).rain*w;weight+=w;}return {cloud:q.cloud,rain:q.rain,wind:.18+q.cloud*.48+q.rain*.25,wet:wet/weight};} let weatherClock=0,rainAmount=0,cloudCover=.18,weatherWind=.25,soilWetness=.25;const choppedTrees=new Set();try{for(const x of JSON.parse(onlineMode?'[]':localStorage.getItem(choppedKey)||'[]'))choppedTrees.add(x)}catch{}function treeTraits(q){const n=landscapeNoise(q.x+711),habitat=archeWorld.sample(q.x),biome=habitat.biome;
+Events.on(r,'afterRender',()=>{const ctx=r.context,w=r.options.width,h=r.options.height,ox=r.bounds.min.x,day=sunlight();ctx.save();ctx.globalCompositeOperation='destination-over';ctx.fillStyle='rgba(35,57,42,'+(.35+day*.3)+')';for(let i=-2;i<Math.ceil(w/13)+2;i++){const q=Math.floor(ox*.32/13)+i,x=i*13-(ox*.32%13),n=landscapeNoise(q+4000);const weight=biomeBlendAt(ox+x).weights.conifer||0;if(weight<.04||n<.25)continue;const y=h*.62+Math.sin(q*.05)*25,ht=18+n*45;drawScenicTree(ctx,x,y,q,'conifer',ht,()=> 'rgba(35,57,42,'+((.35+day*.3)*weight)+')',false)}ctx.restore()});let soundCtx=null,soundGain=null,windFilter=null,soundOn=false,nextBird=0,waterAudioFilter=null,waterAudioMaster=null,headWet=false;const soundToggle=document.querySelector('#soundToggle');async function startNatureSound(){try{if(!soundCtx){soundCtx=new (window.AudioContext||window.webkitAudioContext)();const buffer=soundCtx.createBuffer(1,soundCtx.sampleRate*3,soundCtx.sampleRate),data=buffer.getChannelData(0);let last=0;for(let i=0;i<data.length;i++){last=(last+Math.random()*.04-.02)/1.02;data[i]=last*3}const source=soundCtx.createBufferSource();source.buffer=buffer;source.loop=true;windFilter=soundCtx.createBiquadFilter();windFilter.type='lowpass';windFilter.frequency.value=450;soundGain=soundCtx.createGain();soundGain.gain.value=0;waterAudioFilter=soundCtx.createBiquadFilter();waterAudioFilter.type='lowpass';waterAudioFilter.frequency.value=18000;waterAudioMaster=soundCtx.createGain();waterAudioFilter.connect(waterAudioMaster).connect(soundCtx.destination);source.connect(windFilter).connect(soundGain).connect(waterAudioFilter);source.start()}soundOn=true;await soundCtx.resume();soundGain.gain.setTargetAtTime(soundOn?.18:0,soundCtx.currentTime,.2);soundToggle.textContent=soundOn?'Sound on':'Sound off';soundToggle.setAttribute('aria-pressed',String(soundOn))}catch(err){soundOn=false;soundToggle.textContent='Sound unavailable'}};function unlockNatureSound(){if(!soundCtx||soundCtx.state!=='running'||!soundOn)startNatureSound()}window.addEventListener('pointerdown',unlockNatureSound,{capture:true});window.addEventListener('keydown',unlockNatureSound,{capture:true});startNatureSound();function natureTone(freq,end,duration,volume){const now=soundCtx.currentTime,o=soundCtx.createOscillator(),g=soundCtx.createGain();o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(end,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.035);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g).connect(waterAudioFilter||soundCtx.destination);o.start();o.stop(now+duration+.02)}Events.on(e,'afterUpdate',()=>{document.querySelector('#releaseHuman').classList.toggle('holding',!!held);if(!soundOn||!soundCtx||soundCtx.state!=='running')return;const now=soundCtx.currentTime,day=sunlight();windFilter.frequency.setTargetAtTime(headWet?170:350+150*Math.sin(now*.13)+day*180,now,.5);waterAudioFilter?.frequency.setTargetAtTime(headWet?420:18000,now,.18);waterAudioMaster?.gain.setTargetAtTime(headWet?.65:1,now,.2);if(now>nextBird){nextBird=now+3+Math.random()*9;if(headWet)return;if(day>.15)natureTone(1300+Math.random()*900,2400+Math.random()*600,.18,.025);else natureTone(3900,3600,.09,.009)}});function sharedWeather(now,x,elevation){const t=(now-sharedEpoch)/1000,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const sample=age=>{const u=t-age,cycle=Math.sin(u*.009-1.8-x*.00012)+Math.sin(u*.003+1+x*.000045)*.45,cloud=clamp(.40+cycle*.48+elevation*.22,.08,1),rain=clamp((cloud-.62)*3.2,0,1);return {cloud,rain};};const q=sample(0);let wet=0,weight=0;for(let age=0;age<=1200;age+=60){const w=Math.exp(-age/330);wet+=sample(age).rain*w;weight+=w;}return {cloud:q.cloud,rain:q.rain,wind:.18+q.cloud*.48+q.rain*.25,wet:wet/weight};} let weatherClock=0,rainAmount=0,cloudCover=.18,weatherWind=.25,soilWetness=.25;const choppedTrees=new Set();try{for(const x of JSON.parse(onlineMode?'[]':localStorage.getItem(choppedKey)||'[]'))choppedTrees.add(x)}catch{}function treeTraits(q){const n=landscapeNoise(q.x+711),habitat=archeWorld.sample(q.x),biome=habitat.biome;
 const type=q.type||(biome==='island'&&n<(habitat.tropical||0)*.82?'oak':['island','coast','oasis'].includes(biome)?'palm':['conifer','alpine','steppe'].includes(biome)?'pine':biome==='marsh'||n<.43?'birch':'oak'),size=q.size||56;return {type,size,width:Math.max(3,size*(type==='oak'?.15:type==='pine'?.085:.065))}}function treeLight(){
  const sky=skyCycle(),cues=twilightCues(sky);
  return {side:cues.strength>.01?(cues.morning?-1:1):sky.day>0?2*sky.progress-1:0,
