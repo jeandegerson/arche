@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.120</span><header><h1>Archē</h1><small>v0.12.120 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.121</span><header><h1>Archē</h1><small>v0.12.121 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.112"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -3395,6 +3395,24 @@ function trunkTowPathClear(x,edge,direction,half){
  }
  return false;
 }
+function trunkLaunchTarget(b,direction){
+ const player=human.position.x,start=b.plugin.woodRest.x,half=b.plugin.wood.length/2;
+ const swimmerWater=canoeWater(player),depth=b.plugin.wood.width*.5+3;
+ if(!swimmerWater||swimmerWater.depth<depth||!direction||
+  direction*(player-start)>half+99||(canoeWater(start)?.depth??0)>=depth)return null;
+ // Start from the dry end of the rope's path and find where the trunk can float.
+ const nose=start+direction*half;
+ const noseY=solidGaitSurface(nose);
+ const distance=direction*(player-start);
+ for(let offset=0;offset<=distance;offset+=3){
+  const x=start+direction*offset;
+  if(x-half<=12||x+half>=worldWidth-12)continue;
+  const water=canoeWater(x,swimmerWater.q);
+  if(water?.depth>=depth)return {x,direction};
+  if(offset>=half&&(!water||water.depth<=0)&&solidGaitSurface(x)<noseY-24)return null;
+ }
+ return null;
+}
 function trunkHaulTarget(b){
  if(!b||swimming||!dragHandsFree())return null;
  const player=human.position.x,start=b.plugin.woodRest.x,half=b.plugin.wood.length/2;
@@ -3438,17 +3456,19 @@ Events.on(e,'afterUpdate',()=>{
     (control.wasSwimming||walk*direction>.15||Math.abs(dx)>=reach)){
     control.haul=trunkHaulTarget(b);
    }
-   const haul=control.haul;
+   if(!swimming||control.launch&&walk*control.launch.direction<-.15)control.launch=null;
+   if(!control.launch&&swimming&&walk*direction>.15)control.launch=trunkLaunchTarget(b,direction);
+   const crossing=control.haul||control.launch;
    control.wasSwimming=swimming;
-   if(!haul&&Math.abs(dx)>reach+52){checkpointTrunkDrag(true);return;}
+   if(!crossing&&Math.abs(dx)>reach+52){checkpointTrunkDrag(true);return;}
    const dt=Math.min(.05,e.timing.lastDelta/1000);
    if(!swimming)woodArmPose(facing,human.position.x-(Math.sign(dx)||facing)*11,human.position.y+10);
    const step=Math.min((swimming?58:66)*dt,Math.abs(dx)-reach);
-   if(haul&&!woodBusy){
-    const remaining=haul.x-b.plugin.woodRest.x;
-    const x=b.plugin.woodRest.x+Math.sign(remaining)*Math.min(Math.abs(remaining),44*dt);
+   if(crossing&&!woodBusy){
+    const remaining=crossing.x-b.plugin.woodRest.x;
+    const x=b.plugin.woodRest.x+Math.sign(remaining)*Math.min(Math.abs(remaining),(control.launch?62:44)*dt);
     if(x!==b.plugin.woodRest.x)applyTrunkMove(b,{x});
-    if(Math.abs(haul.x-x)<.01)control.haul=null;
+    if(Math.abs(crossing.x-x)<.01){control.haul=null;control.launch=null;}
    }else if(step>0&&!woodBusy){
     const x=b.plugin.woodRest.x+direction*step;
     const edge=x+direction*half;
