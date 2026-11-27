@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.98
+- Round both ends of felled trunks and add shaded bark grain and growth rings. Landings on floating trunks produce a deeper dip, rocking toward the point of impact, a splash and expanding ripples. Nearby multiplayer clients receive the impact.
+
 ## 0.12.97
 - Keep swim entry at 42 units of depth and return to wading below 36. Use the mean sea level for the shoreline mode switch so individual waves can lift the swimmer without interrupting the gait.
 
