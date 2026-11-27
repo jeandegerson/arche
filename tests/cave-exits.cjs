@@ -16,6 +16,30 @@ const assert=require('node:assert/strict');
    });
   });
   await page.goto('http://127.0.0.1:8080/');
+  await page.evaluate(()=>{
+   Runner.stop(runner);Render.stop(r);
+   const canvas=document.createElement('canvas');canvas.width=820;canvas.height=300;
+   const ctx=canvas.getContext('2d'),sky=skyCycle(18,12),cues=twilightCues(sky,0);
+   const draw=(cover,rain,t)=>{
+    ctx.clearRect(0,0,820,300);
+    paintCloudBank(ctx,410,140,603,1,.5,cues,false,cover,rain,t);
+    const pixels=ctx.getImageData(0,0,820,300).data;
+    if(!pixels.some((value,index)=>index%4===3&&value>0))throw Error('Expected visible clouds');
+    return canvas.toDataURL();
+   };
+   if(draw(.2,0,10)===draw(.9,.8,10)||draw(.9,.8,10)===draw(.9,.8,30))
+    throw Error('Clouds should respond to rain and evolve over time');
+   const travel=cloudTravel.slice(),frame=lastCloudFrame;
+   try{
+    cloudTravel=[0,0];lastCloudFrame=null;
+    advanceCloudLayers(0,0);
+    const [low,high]=advanceCloudLayers(.1,1);
+    if(!(low>high&&high>0))throw Error('Low clouds should drift faster than high wisps');
+   }finally{cloudTravel=travel;lastCloudFrame=frame;}
+   Render.world(r);
+  });
+  console.log('Weather-driven cloud rendering passed in Chromium.');
+
   await page.evaluate(async()=>{
    Runner.stop(runner);Render.stop(r);
    const check=(value,message)=>{if(!value)throw Error(message);};
