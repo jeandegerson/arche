@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.93
+- Let wind move low cloud banks and high wisps at different speeds. Cloud cover thickens the banks, rain lowers and darkens them, and dawn and dusk still light their edges.
+
 ## 0.12.92
 - Give woodland banks, shaded understory and open ground distinct plant communities. Grass and seasonal flowers return in woodland clearings over several game days, using the felling time already stored in the shared world.
 
