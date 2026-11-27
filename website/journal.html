@@ -13,79 +13,79 @@
   <p>Small discoveries, strange failures, and repairs from the world of Archē.</p>
   <article class="field-note" id="where-winter-ends">
    <small><time datetime="2026-11-27T11:50:00+01:00">27 November 2026 · 11:50 CET (field observation)</time> · v0.12.102</small>
-   <h2>Where winter ends</h2>
-   <p>At the foot of the mountain, winter stopped in a straight line. The pines on the other side seemed to have received different instructions.</p>
-   <p>Now the slope changes color gradually, the distant hills pick up the colors of their neighbors, and the forest thins as it meets the snow.</p>
+   <h2>Biome boundary blending</h2>
+   <p>Alpine terrain and conifer forest met at a sharp visual boundary.</p>
+   <p>Ground and background colors now blend across biome boundaries. Distant conifers taper out toward alpine terrain.</p>
   </article>
   <article class="field-note" id="the-fire-that-forgot-to-shine">
    <small><time datetime="2026-11-27T11:40:00+01:00">27 November 2026 · 11:40 CET (field observation)</time> · v0.12.100</small>
-   <h2>The fire that forgot to shine</h2>
-   <p>At two below zero, a bright orange flame burned in the snow. The pines and the traveller seemed to have missed the news.</p>
-   <p>The fire now throws a flickering amber light onto the ground, trees and anything close enough to warm its hands. The flames thin into smoke, and even the embers give off a little light.</p>
+   <h2>Campfire rendering and local lighting</h2>
+   <p>Campfire flames used flat shapes and nearby surfaces showed little illumination.</p>
+   <p>The campfire now renders layered flames, smoke, and embers. A flickering amber light affects nearby terrain, characters, and objects.</p>
   </article>
   <article class="field-note" id="the-button-that-went-for-a-walk">
    <small><time datetime="2026-11-27T11:21:11+01:00">27 November 2026 · 11:21 CET</time> · v0.12.99</small>
-   <h2>The button that went for a walk</h2>
-   <figure><img src="assets/actions-moving.jpg" width="380" height="205" alt="Work on canoe appears higher when Take branch is available and moves down when it disappears"><figcaption>The canoe stood still. Its button had somewhere to be.</figcaption></figure>
-   <p>Walk a little way and a branch falls out of reach. That used to move the canoe button, even though you could still work on the same canoe.</p>
-   <p>Nearby actions now have fixed places. Empty positions stay open, and each label starts with a small pictogram. Even the fire gets two crossed logs.</p>
+   <h2>Stable action button positions</h2>
+   <figure><img src="assets/actions-moving.jpg" width="380" height="205" alt="Work on canoe appears higher when Take branch is available and moves down when it disappears"><figcaption>Work on canoe shifts by one row when Take branch disappears.</figcaption></figure>
+   <p>Available actions shifted position when nearby options appeared or disappeared.</p>
+   <p>Each action now occupies a fixed slot and has an icon before its label.</p>
   </article>
   <article class="field-note" id="a-bridge-that-disagrees">
    <small><time datetime="2026-11-27T11:10:53+01:00">27 November 2026 · 11:10 CET</time> · v0.12.98</small>
-   <h2>A bridge that disagrees</h2>
-   <figure><img src="assets/trunks-flat-end.jpg" width="420" height="154" alt="Two floating trunks with flat right ends lie across a dark pool"><figcaption>Two trunks trying very hard to look like a bridge.</figcaption></figure>
-   <p>One end of a floating trunk looked round. The other ended in a straight line. Land on it and the lake barely seemed to notice.</p>
-   <p>Both ends now curve, and the bark and cut face have their own grain. Jump on a trunk and it dips, rocks, and sends little ripples out across the water.</p>
+   <h2>Floating trunk rendering and impact response</h2>
+   <figure><img src="assets/trunks-flat-end.jpg" width="420" height="154" alt="Two floating trunks with flat right ends lie across a dark pool"><figcaption>Floating trunks before the end-cap update.</figcaption></figure>
+   <p>One end of each trunk appeared flat. Jump impact produced little visible movement.</p>
+   <p>Both ends are rounded, with bark and cut-face detail. Landings produce a deeper dip, rocking, and water ripples.</p>
   </article>
   <article class="field-note" id="stones-with-their-own-sun">
    <small><time datetime="2026-11-27T01:45:38+01:00">27 November 2026 · 01:45 CET</time> · v0.12.86</small>
-   <h2>Stones with their own sun</h2>
-   <figure><img src="assets/cave-light-balance.jpg" width="700" height="314" alt="Bright stones sit on the floor of a nearly black cave beneath a sunny beach"><figcaption>The cave went dark. The stones apparently had other arrangements.</figcaption></figure>
-   <p>We turned down the light underground until the walls almost disappeared. The stones stayed as bright as they were outside.</p>
-   <p>Now daylight falls more visibly across the entrance, the deep rock keeps a little of its texture, and stones and loose wood share the light around them.</p>
+   <h2>Cave lighting and object shading</h2>
+   <figure><img src="assets/cave-light-balance.jpg" width="700" height="314" alt="Bright stones sit on the floor of a nearly black cave beneath a sunny beach"><figcaption>Loose stones appear bright against the dark cave floor.</figcaption></figure>
+   <p>Deep cave textures were difficult to see, and loose objects retained outdoor brightness.</p>
+   <p>Entrance daylight is stronger, deep rock texture remains visible, and stones and loose wood use the cave lighting.</p>
   </article>
   <article class="field-note" id="a-tree-is-never-just-a-tree">
    <small><time datetime="2026-11-26">26 November 2026</time> · v0.12.65 retrospective</small>
-   <h2>A tree is never just a tree</h2>
-   <p>A fallen tree can now be a bridge, a canoe, or a rather questionable place to stand in the middle of a lake. Meanwhile, beneath the mountains, there are stones to gather. The world is acquiring possibilities without acquiring a list of things to do.</p>
-   <p>There remains the small philosophical problem of making sure that two people standing on the same floating trunk are, in fact, standing on the same floating trunk. Even reality takes some programming.</p>
+   <h2>Trunk interactions and stone gathering</h2>
+   <p>Felled trunks can support players or serve as canoe material. Stones can be gathered underground.</p>
+   <p>At this release, cross-client agreement on floating trunk positions remained an open issue.</p>
   </article>
   <article class="field-note" id="where-the-lake-forgot">
    <small><time datetime="2026-11-26T17:21:07+01:00">26 November 2026 · 17:21 CET</time> · v0.12.72</small>
-   <h2>Where the lake forgot to catch them</h2>
-   <figure><img src="assets/branches-above-water.jpg" width="300" height="155" alt="Two branches hang above the waves while a log and planks float at the waterline"><figcaption>Two twigs briefly took up residence in the sky.</figcaption></figure>
-   <p>Two branches hung over the waves. The saved positions said they had already come to rest, and there was nothing beneath them but air.</p>
-   <p>Loose branches, planks and logs now use the same rule. When released they fall until ground or water catches them. Old saves with unsupported wood settle where it belongs too.</p>
+   <h2>Gravity and buoyancy for loose wood</h2>
+   <figure><img src="assets/branches-above-water.jpg" width="300" height="155" alt="Two branches hang above the waves while a log and planks float at the waterline"><figcaption>Two branches remain suspended above the water.</figcaption></figure>
+   <p>Saved branches could remain suspended because their state marked them as settled.</p>
+   <p>Released branches, planks, and logs now fall until supported by ground or water. Unsupported wood in existing saves settles on load.</p>
   </article>
   <article class="field-note" id="a-canoe-with-its-own-schedule">
    <small><time datetime="2026-11-26T16:51:29+01:00">26 November 2026 · 16:51 CET</time> · v0.12.67</small>
-   <h2>A canoe with its own schedule</h2>
-   <figure><img src="assets/canoe-left-behind.jpg" width="355" height="114" alt="A seated paddler hangs over the water to the left of an empty canoe"><figcaption>The paddler had somewhere to be. His canoe would be along shortly.</figcaption></figure>
-   <p>From the bank, I watched a paddler sail out of his own canoe. He was still sitting down. The canoe, a few strokes behind, looked unbothered.</p>
-   <p>The paddler’s movements reached other players faster than the canoe’s saved position. Now their screens move the hull and rider together with each update. In v0.12.68 the paddle comes along too, stroke for stroke.</p>
+   <h2>Multiplayer canoe synchronization</h2>
+   <figure><img src="assets/canoe-left-behind.jpg" width="355" height="114" alt="A seated paddler hangs over the water to the left of an empty canoe"><figcaption>A seated remote player appears beside the canoe.</figcaption></figure>
+   <p>Remote paddler updates arrived more often than the saved canoe position, separating the rider and hull on observers’ screens.</p>
+   <p>The hull and rider now move together on remote clients. Version 0.12.68 also synchronizes paddle animation.</p>
   </article>
   <article class="field-note" id="a-lake-full-of-paperweights">
    <small><time datetime="2026-11-26T12:51:33+01:00">26 November 2026 · 12:51 CET</time> · v0.12.66</small>
-   <h2>A lake full of paperweights</h2>
-   <figure><img src="assets/lake-paperweights.jpg" width="570" height="292" alt="Branches lie below the waterline while a birch trunk floats above them"><figcaption>The birch held still. The twigs took the stairs.</figcaption></figure>
-   <p>The twigs settled down the submerged bank. The trunk stayed on top, so still you could have drawn a straight line with it.</p>
-   <p>Loose branches now rise to the surface. Floating trunks bob and roll gently, even on a lake, and the surface you walk on moves with the wood.</p>
+   <h2>Branch buoyancy and trunk movement</h2>
+   <figure><img src="assets/lake-paperweights.jpg" width="570" height="292" alt="Branches lie below the waterline while a birch trunk floats above them"><figcaption>Branches remain below the waterline beside a stationary floating trunk.</figcaption></figure>
+   <p>Loose branches settled underwater, and floating trunks stayed static.</p>
+   <p>Branches now rise to the surface. Trunks bob and roll, with their walkable surfaces moving with them.</p>
   </article>
   <article class="field-note" id="the-lake-got-ahead-of-itself">
    <small><time datetime="2026-11-26T12:43:07+01:00">26 November 2026 · 12:43 CET</time> · v0.12.65</small>
-   <h2>The lake got ahead of itself</h2>
-   <figure><img src="assets/over-eager-dive.jpg" width="700" height="240" alt="The character pitches into a dive above the second of two floating logs"><figcaption>Two logs, one unsolicited swan dive.</figcaption></figure>
-   <p>I jumped from one trunk to the next. Halfway across, my character stretched out like a swimmer, although the second log was right under his feet.</p>
-   <p>The dive animation was watching the water. Now it checks the jump’s path for a trunk first. If your feet will reach wood, you stay ready to land. If you miss, the lake still gets its dive.</p>
+   <h2>Dive animation above floating trunks</h2>
+   <figure><img src="assets/over-eager-dive.jpg" width="700" height="240" alt="The character pitches into a dive above the second of two floating logs"><figcaption>The character starts a dive above the landing trunk.</figcaption></figure>
+   <p>Water detection started the dive animation during jumps that would land on a floating trunk.</p>
+   <p>The jump prediction now checks for a trunk landing before triggering the dive pose.</p>
   </article>
   <article class="field-note" id="the-log-that-let-me-through">
    <small><time datetime="2026-11-26T12:27:38+01:00">26 November 2026 · 12:27 CET</time> · v0.12.63</small>
-   <h2>The log that let me through</h2>
-   <figure><img src="assets/floating-trunk-footing.jpg" width="500" height="236" alt="A character stands on the bank beside a large floating trunk"><figcaption>It looked like a bridge. The lake had other ideas.</figcaption></figure>
-   <p>I jumped for the floating trunk. The trunk stayed exactly where it was. I went straight through it and into the lake.</p>
-   <p>Only the water had a say in where you landed. Now the top of a large floating trunk catches your feet. You can walk along it or jump off again, and it dips and bobs under your weight.</p>
+   <h2>Walkable floating trunks</h2>
+   <figure><img src="assets/floating-trunk-footing.jpg" width="500" height="236" alt="A character stands on the bank beside a large floating trunk"><figcaption>A large floating trunk beside the bank.</figcaption></figure>
+   <p>Characters passed through large floating trunks and entered the water.</p>
+   <p>Large floating trunks now support landing, walking, and jumping. They dip and bob under the character’s weight.</p>
   </article>
-  <article class="field-note" id="when-a-trunk-forgot-to-float"><small><time datetime="2026-11-26T11:54:56+01:00">26 NOVEMBER 2026 · 11:54 CET</time> · v0.12.60</small><h2>The tree that tried to drown</h2><figure><img src="assets/trunk-water.jpg" width="420" height="270" alt="A felled trunk lies diagonally underwater against a steep bank"><figcaption>The trunk, halfway through a career change.</figcaption></figure><p>The tree fell into a pool and lay diagonally under the water, as if it had one last hill to lie on. From the bank, Archē offered a perfectly reasonable suggestion: <em>Work on canoe</em>.</p><p>The trunk had kept its instructions for lying on a slope. Now, if there’s room to clear the bank, it rises to the waterline. Canoe work can wait until the wood is back on dry ground.</p></article>
+  <article class="field-note" id="when-a-trunk-forgot-to-float"><small><time datetime="2026-11-26T11:54:56+01:00">26 NOVEMBER 2026 · 11:54 CET</time> · v0.12.60</small><h2>Trunk flotation and canoe work</h2><figure><img src="assets/trunk-water.jpg" width="420" height="270" alt="A felled trunk lies diagonally underwater against a steep bank"><figcaption>A felled trunk rests underwater against a steep bank.</figcaption></figure><p>A felled trunk retained its slope-aligned position underwater, where the canoe work action was still available.</p><p>Trunks now float when they have room to clear the bank. Canoe work requires dry ground.</p></article>
  </main>
  <footer><div class="shell footer-inner"><span>Archē · Official game site</span><a href="https://github.com/jeandegerson/arche">Source on GitHub</a></div></footer>
 </body>
