@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.116
+- Extend cabanes from the first wall timbers to six courses of stacked logs. Fit long side logs and short end timbers, then cap the open end with a doorway lintel. The near wall fades when the player is within the footprint.
+- Verified syntax, compatibility with existing first timbers, order of placement, the finished doorway, and persistence in isolated checks.
+
 ## 0.12.115
 - Add dragging for felled trunks on dry ground. Trunks follow on a rope and their last position is shared. Fit two sufficiently long trunks onto completed cabane footings as the first wall timbers.
 - Verified inline script syntax and exercised drag claims, checkpoints, fitting, reload, and rollback in isolation.
