@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.111
+- Render precipitation as drifting snowflakes at 0°C or below using the same air temperature as the display. Rain streaks return above freezing.
+- Verified inline script syntax and draw behavior at −7°C, freezing, above freezing, and in dry conditions.
+
 ## 0.12.110
 - Restore the standing-tree bark rendering path and use a compatible species lookup for harvested timber and branch sync.
 - Reproduced the v0.12.109 drawing failure with `Object.hasOwn` unavailable and verified all four standing-tree renderers and the timber fallback after the fix.
