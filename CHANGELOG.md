@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.89
+- Remove the numeric time display. Align the sun and moon with seasonal daylight, and give dawn and dusk distinct warm horizons.
+
 ## 0.12.88
 - Give loose stones shaded faces and mineral grain. Add related grain to cave rock and fractured faces beneath the soil, anchored to the terrain.
 
