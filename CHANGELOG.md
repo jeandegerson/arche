@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.108
+- Light player skin and clothing directly and soften the campfire halo. Local and remote characters use the same response, with falloff and passage isolation.
+- Verified inline script syntax and isolated character palette checks for near and distant fires, embers, unlit fuel, and separate passages.
+
 ## 0.12.107
 - Use nearby firelight to reveal cave wall relief. Rock faces catch warm highlights based on their position and orientation, while fractures retain contrast. Embers illuminate a smaller area.
 - Verified inline script syntax and isolated rock-rendering checks for flames, embers, unlit fuel, distance, and passage isolation.
