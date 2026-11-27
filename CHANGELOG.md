@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.121
+- When a player swims away from the bank with a tethered trunk, pull it toward the first point in the same body of water deep enough to float. This lets trunks clear dry steps near the waterline that used to stall ordinary dragging.
+- Tested launch target selection at both banks of all five generated rivers, a stepped shoreline, and an out-of-range pull.
+
 ## 0.12.120
 - Use one Drag trunk action on land and at the water’s surface. Start hauling automatically when the player pulls toward a suitable bank or steps ashore with the rope attached. Let trunks tip into water at low banks.
 - Verified syntax and simulated dragging into the water and hauling fully ashore, with the same rope, in both directions. High cliffs still block a drop.
