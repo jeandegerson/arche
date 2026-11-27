@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.81
+- Give foreground pines uneven individual boughs, a narrow leader and bare lower branches. Alpine snow follows the boughs.
+
 ## 0.12.80
 - Give foreground oaks and birches distinct trunks, branching and irregular crowns with stable variation from tree to tree. Retain the current seasonal palette.
 
