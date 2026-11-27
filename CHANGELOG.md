@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.109
+- Carry the source tree’s bark and wood palette through felled trunks, logs, planks and branches. Logs share the trunk renderer, planks show exposed grain, and palm cut ends show fibers. Branch species persist and sync when carried.
+- Verified inline script syntax and rendering calls for oak, pine, birch, palm, and legacy species fallback.
+
 ## 0.12.108
 - Light player skin and clothing directly and soften the campfire halo. Local and remote characters use the same response, with falloff and passage isolation.
 - Verified inline script syntax and isolated character palette checks for near and distant fires, embers, unlit fuel, and separate passages.
