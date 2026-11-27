@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.99
+- Keep nearby actions in fixed positions as other options appear and disappear. Add action icons, including a campfire emblem, and suppress duplicate chop and cut buttons.
+
 ## 0.12.98
 - Round both ends of felled trunks and add shaded bark grain and growth rings. Landings on floating trunks produce a deeper dip, rocking toward the point of impact, a splash and expanding ripples. Nearby multiplayer clients receive the impact.
 
