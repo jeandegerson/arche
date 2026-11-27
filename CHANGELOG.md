@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.123
+- Accept shorter whole trunks for cabane walls, ends, and doorway lintels. Side logs still reach both footing pads, and shorter logs retain their actual length when fitted.
+- Keep felled trunk widths within 16–21 world units while their length still follows tree size. Apply this on both newly felled and reloaded trunks while preserving sawed log yields.
+- Verified script syntax, fitting thresholds, trunk proportions, and the existing canoe minimum width for eligible trunk lengths.
+
 ## 0.12.122
 - Let players step from a bank onto reachable floating trunks. Include rounded ends in the walking surface and check reachable decks before switching to swimming.
 - Verified the shore step in both directions, deck continuity, the steep-bed transition, wide gaps, and swimmers below the deck.
