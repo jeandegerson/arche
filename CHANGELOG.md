@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.113
+- Draw firewood logs with the same dimensions, species-specific bark, and cut ends as loose logs. Burning logs keep these details beneath a charred tint, and new fuel retains its species.
+- Verified script syntax and prepared, burning, and legacy log rendering.
+
 ## 0.12.112
 - Deepen river channels and vary their cross-sections with offset pools and shallower shelves. Keep water levels and shorelines in place and extend river color shading into deeper water.
 - Compared old and new map samples across all five rivers and verified that cave geometry and non-river terrain were unchanged.
