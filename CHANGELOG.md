@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.120
+- Use one Drag trunk action on land and at the water’s surface. Start hauling automatically when the player pulls toward a suitable bank or steps ashore with the rope attached. Let trunks tip into water at low banks.
+- Verified syntax and simulated dragging into the water and hauling fully ashore, with the same rope, in both directions. High cliffs still block a drop.
+
 ## 0.12.119
 - Add a stationary Haul ashore action. While standing on the bank with the rope attached, pull the full trunk onto dry ground where there is enough clearance.
 - Reproduced the ordinary drag stalling in a shoreline simulation and tested complete stationary hauls in both directions and steep-cliff rejection.
