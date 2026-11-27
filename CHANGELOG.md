@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.130
+- Allow front timbers to stack on the preceding front timber while the end walls are unfinished. Check all four walls before reporting completion.
+- Verified six successive center placements with missing end timbers on partial and full back walls, end placement afterward, and inline script syntax.
+
 ## 0.12.129
 - Fit a full-length front timber at the middle of each course. The back wall sits behind the character and the front wall fades inside. Existing cabins accept missing front timbers from the ground up.
 - Checked fresh and existing six-course builds, minimum front timber length, completed-wall behavior and inline script syntax.
