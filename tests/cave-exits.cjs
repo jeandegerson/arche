@@ -39,6 +39,33 @@ const assert=require('node:assert/strict');
    Render.world(r);
   });
   console.log('Weather-driven cloud rendering passed in Chromium.');
+  await page.evaluate(()=>{
+   const original=ponds.slice();
+   try{
+    ponds.splice(0,ponds.length,{kind:'lake',left:1000,right:1120,level:500,spill:499});
+    let reedX=1000;
+    while(reedX<1120&&landscapeNoise(Math.floor(reedX/92)+1014)<=.22)reedX++;
+    if(reedX===1120||regionalPlantAt('marsh',reedX,502,.5)?.plant!==habitatPlants.reeds||
+      regionalPlantAt('marsh',reedX,520,.5)!==null||
+      regionalPlantAt('marsh',1240,480,.5)?.plant!==habitatPlants.marshSedge||
+      regionalPlantAt('conifer',1000,500,.5,[1010])?.plant!==habitatPlants.moss||
+      regionalPlantAt('conifer',1000,500,.5,[])?.plant===habitatPlants.moss||
+      regionalPlantAt('dunes',1000,500,.5)?.plant!==habitatPlants.duneGrass)
+     throw Error('Expected waterline reeds, dry sedges, moss at shelter and dune grasses');
+    const canvas=document.createElement('canvas');canvas.width=160;canvas.height=120;
+    const ctx=canvas.getContext('2d');
+    for(const plant of [habitatPlants.shoreGrass,habitatPlants.reeds,habitatPlants.moss]){
+     ctx.clearRect(0,0,160,120);ctx.save();
+     const x=1000,y=solidGaitSurface(x);
+     ctx.translate(80-x,85-y);drawBiomePlant(ctx,plant,x,y,.6,3);
+     ctx.restore();
+     if(!ctx.getImageData(0,0,160,120).data.some((v,i)=>i%4===3&&v>0))
+      throw Error('Expected visible '+plant.type);
+    }
+   }finally{ponds.splice(0,ponds.length,...original);}
+  });
+  console.log('Regional vegetation checks passed in Chromium.');
+
 
   await page.evaluate(async()=>{
    Runner.stop(runner);Render.stop(r);
