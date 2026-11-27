@@ -65,6 +65,38 @@ const assert=require('node:assert/strict');
    }finally{ponds.splice(0,ponds.length,...original);}
   });
   console.log('Regional vegetation checks passed in Chromium.');
+  await page.evaluate(()=>{
+   Runner.stop(runner);Render.stop(r);
+   const original=ponds.slice(),x=spawnX,bed=solidGaitSurface(x);
+   const lake={kind:'lake',left:x-90,right:x+90,level:bed-43,spill:bed-44};
+   if(!human)createHuman(x,bed-37);
+   const state=human.plugin.groundTravel={vx:0,vy:0};
+   try{
+    ponds.splice(0,ponds.length,lake);
+    const step=depth=>{
+     lake.level=bed-depth;lake.spill=lake.level-1;
+     Body.setPosition(human,{x,y:bed-37});
+     return updateSurfaceSwim(state,1);
+    };
+    if(step(39)||!step(43)||!step(39)||step(35)||state.swim||state.shorePose?.entering!==false)
+     throw Error('Expected a short wading buffer and an earlier animated swim exit');
+    const realLevel=physicalWaterLevel;
+    lake.kind='sea';
+    try{
+     physicalWaterLevel=pond=>pond.level-12;
+     if(step(39))throw Error('A trough should not trigger swimming in the buffer');
+     if(!step(43))throw Error('Expected swim entry at the mean sea depth');
+     physicalWaterLevel=pond=>pond.level+12;
+     if(!step(39)||step(35))throw Error('A crest should not interrupt swimming in the buffer');
+    }finally{physicalWaterLevel=realLevel;}
+
+   }finally{
+    ponds.splice(0,ponds.length,...original);
+    delete human.plugin.groundTravel;swimming=false;
+   }
+  });
+  console.log('Swim depth transition passed in Chromium.');
+
 
 
   await page.evaluate(async()=>{

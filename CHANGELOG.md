@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.97
+- Keep swim entry at 42 units of depth and return to wading below 36. Use the mean sea level for the shoreline mode switch so individual waves can lift the swimmer without interrupting the gait.
+
 ## 0.12.96
 - Give swimmers a leading foothold and a staggered rise when returning to a walk. Keep feet from visually sliding through the bank during the handoff.
 
