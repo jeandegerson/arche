@@ -39,7 +39,7 @@
  }
  #extraActions .world-action{grid-row:var(--wide-row);grid-column:var(--wide-column);font-size:11px}
 }
-</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.99</span><header><h1>Archē</h1><small>v0.12.99 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
+</style></head><body><canvas id="world"></canvas><span id="versionLabel">v0.12.100</span><header><h1>Archē</h1><small>v0.12.100 · Explore the world</small></header><button id="labToggle" hidden style="display:none;position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:5">Lab</button><button id="soundToggle" hidden style="display:none" aria-pressed="false">Sound off</button><nav style="display:none"><div class="tabs" role="group" aria-label="Tool categories"><button data-tab="matter" aria-pressed="true">Matter</button><button data-tab="build" aria-pressed="false">Build</button><button data-tab="world" aria-pressed="false">World</button></div><div class="tools"><button id="box">Box</button><button id="ball">Ball</button><button id="pin">Pin</button><button id="water">Water</button><button id="rope">Rope</button><button id="human">Human: Off</button><button id="geology">Ground: Off</button><button id="wind">Wind: Calm</button><button id="air">Air: Hide</button><button id="gravity" aria-label="Change gravity">Gravity: 1g</button><button id="material">Wood</button><button id="size">Size: M</button><button id="seed">Plant: Off</button><button id="dig">Dig: Off</button><button id="cold">Cold: Off</button><button id="heat">Heat: Off</button><button id="insert">Insert: Off</button><button id="drill">Drill: Off</button><button id="cut">Cut: Off</button><button id="link">Link: Off</button><button id="motor">Motor: Off</button><button id="terrain">Terrain: Off</button><button id="pause">Pause</button><button id="reset">Reset</button></div></nav><div id="humanControls" hidden style="position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none"><div style="display:flex;gap:6px;pointer-events:auto"><div id="walkPad" role="group" aria-label="Move sideways to walk or upward to climb" style="width:116px;height:116px;border-radius:58px;background:#29343dcc;border:1px solid #83939c;touch-action:none;position:relative;display:flex;align-items:center;justify-content:space-around;user-select:none"><span>◀</span><span style="position:absolute;top:8px">▲</span><span>▶</span><div id="walkKnob" style="position:absolute;left:38px;top:38px;width:40px;height:40px;border-radius:50%;background:#9aafa9;pointer-events:none"></div></div></div><div style="display:flex;gap:6px;pointer-events:auto"><button id="jumpHuman" hidden>Step ↑</button><button id="handSelect" hidden>Hand: R</button><button id="releaseHuman">Release</button></div></div><script src="geology-experimental.js?v=19"></script><script src="world.js?v=0.12.73"></script><script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script>const {Engine,Render,Runner,Bodies,Composite,Mouse,MouseConstraint,Body,Constraint,Query,Events}=Matter;const e=Engine.create();e.positionIterations=10;e.constraintIterations=6;e.velocityIterations=8;const c=document.querySelector('canvas');const r=Render.create({canvas:c,engine:e,options:{width:innerWidth,height:innerHeight,wireframes:false,background:'#161b20',pixelRatio:scenePixelRatio(innerWidth,innerHeight)}});function scenePixelRatio(width,height,dpr=devicePixelRatio){
  // Bound the cost of full-screen canvas passes on high-density displays.
  const budgetRatio=Math.sqrt(2200000/Math.max(1,width*height));
  return Math.min(dpr,Math.max(1,Math.min(2,Math.floor(budgetRatio*4)/4)));
@@ -799,19 +799,6 @@ function paintCaveLight(ctx,c,start,end,top,bottom,day){
  }
  ctx.fillStyle=warm;ctx.fillRect(start,top,end-start,bottom-top);
 
- const now=Date.now();
- for(const fire of logfires){
-  if(fire.route!==c.id)continue;
-  const {strength,radius}=caveFireLight(fire,now);
-  if(!strength)continue;
-  if(fire.x+radius<start||fire.x-radius>end)continue;
-  const y=fire.y-10;
-  const glow=ctx.createRadialGradient(fire.x,y,4,fire.x,y,radius);
-  glow.addColorStop(0,'rgba(255,168,88,'+strength+')');
-  glow.addColorStop(.5,'rgba(218,118,59,'+strength*.31+')');
-  glow.addColorStop(1,'rgba(218,118,59,0)');
-  ctx.fillStyle=glow;ctx.fillRect(fire.x-radius,y-radius,radius*2,radius*2);
- }
 }
 function paintCave(c){
  const ctx=r.context,lo=r.bounds.min.x,hi=r.bounds.max.x;
@@ -2775,7 +2762,105 @@ worldOverlay(()=>{const ctx=r.context;for(const b of branches.values()){if(b.own
 const bounce=pose.water?0:Math.abs(Math.sin((b.bounce||0)*Math.PI*2))*12*(b.bounce||0);
 drawBranch(ctx,pose.x,pose.y-bounce,pose.angle||0,b.route)}});const fireButton=document.createElement('button');fireButton.style.cssText='position:fixed;right:24px;bottom:265px;z-index:1000;padding:12px 18px;background:#303a30;color:white;border:1px solid #89917c;border-radius:8px;display:none';document.body.appendChild(fireButton);fireButton.addEventListener('pointerdown',ev=>ev.stopPropagation());fireButton.onclick=ev=>{ev.stopPropagation();fireAction()};
 Events.on(e,'afterUpdate',()=>{if(!human)return;const f=nearFire(),idle=!heldStone&&!miningStone&&!swimming&&!cutAction&&!chopAction&&!sawAction&&!heldPlanks.length;trunkExtra.style.display=idle&&!heldBranches.length&&!heldLog&&!ignition&&nearbyTrunk()&&(nearbyLog()||plankNear())?'block':'none';treeExtra.style.display=idle&&!heldBranches.length&&!heldLog&&!ignition&&findNearbyTree()&&(nearbyLog()||plankNear()||nearbyTrunk())?'block':'none';retrieveFire.style.display=!bothHandsOccupied()&&idle&&!heldBranches.length&&!heldLog&&!ignition&&f&&fireStage(f)==='prepared'&&f.count>0?'block':'none';retrieveTwig.style.display=canAddToBundle('branch')&&idle&&!ignition&&f&&fireStage(f)==='prepared'&&f.twigs>0?'block':'none';retrieveBoard.style.display=canAddToBundle('plank')&&!swimming&&!cutAction&&!chopAction&&!sawAction&&!ignition&&f&&fireStage(f)==='prepared'&&f.boards?.length?'block':'none';fireButton.style.display=!swimming&&!cutAction&&!chopAction&&!sawAction&&!ignition&&((heldLog||heldBranches.length||heldPlanks.length)?(f?fireRoom(f,!!heldBranches.length,!!heldPlanks.length):fireGround(human.position.x+facing*24)):canLight(f))?'block':'none';updateWorldAction(fireButton,heldLog||heldBranches.length||heldPlanks.length?(f?(heldLog?'Add log to fire':heldPlanks.length?'Add plank to fire':'Add branch to fire'):'Prepare fire'):'Light fire');if(ignition){if(Math.abs(walk)>.2||swimming||!f||f.id!==ignition.id||heldLog||heldPlanks.length||heldBranches.length){ignition=null;return}ignition.t+=Math.min(.05,e.timing.lastDelta/1000);const tick=Math.floor(ignition.t*3);if(tick!==ignition.soundTick){ignition.soundTick=tick;if(ignition.t<3.2)fireNoise('strike',.24)}const d=f.x<human.position.x?-1:1,stroke=Math.sin(ignition.t*15),reach=Math.min(23,Math.abs(f.x-human.position.x));woodArmPose(d,human.position.x+d*(reach-4+stroke*3),human.position.y+15+stroke*3);if(ignition.t>=3.8){const id=ignition.id;ignition=null;woodAction(()=>{const q=logfires.find(v=>v.id===id);if(canLight(q)){q.end=Date.now()+q.count*fuelMs+(q.twigs||0)*branchFuel+(q.boards?.length||0)*plankFuel;fireNoise('ignite',.3)}})}}});
-const fireStyle=document.createElement('style');fireStyle.textContent='@keyframes fireDance{0%{transform:scale(.9,1.03) skewX(-6deg)}50%{transform:scale(1.08,.83) skewX(7deg)}100%{transform:scale(.96,1.1) skewX(-3deg)}} .fireflames path{transform-origin:24px 39px;animation:fireDance .43s infinite alternate ease-in-out}.fireflames .flameB{animation-duration:.31s;animation-delay:-.12s}.fireflames .flameC{animation-duration:.24s;animation-delay:-.08s}';document.head.appendChild(fireStyle);const fireMarkers=new Map();const fireParticles=new Map();let fireVisualTime=performance.now();function renderFireMarkers(){requestAnimationFrame(renderFireMarkers);const rect=document.getElementById('world').getBoundingClientRect(),sx=rect.width/(r.bounds.max.x-r.bounds.min.x),sy=rect.height/(r.bounds.max.y-r.bounds.min.y);const now=performance.now(),dt=Math.min(.05,(now-fireVisualTime)/1000);fireVisualTime=now;const active=new Set();for(const f of logfires){const stage=fireStage(f);if(stage==='gone')continue;active.add(f.id);let el=fireMarkers.get(f.id);if(!el){el=document.createElement('div');el.style.cssText='position:fixed;z-index:900;pointer-events:none;width:64px;height:64px;transform:translate(-50%,-100%);';document.body.appendChild(el);fireMarkers.set(f.id,el)}const x=rect.left+(f.x-r.bounds.min.x)*sx,y=rect.top+(f.y-r.bounds.min.y)*sy;el.style.left=x+'px';el.style.top=y+'px';el.style.setProperty('--fire-wind',String(weatherWind||0));el.style.display=x<-50||x>innerWidth+50?'none':'block';const n=Math.min(6,Math.max(0,stage==='prepared'?f.count:Math.min(f.count||0,fireCount(f)))),twigs=stage==='prepared'?(f.twigs||0):Math.min(f.twigs||0,Math.ceil(Math.max(0,f.end-Date.now())/branchFuel)),boards=stage==='prepared'?(f.boards?.length||0):Math.min(f.boards?.length||0,Math.ceil(Math.max(0,f.end-Date.now())/plankFuel)),key=stage+n+'-'+twigs+'-'+boards;const remaining=stage==='burning'?Math.max(0,(f.end-Date.now())/fuelMs):0,heat=stage==='burning'?Math.min(1,.12+remaining*.24):0;el.style.opacity=stage==='ashes'?String(Math.max(0,1-(Date.now()-f.end-emberMs)/ashMs)):'1';if(el.dataset.key!==key){el.dataset.key=key;let logs='';for(let i=0;i<Math.min(18,boards);i++){logs+='<rect x="'+(12+i%3*3)+'" y="'+(40-Math.floor(i/3)*3)+'" width="20" height="3" rx=".5" fill="#b58b59" stroke="#65472e" stroke-width=".6" transform="rotate('+(i%2?12:-12)+' 24 40)"/>'}for(let i=0;i<Math.min(12,twigs);i++){const dx=24+(i%3-1)*5,dy=42-Math.floor(i/3)*2;logs+='<path d="M-9 0L0 -1L9 1M1 -1L5 -4" transform="translate('+dx+' '+dy+') rotate('+(i%2?24:-24)+')" stroke="#795638" stroke-width="2" fill="none" stroke-linecap="round"/>'}for(let i=0;i<n;i++){const dx=n===1?0:(i%2-.5)*14,dy=40-Math.floor(i/2)*7;logs+='<g transform="translate('+(24+dx)+' '+dy+') rotate('+(i%2?18:-18)+')"><rect x="-12" y="-5" width="24" height="10" rx="3" fill="'+(stage==='prepared'?'#956b43':'#49382d')+'" stroke="#392b21"/><path d="M-10 -3 L6 -2 M-10 1 L7 2" stroke="#60432f" stroke-width=".8"/><ellipse cx="10" cy="0" rx="3.5" ry="5" fill="#d6ae78" stroke="#795538"/><ellipse cx="10" cy="0" rx="1.8" ry="3" fill="none" stroke="#a67c50" stroke-width=".7"/></g>'}el.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="-8 -8 64 56" style="overflow:visible">'+(stage==='ashes'?'<ellipse cx="24" cy="44" rx="17" ry="3" fill="#827d70"/><path d="M12 43l7 -2 4 2 6 -3 8 3" fill="none" stroke="#4e4a42" stroke-width="2"/>':logs)+(stage==='burning'?'<ellipse cx="24" cy="39" rx="15" ry="5" fill="#b84d25" opacity=".75"/><g class="fireflames"><path class="flameA" d="M10 39 Q2 26 15 17 Q12 28 23 9 Q30 19 29 27 Q40 17 38 39Z" fill="#d65b26"/><path class="flameB" d="M15 39 Q8 27 22 15 Q19 25 28 7 Q38 25 33 39Z" fill="#f59b38"/><path class="flameC" d="M20 39 Q15 30 25 22 Q33 31 29 39Z" fill="#ffe09a"/></g>':stage==='embers'?'<ellipse cx="24" cy="41" rx="13" ry="3" fill="#542d23"/><path d="M13 41l5 -2 4 2 5 -3 7 2" stroke="#c75d30" stroke-width="1.5" fill="none"/>':'')+'<g class="fire-air"></g></svg>'}const svg=el.firstElementChild,flames=svg?.querySelector('.fireflames');if(flames){const pulse=.9+.1*Math.sin(now*.007+f.x);flames.setAttribute('transform','translate(24 39) scale('+(.45+heat*.55)+' '+((.22+heat*.78)*pulse*(1-rainAmount*.25))+') skewX('+(-weatherWind*12)+') translate(-24 -39)')}let p=fireParticles.get(f.id);if(!p){p={list:[],smoke:0,spark:0};fireParticles.set(f.id,p)}if(x>=-80&&x<=innerWidth+80&&(stage==='burning'||stage==='embers')){p.smoke+=dt*(stage==='burning'?4+rainAmount*3:1);p.spark+=dt*heat*2.5;if(p.smoke>=1){p.smoke-=1;p.list.push({kind:'smoke',x:24+(Math.random()-.5)*9,y:stage==='burning'?22:37,t:0,life:2.5+Math.random()*2,v:10+Math.random()*8,r:2+Math.random()*3})}if(p.spark>=1){p.spark-=1;p.list.push({kind:'spark',x:24+(Math.random()-.5)*12,y:30,t:0,life:.45+Math.random()*.8,v:24+Math.random()*20,r:.5+Math.random()*.5})}}for(const a of p.list){a.t+=dt;a.y-=a.v*dt;a.x+=(weatherWind*13+Math.sin(a.t*3+a.r)*4)*dt}p.list=p.list.filter(a=>a.t<a.life).slice(-36);const air=svg?.querySelector('.fire-air');if(air)air.innerHTML=p.list.map(a=>{const u=a.t/a.life,opacity=a.kind==='smoke'?.16*Math.sin(Math.PI*u):.85*(1-u);return '<ellipse cx="'+a.x.toFixed(1)+'" cy="'+a.y.toFixed(1)+'" rx="'+(a.r*(a.kind==='smoke'?1+u*2.8:1)).toFixed(1)+'" ry="'+(a.r*(a.kind==='smoke'?.7+u*1.8:1)).toFixed(1)+'" fill="'+(a.kind==='smoke'?'#a5a39a':'#ffc16a')+'" opacity="'+opacity.toFixed(2)+'"/>'}).join('')}for(const [id,el] of fireMarkers)if(!active.has(id)){el.remove();fireMarkers.delete(id);fireParticles.delete(id)}}requestAnimationFrame(renderFireMarkers);
+function paintCampfire(ctx,fire,stage,now,time){
+ const {x,y}=fire;
+ const seed=x*.037;
+ const fuel=Math.max(0,fire.end-now);
+ const heat=stage==='burning'?Math.min(1,.30+fuel/fuelMs*.40):0;
+ const logs=Math.min(6,stage==='prepared'?fire.count||0:Math.min(fire.count||0,Math.ceil(fuel/fuelMs)));
+ const twigs=Math.min(12,fire.twigs||0,stage==='prepared'?Infinity:Math.ceil(fuel/branchFuel));
+ const boards=Math.min(18,fire.boards?.length||0,stage==='prepared'?Infinity:Math.ceil(fuel/plankFuel));
+ ctx.save();ctx.translate(x,y);
+ if(stage==='ashes')ctx.globalAlpha=Math.max(0,1-(now-fire.end-emberMs)/ashMs);
+ ctx.fillStyle='#302722';
+ ctx.beginPath();ctx.ellipse(0,-1,20,3,0,0,Math.PI*2);ctx.fill();
+ for(let i=0;i<logs+twigs+boards;i++){
+  const log=i<logs,twig=i>=logs+boards;
+  const width=log?27:twig?15:21,height=log?7:twig?2:4;
+  ctx.save();ctx.translate((i%3-1)*6,-height*.5-Math.min(10,i*.65));ctx.rotate(i%2?.22:-.27);
+  ctx.fillStyle=stage==='prepared'?'#765336':'#3c2a23';ctx.fillRect(-width/2,-height/2,width,height);
+  ctx.fillStyle=stage==='prepared'?'#c59a66':'#88634d';
+  ctx.beginPath();ctx.ellipse(width/2,0,height*.32,height*.5,0,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=stage==='prepared'?'#a27851':'#645044';ctx.lineWidth=.7;
+  ctx.beginPath();ctx.moveTo(-width/2+2,-height*.2);ctx.lineTo(width/2-2,-height*.1);ctx.stroke();
+  ctx.restore();
+ }
+ if(stage==='burning'||stage==='embers'){
+  for(let i=0;i<19;i++){
+   const px=(landscapeNoise(i+seed)-.5)*35,py=-2-landscapeNoise(i*13+seed)*5;
+   const pulse=.5+.5*Math.sin(time*(3+i%4)+i*2+seed);
+   ctx.fillStyle='rgba(255,'+(72+i%5*21)+',31,'+((stage==='burning'?.85:.45)*pulse)+')';
+   ctx.fillRect(px,py,1+ i%3,1.2);
+  }
+ }
+ if(heat){
+  const height=(18+heat*37)*(1-rainAmount*.22);
+  const flame=ctx.createLinearGradient(0,-height,0,-3);
+  flame.addColorStop(0,'rgba(202,61,17,0)');
+  flame.addColorStop(.42,'rgba(242,94,24,.58)');
+  flame.addColorStop(.73,'rgba(255,166,59,.87)');
+  flame.addColorStop(1,'rgba(255,236,170,.93)');
+  ctx.fillStyle=flame;
+  for(let i=0;i<7;i++){
+   const phase=time*(7+i*.39)+seed+i*2.18;
+   const foot=(i-3)*4;
+   const tip=foot+Math.sin(phase)*5+weatherWind*12;
+   const rise=height*(.57+.34*Math.sin(phase*.76)+.17*landscapeNoise(i+seed));
+   ctx.beginPath();ctx.moveTo(foot-4,-3);
+   ctx.bezierCurveTo(foot-9,-rise*.38,tip+4,-rise*.68,tip,-rise);
+   ctx.bezierCurveTo(tip+12,-rise*.60,foot+1,-rise*.44,foot+5,-3);
+   ctx.fill();
+  }
+ }
+ if(stage==='burning'||stage==='embers'){
+  for(let i=0;i<12;i++){
+   const u=(time*.26+i/12+landscapeNoise(seed+i)*.12)%1;
+   const px=u*weatherWind*55+Math.sin(u*8+i*.32+seed)*(4+u*9);
+   const py=-10-u*89,rx=3+u*15;
+   const smoke=ctx.createRadialGradient(px,py,0,px,py,rx);
+   smoke.addColorStop(0,'rgba(145,132,119,'+(Math.sin(Math.PI*u)*(stage==='embers'?.095:.15))+')');
+   smoke.addColorStop(1,'rgba(145,132,119,0)');ctx.fillStyle=smoke;
+   ctx.fillRect(px-rx,py-rx,rx*2,rx*2);
+  }
+ }
+ if(heat)for(let i=0;i<5;i++){
+  const u=(time*(.69+i*.04)+i*.27+landscapeNoise(seed+i))%1;
+  const px=(i-2)*3+u*weatherWind*39+Math.sin(u*4+i)*u*9;
+  ctx.fillStyle='rgba(255,186,94,'+(1-u)*heat+')';
+  ctx.fillRect(px,-9-u*(31+i*7),1.3,1.7);
+ }
+ ctx.restore();
+}
+function paintCampfireLighting(ctx,fire,stage,time,day){
+ if(stage!=='burning'&&stage!=='embers')return;
+ const {x,y}=fire;
+ const radius=stage==='burning'?175:64;
+ const flicker=.9+.06*Math.sin(time*9+x)+.04*Math.sin(time*17+x*.37);
+ const intensity=flicker*(stage==='burning'?.72:.26)*(1-.63*day);
+ const cave=caveById(fire.route);
+ const left=Math.max(x-radius,cave?cave.left:-Infinity);
+ const right=Math.min(x+radius,cave?cave.right:Infinity);
+ if(left>=right)return;
+ ctx.save();ctx.beginPath();
+ for(let px=left;;px=Math.min(right,px+6)){
+  const roof=cave?Math.max(exteriorVisualSurface(px),caveCeiling(px,cave)):y-radius-12;
+  if(px===left)ctx.moveTo(px,roof);else ctx.lineTo(px,roof);
+  if(px===right)break;
+ }
+ for(let px=right;;px=Math.max(left,px-6)){
+  ctx.lineTo(px,cave?caveFloor(px,cave):exteriorVisualSurface(px)+15);
+  if(px===left)break;
+ }
+ ctx.closePath();ctx.clip();
+ const glow=ctx.createRadialGradient(x,y-11,1,x,y-11,radius);
+ glow.addColorStop(0,'rgba(255,176,88,'+intensity+')');
+ glow.addColorStop(.28,'rgba(255,148,67,'+intensity*.64+')');
+ glow.addColorStop(.64,'rgba(231,102,46,'+intensity*.19+')');
+ glow.addColorStop(1,'rgba(231,102,46,0)');
+ ctx.globalCompositeOperation='screen';ctx.fillStyle=glow;
+ ctx.fillRect(x-radius,y-11-radius,radius*2,radius*2);
+ ctx.restore();
+}
 const plankButton=document.createElement('button');plankButton.style.cssText='position:fixed;right:24px;bottom:155px;z-index:1000;padding:12px 18px;background:#303a30;color:white;border:1px solid #89917c;border-radius:8px;display:none';plankButton.textContent='Take plank';document.body.appendChild(plankButton);plankButton.addEventListener('pointerdown',ev=>ev.stopPropagation());plankButton.onclick=ev=>{ev.stopPropagation();if(!canAddToBundle('plank')||sawAction||cutAction||chopAction)return;woodAction(()=>{if(!canAddToBundle('plank'))return;const p=plankNear();if(p){detachPile(p);heldPlanks.push(p)}})};const stackButton=document.createElement('button');stackButton.style.cssText='position:fixed;right:24px;bottom:155px;z-index:1000;padding:12px 18px;background:#303a30;color:white;border:1px solid #89917c;border-radius:8px;display:none';document.body.appendChild(stackButton);stackButton.addEventListener('pointerdown',ev=>ev.stopPropagation());stackButton.onclick=ev=>{ev.stopPropagation();if(heldBranches.length)return;woodAction(()=>stackWood(heldLog?'log':'plank'))};const sawButton=document.createElement('button');sawButton.style.cssText='position:fixed;right:24px;bottom:100px;z-index:1000;padding:12px 18px;background:#303a30;color:white;border:1px solid #89917c;border-radius:8px;display:none';document.body.appendChild(sawButton);sawButton.addEventListener('pointerdown',ev=>ev.stopPropagation());sawButton.onclick=ev=>{ev.stopPropagation();if(heldLog||heldBranches.length||heldPlanks.length)return;if(heldPlanks.length){dropPlanks();return}if(sawAction){sawAction=null;return}const b=nearbyLog();if(b&&!bothHandsOccupied()&&!cutAction&&!chopAction)sawAction={b,t:0};};function finishSaw(b){const id=woodId(b);woodAction(()=>{const q=visibleLogs.find(v=>woodId(v)===id&&!v.remoteWood&&v!==heldLog);if(q)finishSawLocal(q)})}function finishSawLocal(b){woodConsumed.add(woodId(b));const i=visibleLogs.indexOf(b);if(i<0)return;detachPile(b);visibleLogs.splice(i,1);Composite.remove(e.world,b);for(let j=0;j<3;j++){const x=Math.max(15,Math.min(worldWidth-15,b.position.x+(j-1)*26)),y=solidGaitSurface(x)-2;visiblePlanks.push({x,y,species:b.plugin.woodLog.species,id:b.plugin.woodLog.id+'-plank-'+j})}}worldOverlay(()=>{const ctx=r.context;ctx.save();for(const p of visiblePlanks){if(p.remoteWood)continue;if(p.x<r.bounds.min.x-30||p.x>r.bounds.max.x+30)continue;const loose=!p.pile&&!heldPlanks.includes(p),pose=loose?looseObjectPose(p,'plank'):p;
 ctx.save();const fall=p.pile?woodFallOffset(p.fall):pose.fall,lit=caveObjectPalette(p.route,pose.x,pose.y);
 ctx.translate(pose.x,pose.y-(p.pile?fall:0));
@@ -3105,6 +3190,21 @@ Events.on(r,'afterRender',()=>{
  ctx.save();ctx.setTransform(r.options.pixelRatio||1,0,0,r.options.pixelRatio||1,0,0);
  ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
  paintSceneLight(ctx,w,h,sky,twilightCues(sky));
+ if(logfires.length){
+  const now=Date.now(),time=performance.now()/1000;
+  const visible=[];
+  ctx.save();ctx.translate(-r.bounds.min.x,-r.bounds.min.y);
+  for(const fire of logfires){
+   if(fire.x+180<r.bounds.min.x||fire.x-180>r.bounds.max.x||
+      fire.y+180<r.bounds.min.y||fire.y-190>r.bounds.max.y)continue;
+   const stage=fireStage(fire,now);
+   if(stage==='gone')continue;
+   paintCampfireLighting(ctx,fire,stage,time,sky.day);
+   visible.push({fire,stage});
+  }
+  for(const {fire,stage} of visible)paintCampfire(ctx,fire,stage,now,time);
+  ctx.restore();
+ }
  ctx.fillStyle='#fff';ctx.font='12px system-ui';ctx.textAlign='right';
  ctx.fillText(Math.round(climateTarget())+'°C',w-14,45);ctx.restore();
 });
