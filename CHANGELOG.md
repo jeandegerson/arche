@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.103
+- Strengthen and widen nighttime campfire illumination on nearby characters, vegetation, objects and shallow terrain. Use a surface-sensitive blend and a faint air glow so nearby detail remains visible. Daylight and embers reduce the effect.
+- Verified inline script syntax and numerical blend samples for nearby surfaces, distance falloff, daylight, embers and cave clipping. In-game browser rendering remains unverified.
+
 ## 0.12.99
 - Keep nearby actions in fixed positions as other options appear and disappear. Add action icons, including a campfire emblem, and suppress duplicate chop and cut buttons.
 
