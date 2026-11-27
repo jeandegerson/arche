@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.106
+- Increase the amount of firelight visible on dark rock, characters, and objects while retaining material contrast. The shared light still falls off with distance and is clipped at cave boundaries.
+- Verified script syntax and sampled the blend on shaded rock and lighter material, including falloff, embers, unlit fuel, and cave clipping.
+
 ## 0.12.105
 - Use one campfire light response above and below ground. Remove the extra cave-only tint from loose objects, shade firewood with the rest of the scene, and clip shallow ground illumination at lower cave passages.
 - Verified script syntax, matching gradients and blend modes, passage clipping, unlit fuel, and render order in isolated tests.
