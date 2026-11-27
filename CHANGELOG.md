@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.104
+- Apply cave ambient shade to local and remote characters and to campfire fuel. Burning fires use the daylight reaching the cave to determine how strongly they light the surroundings.
+- Verified inline script syntax and isolated checks for deep shade, cave entrances, unlit fuel, and underground fire illumination.
+
 ## 0.12.103
 - Strengthen and widen nighttime campfire illumination on nearby characters, vegetation, objects and shallow terrain. Use a surface-sensitive blend and a faint air glow so nearby detail remains visible. Daylight and embers reduce the effect.
 - Verified inline script syntax and numerical blend samples for nearby surfaces, distance falloff, daylight, embers and cave clipping. In-game browser rendering remains unverified.
