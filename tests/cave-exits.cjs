@@ -389,7 +389,7 @@ const assert=require('node:assert/strict');
    let dip=trunk.plugin.deckDip||0;
    for(let i=0;i<15;i++){tick();dip=Math.max(dip,trunk.plugin.deckDip||0);}
    check(travel.trunkSupport===trunk&&human.position.x>startOnTrunk+12,'The player should walk along the trunk');
-   check(dip>1&&dip<=6,'The weighted trunk should dip slightly');
+   check(dip>6&&dip<=13&&trunkWakes.length>0,'Landing should dip the trunk more deeply and send a wake');
    rawPadX=.42;walk=0;padY=.40;crouchInput=0;
    check(!crouchGesture(rawPadX,padY),'A jump dip can fall outside the crouch angle');
    for(let i=0;i<3;i++)tick();
