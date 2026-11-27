@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.84
+- Add world-anchored soil grain, moving near-surface water highlights, a deeper sky gradient and layered drifting cloud banks.
+
 ## 0.12.83
 - Texture foreground trees with bark grain, birch scars, palm rings, foliage clusters, pine needle strokes and palm veins. Marks stay fixed to the tree as it sways.
 
