@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.105
+- Use one campfire light response above and below ground. Remove the extra cave-only tint from loose objects, shade firewood with the rest of the scene, and clip shallow ground illumination at lower cave passages.
+- Verified script syntax, matching gradients and blend modes, passage clipping, unlit fuel, and render order in isolated tests.
+
 ## 0.12.104
 - Apply cave ambient shade to local and remote characters and to campfire fuel. Burning fires use the daylight reaching the cave to determine how strongly they light the surroundings.
 - Verified inline script syntax and isolated checks for deep shade, cave entrances, unlit fuel, and underground fire illumination.
