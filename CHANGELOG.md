@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.91
+- Align the sun and moon with the scenic horizon and let ridges occlude their discs. Apply shared twilight and moonlight to the complete scene, keeping full night darker.
+
 ## 0.12.90
 - Separate sunrise and dusk into distinct light transitions. Dawn warms the canopy over cool ground and lingering mist. Dusk brings copper clouds, warm water glints and a longer afterglow. Rain softens the warm colors.
 
