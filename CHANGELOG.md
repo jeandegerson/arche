@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.122
+- Let players step from a bank onto reachable floating trunks. Include rounded ends in the walking surface and check reachable decks before switching to swimming.
+- Verified the shore step in both directions, deck continuity, the steep-bed transition, wide gaps, and swimmers below the deck.
+
 ## 0.12.121
 - When a player swims away from the bank with a tethered trunk, pull it toward the first point in the same body of water deep enough to float. This lets trunks clear dry steps near the waterline that used to stall ordinary dragging.
 - Tested launch target selection at both banks of all five generated rivers, a stepped shoreline, and an out-of-range pull.
