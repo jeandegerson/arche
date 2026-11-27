@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.115
+- Add dragging for felled trunks on dry ground. Trunks follow on a rope and their last position is shared. Fit two sufficiently long trunks onto completed cabane footings as the first wall timbers.
+- Verified inline script syntax and exercised drag claims, checkpoints, fitting, reload, and rollback in isolation.
+
 ## 0.12.114
 - Add the first stage of cabane construction. Collect flat slabs near rock outcrops and set four footing pads on dry, fairly level ground. On a mild slope, stack a second slab on each lower pad. Installed slabs persist in the shared stone state and can be recovered by hand.
 - Verified inline script syntax and exercised placement, completion, slope and water rejection, and slab recovery in isolation.
