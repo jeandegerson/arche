@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.90
+- Separate sunrise and dusk into distinct light transitions. Dawn warms the canopy over cool ground and lingering mist. Dusk brings copper clouds, warm water glints and a longer afterglow. Rain softens the warm colors.
+
 ## 0.12.89
 - Remove the numeric time display. Align the sun and moon with seasonal daylight, and give dawn and dusk distinct warm horizons.
 
