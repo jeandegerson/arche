@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.95
+- Blend the torso and limbs between walking and swimming at the shoreline. Broadcast the blended pose to other players and retain the dive animation for airborne entries.
+
 ## 0.12.94
 - Add wind-bent dune grasses with sand caught around their roots, moss near stones and fallen trunks in conifer woods, and marsh reeds that give way to sedges on higher ground.
 
