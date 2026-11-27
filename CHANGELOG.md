@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.86
+- Reveal more wall texture in dark caves, strengthen the daylight gradient at entrances and light stone and loose wood with the same passage lighting.
+
 ## 0.12.85
 - Darken cave interiors and fade exterior light within a short distance of open mouths. Burning campfires and embers light their own passage.
 
